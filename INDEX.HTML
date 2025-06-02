@@ -265,11 +265,38 @@
         .history-container { display: flex; flex-direction: column; gap: 1rem; max-height: none; overflow: visible; position: relative; }
         .history-item {
             transition: all 0.3s ease; width: 100%; max-width: 100%; margin: 0; border-radius: 1.2rem;
-            /* background: var(--bg-dark-tertiary); */ /* Base background set by JS, status classes add gradients */
             backdrop-filter: blur(5px);
-            box-shadow: 0 4px 14px rgba(0,0,0,0.2); position: relative; overflow: hidden; padding: 1.2rem;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2); position: relative; overflow: hidden; padding: 0.8rem 1rem; 
             border-left: 4px solid transparent;
+            /* Flexbox for alignment */
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
         }
+        .history-item > div { /* Target direct children divs for flex items */
+            display: flex;
+            align-items: center;
+        }
+        .history-item .period-info { 
+            gap: 0.75rem; /* space-x-3 */
+            min-width: 120px; /* Ensure period info has some base width */
+        }
+         .history-item .prediction-actual-info { 
+            gap: 1rem; /* space-x-4 */
+            justify-content: center; 
+            flex-grow: 1; /* Allow this to take middle space */
+            text-align: center;
+        }
+        .history-item .prediction-actual-info > div { /* Individual prediction/actual blocks */
+            min-width: 80px; /* Give them some space */
+        }
+        .history-item .status-action-info { 
+            gap: 0.75rem; /* space-x-3 */
+            justify-content: flex-end; /* Push to the right */
+            min-width: 80px; /* Space for icon and button */
+        }
+
+
         .history-item.win { border-left-color: var(--win-color); background: linear-gradient(135deg, rgba(56, 161, 105, 0.2), var(--bg-dark-secondary)) !important; }
         .history-item.loss { border-left-color: var(--loss-color); background: linear-gradient(135deg, rgba(229, 62, 62, 0.2), var(--bg-dark-secondary)) !important; }
         .history-item.pending { border-left-color: var(--pending-color); background: linear-gradient(135deg, rgba(221, 107, 32, 0.2), var(--bg-dark-secondary)) !important; }
@@ -289,22 +316,23 @@
         }
         @keyframes float { 0% { transform: translate(0, 0); opacity: 0.7; } 50% { transform: translate(12px, -12px); opacity: 0.3; } 100% { transform: translate(0, 0); opacity: 0.7; } }
         .delete-btn:hover { color: var(--accent-primary); transform: scale(1.3); }
-        .status-icon {
-            width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 18px; position: relative; overflow: hidden;
+        
+        /* Status icons in history list */
+        .history-status-icon {
+            width: 24px; /* Smaller for history items */
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px; /* Smaller font */
         }
-        .status-icon::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            opacity: 0.1; background: radial-gradient(circle, currentColor 0%, transparent 70%);
-        }
-        .win-icon { color: var(--win-color); animation: pulseWin 1.5s infinite; }
-        .loss-icon { color: var(--loss-color); animation: pulseLoss 1s infinite; }
+        .win-icon { color: var(--win-color); } /* General win icon color */
+        .loss-icon { color: var(--loss-color); } /* General loss icon color */
         .pending-icon { color: var(--pending-color); animation: rotate 2s infinite linear; }
-        .skipped-icon { color: var(--skipped-color); animation: pulseSkip 1.5s infinite; }
-        @keyframes pulseWin { 0%, 100% { box-shadow: 0 0 0 0 rgba(56, 161, 105, 0.5); } 50% { box-shadow: 0 0 0 10px rgba(56, 161, 105, 0); } }
-        @keyframes pulseLoss { 0%, 100% { box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.5); } 50% { box-shadow: 0 0 0 10px rgba(229, 62, 62, 0); } }
+        .skipped-icon { color: var(--skipped-color); }
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        @keyframes pulseSkip { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+
 
         /* Animation for new history items */
         @keyframes bounceInItem { 0% { transform: scale(0.95) translateY(8px); opacity: 0; } 70% { transform: scale(1.01) translateY(-1px); opacity: 1; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
@@ -529,6 +557,24 @@
             .card { margin: 0.5rem; }
             .popup, .modal { width: 95%; }
             #pauseIndicator { padding: 0.6rem 1.2rem; font-size: 0.9rem; top: 15px;}
+            .history-item { 
+                flex-direction: column; 
+                align-items: stretch; /* Make children take full width */
+                gap: 0.5rem; 
+                padding: 0.8rem; 
+            }
+            .history-item > div { /* Reset flex for direct children if needed or adjust specific groups */
+                justify-content: space-between; /* Example: spread items in each row */
+                width: 100%;
+            }
+            .history-item .prediction-actual-info { 
+                justify-content: space-around; /* Space out pred, conf, actual */
+                min-width: unset; /* Remove min-width for smaller screens */
+            }
+             .history-item .status-action-info { 
+                margin-left: 0; /* Remove margin for stacked layout */
+                justify-content: flex-end; /* Keep delete button to the right */
+            }
         }
     </style>
 </head>
@@ -965,10 +1011,10 @@
         // Firebase Paths
         const SHARED_GAME_HISTORY_PATH = "shared_alpha_x_ai/game_history";
         const SHARED_CURRENT_PREDICTION_PATH = "shared_alpha_x_ai/current_prediction";
-        const SHARED_STATS_PATH = "shared_alpha_x_ai/stats"; // For streak, winLevel, consecutiveLosses
-        const MAX_SHARED_HISTORY_LENGTH = 50; // Number of game results to keep in shared history
+        const SHARED_STATS_PATH = "shared_alpha_x_ai/stats"; 
+        const MAX_SHARED_HISTORY_LENGTH = 50; 
 
-        // --- Auth State & Config (Retained from previous full script for shell functionality) ---
+        // --- Auth State & Config ---
         const USER_DEVICE_ID_STORAGE_KEY_ALPHAX = 'userGeneratedDeviceId_AlphaXAI_V3';
         const TELEGRAM_USERNAME_STORAGE_KEY_ALPHAX = 'telegramUsername_AlphaXAI_V3';
         const PREDICTOR_LOGGED_IN_KEY_ALPHAX = 'predictorLoggedIn_AlphaXAI_V3';
@@ -977,14 +1023,14 @@
         const APPROVAL_CHECK_INTERVAL_MS_ALPHAX = 5000;
         let alphaX_isMaintenanceModeActive = false;
 
-        // --- Global Settings State (Retained from previous full script for UI interaction) ---
+        // --- Global Settings State ---
         let alphaX_currentLanguage = localStorage.getItem('alphaXAiLanguage') || 'en';
         let alphaX_isSoundEnabled = localStorage.getItem('alphaXAiSound') === null ? true : localStorage.getItem('alphaXAiSound') === 'true';
         let alphaX_isNotificationsEnabled = localStorage.getItem('alphaXAiNotifications') === 'true' || false;
         let alphaX_isAdvancedModeActive = localStorage.getItem('alphaXAiPredictionMode') === null ? true : localStorage.getItem('alphaXAiPredictionMode') === 'advanced';
-        let isMuted = !alphaX_isSoundEnabled; // For new showToast function
+        let isMuted = !alphaX_isSoundEnabled; 
 
-        // --- Translations (Minimal for new logic, can be expanded) ---
+        // --- Translations ---
         const translations = {
             en: { 
                 period: "Period", 
@@ -1036,7 +1082,7 @@
                 omega_level_2: "Omega Protocol: Level 2 (Warning Mode - High Risk)",
                 omega_level_3: "Omega Protocol: Level 3 (Critical - Predictions Disabled)",
             },
-            hi: { // Basic Hindi translations, can be expanded
+            hi: { 
                 period: "अवधि", prediction: "भविष्यवाणी", confidence: "आत्मविश्वास",
                 analysis_dashboard: "विश्लेषण डैशबोर्ड", most_frequent_bs: "सबसे लगातार (बड़ा/छोटा)",
                 least_frequent_bs: "कम से कम लगातार (बड़ा/छोटा)", win_rate: "जीत दर", wins: "जीत", losses: "हार",
@@ -1086,7 +1132,7 @@
             }
         };
         
-        // --- DOM Elements (Retained from previous full script) ---
+        // --- DOM Elements ---
         const alphaX_currentPeriodEl = document.getElementById('currentPeriod');
         const alphaX_currentResultEl = document.getElementById('currentResult'); 
         const alphaX_confidenceFillEl = document.getElementById('confidenceFill');
@@ -1116,23 +1162,18 @@
         const alphaX_badTrendPopupMessageEl = document.getElementById('badTrendPopupMessage');
 
 
-        // --- MODIFIED JAVASCRIPT LOGIC (Client-Side for Netlify) ---
+        // --- Client-Side Logic (No Prediction Algorithms Here) ---
         let localHistoryData = []; // Local cache of shared history for UI rendering
         let globalPredictionData = null; // Holds { prediction, confidence, logicSource } for the *next* period from Firebase
         
-        // Stats like streak, winLevel, consecutiveLosses will be primarily read from Firebase
-        // and updated in Firebase by the backend.
-        // These window variables are for UI updates via Firebase listeners.
         window.streak = 0; 
         window.winLevel = 0; 
         window.consecutiveLosses = 0; 
         
-        // IMPORTANT: Replace with your actual Replit backend URL
-        const BACKEND_PREDICT_URL = "https://a433d4ec-3f61-452f-90b7-f4a5743e90e3-00-25ssmvi7nn4pw.sisko.replit.dev/api/v1/predict"; // EXAMPLE - REPLACE THIS
+        const BACKEND_PREDICT_URL = "https://a433d4ec-3f61-452f-90b7-f4a5743e90e3-00-25ssmvi7nn4pw.sisko.replit.dev/api/v1/predict"; 
 
         // --- UI Update Functions (Listen to Firebase) ---
         function setupFirebaseListeners() {
-            // Listen for changes in the current shared prediction (set by backend)
             db.ref(SHARED_CURRENT_PREDICTION_PATH).on('value', (snapshot) => {
                 const currentPredData = snapshot.val();
                 if (currentPredData) {
@@ -1151,7 +1192,6 @@
                 }
             });
 
-            // Listen for changes in shared game history (updated by backend)
             db.ref(SHARED_GAME_HISTORY_PATH).orderByChild("timestamp").limitToLast(MAX_SHARED_HISTORY_LENGTH).on('value', (snapshot) => {
                 const newHistory = [];
                 if (snapshot.exists()) {
@@ -1165,7 +1205,6 @@
                 console.log("Firebase: Shared history updated, UI refreshed.");
             });
 
-            // Listen for changes in shared stats (updated by backend)
             db.ref(SHARED_STATS_PATH).on('value', (snapshot) => {
                 const stats = snapshot.val() || { streak: 0, winLevel: 0, consecutiveLosses: 0 };
                 window.streak = stats.streak; 
@@ -1184,13 +1223,14 @@
                 const itemStatus = item.status || "Pending"; 
                 const itemPrediction = item.prediction || "-";
 
+                // Improved alignment using flex and Tailwind classes
                 return `
-                <div class="history-item ${itemStatus.toLowerCase()} bg-[var(--bg-dark-secondary)] p-3 md:p-4 rounded-xl border border-[var(--card-border-color)] flex flex-col md:flex-row justify-between items-start md:items-center animate-bounceIn" 
+                <div class="history-item ${itemStatus.toLowerCase()} bg-[var(--bg-dark-secondary)] p-3 md:p-4 rounded-xl border border-[var(--card-border-color)] flex justify-between items-center animate-bounceIn" 
                      data-id="${item.id}" 
                      style="animation-delay: ${index * 0.05}s;">
                 
-                  <div class="flex items-center space-x-2 md:space-x-3 mb-2 md:mb-0 flex-grow">
-                    <div class="w-8 h-8 md:w-10 md:h-10 bg-[var(--accent-secondary)] bg-opacity-20 rounded-full flex items-center justify-center">
+                  <div class="period-info flex items-center space-x-2 md:space-x-3">
+                    <div class="w-8 h-8 md:w-10 md:h-10 bg-[var(--accent-secondary)] bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0">
                       <i class="fas fa-history text-sm md:text-base text-[var(--accent-secondary)] opacity-80"></i>
                     </div>
                     <div>
@@ -1199,7 +1239,7 @@
                     </div>
                   </div>
 
-                  <div class="flex items-center space-x-2 md:space-x-3 text-center md:text-left">
+                  <div class="prediction-actual-info flex items-center space-x-3 md:space-x-4 text-center">
                     <div>
                       <p class="text-[var(--text-light-secondary)] text-xs md:text-sm">${translations[alphaX_currentLanguage]?.prediction || 'Prediction'}</p>
                       <p class="font-semibold text-[var(--text-light-primary)] text-sm md:text-base">${itemPrediction}</p> 
@@ -1210,16 +1250,16 @@
                           <p class="font-semibold text-[var(--text-light-primary)] text-xs md:text-sm">${item.confidence}%</p>
                         </div>` : ''
                      }
-                  </div>
-                
-                  <div class="flex items-center space-x-2 md:space-x-3 mt-2 md:mt-0 md:ml-auto">
-                     <div class="text-center">
+                     <div>
                         <p class="text-[var(--text-light-secondary)] text-xs md:text-sm">Actual</p>
                         <p class="font-semibold text-[var(--text-light-primary)] text-sm md:text-base">
                           ${item.actual !== undefined ? `${item.actual} (${item.resultType || ''})` : '-'}
                         </p>
                       </div>
-                    <div class="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-base
+                  </div>
+                
+                  <div class="status-action-info flex items-center space-x-2 md:space-x-3">
+                    <div class="history-status-icon w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-base
                       ${itemStatus === 'WIN' ? 'bg-green-100' : itemStatus === 'LOSS' ? 'bg-red-100' : itemStatus === 'Skipped' ? 'bg-gray-200' : 'bg-yellow-100'}">
                       <i class="fas ${itemStatus === 'WIN' ? 'fa-check-circle text-green-500 win-animation' : 
                                     itemStatus === 'LOSS' ? 'fa-times-circle text-red-500 loss-animation' : 
@@ -1246,11 +1286,8 @@
             
             alphaX_showConfirmModal('delete_item_confirm', async () => {
                 try {
-                    // This should ideally also be an API call to the backend to delete,
-                    // if strict data ownership by backend is maintained.
-                    // For now, client directly removes from shared history.
                     await db.ref(SHARED_GAME_HISTORY_PATH).child(itemId).remove();
-                    showToast("History item deleted.", "info"); // Toast from old logic
+                    showToast("History item deleted.", "info"); 
                     alphaX_playSound('confirm');
                 } catch (error) {
                     console.error("Error deleting shared history item:", error);
@@ -1267,7 +1304,6 @@
                 consecutiveLosses: window.consecutiveLosses || 0
             };
 
-            // Calculate wins/losses/accuracy based on the localHistoryData which reflects shared history
             const actualWins = localHistoryData.filter(i => i.status === "WIN").length;
             const actualLosses = localHistoryData.filter(i => i.status === "LOSS").length;
             const totalPlayed = actualWins + actualLosses;
@@ -1291,7 +1327,6 @@
                 alphaX_lastFiveActualsEl.textContent = lastFive;
             }
 
-            // Update Most/Least Frequent B/S based on localHistoryData
             const bigSmallCounts = { BIG: 0, SMALL: 0 };
             localHistoryData.forEach(entry => { 
                 if(entry.resultType === "BIG") bigSmallCounts.BIG++; 
@@ -1314,10 +1349,13 @@
                 return;
             }
             console.log("Frontend: Triggering backend prediction cycle via:", BACKEND_PREDICT_URL);
-            if(alphaX_currentResultEl) alphaX_currentResultEl.textContent = translations[alphaX_currentLanguage]?.fetching_data || "Fetching...";
+            if(alphaX_currentResultEl && (alphaX_currentResultEl.textContent === '-' || alphaX_currentResultEl.textContent === (translations[alphaX_currentLanguage]?.api_error || "API Error"))) {
+                 alphaX_currentResultEl.textContent = translations[alphaX_currentLanguage]?.fetching_data || "Fetching...";
+            }
+
 
             try {
-                const response = await fetch(BACKEND_PREDICT_URL); // GET request by default
+                const response = await fetch(BACKEND_PREDICT_URL); 
                 if (!response.ok) {
                     const errorData = await response.text();
                     console.error("Frontend: Backend API call failed:", response.status, errorData);
@@ -1326,8 +1364,6 @@
                 } else {
                     const predictionData = await response.json();
                     console.log("Frontend: Received data from backend (UI updates via Firebase listeners):", predictionData);
-                    // The UI will update based on Firebase listeners for SHARED_CURRENT_PREDICTION_PATH,
-                    // which the backend is responsible for updating.
                     alphaX_updateServerStatusUI(true, translations[alphaX_currentLanguage]?.connected || "Connected");
                 }
             } catch (error) {
@@ -1352,7 +1388,6 @@
 
             toast.innerText = message;
             document.body.appendChild(toast);
-            // Force reflow to enable transition
             void toast.offsetWidth; 
             toast.classList.add('show'); 
 
@@ -1584,7 +1619,7 @@
             alphaX_updateServerStatusUI(isConnected);
         }
 
-        function alphaX_playSound(type) { // Retained basic sound player
+        function alphaX_playSound(type) { 
             if (!alphaX_isSoundEnabled) return;
             try {
                 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -1653,7 +1688,7 @@
             if(backendCallInterval) clearInterval(backendCallInterval); 
             backendCallInterval = setInterval(() => {
                 triggerBackendPredictionCycle().catch(error => console.error("Scheduled backend trigger failed:", error));
-            }, 15000); 
+            }, 15000); // Interval can be adjusted based on game result frequency
 
             if (alphaX_isNotificationsEnabled && Notification.permission !== 'granted') {
                 Notification.requestPermission().then(permission => {
@@ -1719,11 +1754,12 @@
             if(deleteAllHistoryBtn) deleteAllHistoryBtn.addEventListener('click', () => { 
                 alphaX_showConfirmModal('delete_all_confirm', async () => { 
                     try {
+                        // This should ideally be a backend API call too, for security.
+                        // For now, client attempts to clear Firebase paths.
                         await db.ref(SHARED_GAME_HISTORY_PATH).remove(); 
                         await db.ref(SHARED_STATS_PATH).set({ streak: 0, winLevel: 0, consecutiveLosses: 0, lastUpdated: firebase.database.ServerValue.TIMESTAMP }); 
                         localHistoryData = []; 
-                        window.streak = 0; window.winLevel = 0; window.consecutiveLosses = 0; // Reset local window vars
-                        lastFetchedPeriod = null; // Reset last fetched period
+                        window.streak = 0; window.winLevel = 0; window.consecutiveLosses = 0; 
                         
                         showToast('All history and stats cleared from server.', 'info'); 
                         alphaX_playSound('confirm'); 
