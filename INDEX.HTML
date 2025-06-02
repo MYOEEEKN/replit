@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALPHA X AI - Predictor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <style>
+        :root {
+            --bg-dark-primary: #1a202c; /* Dark Charcoal */
+            --bg-dark-secondary: #2d3748; /* Slightly Lighter Charcoal */
+            --bg-dark-tertiary: #171923; /* Even Darker for depth */
+            --text-light-primary: #edf2f7; /* Light Gray */
+            --text-light-secondary: #a0aec0; /* Medium Gray */
+            --accent-primary: #38b2ac; /* Teal */
+            --accent-secondary: #4299e1; /* Vibrant Blue */
+            --card-border-color: #4a5568; /* Dark Gray border */
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --shadow-accent-glow: rgba(56, 178, 172, 0.3); /* Teal glow */
+
+            --win-color: #38a169; /* Green */
+            --loss-color: #e53e3e; /* Red */
+            --pending-color: #dd6b20; /* Orange */
+            --skipped-color: #718096; /* Gray */
+            --warning-color: #f59e0b; /* Amber - for pending/warning states in login */
+            --maintenance-text-color: #ecc94b; /* Yellow for maintenance */
+
+            /* Input specific styles for dark theme */
+            --input-bg-dark: rgba(45, 55, 72, 0.7);
+            --input-border-dark: var(--card-border-color);
+            --input-focus-border-dark: var(--accent-primary);
+            --input-focus-shadow-dark: var(--shadow-accent-glow);
+        }
+
+        body {
+            font-family: 'El Messiri', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark-primary), var(--bg-dark-secondary));
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            margin: 0;
+            padding: 0;
+            color: var(--text-light-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Center content by default (for login/maintenance) */
+        }
+        * {
+            color: var(--text-light-primary);
+        }
+
+        /* New Login System Styles - Adapted for AlphaX Theme */
+        .auth-screen {
+            display: none; /* Hidden by default, JS controls visibility */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 95vh; /* Ensure it takes full viewport height */
+            padding: 1rem;
+            animation: fadeInAuthAlphaX 0.7s ease-out;
+        }
+        .auth-screen.active {
+            display: flex;
+        }
+
+        @keyframes fadeInAuthAlphaX {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .auth-container-alphax {
+            background: var(--bg-dark-secondary);
+            padding: 2rem 2.5rem;
+            border-radius: 1.5rem; /* Consistent with AlphaX card radius */
+            box-shadow: 0 10px 25px var(--shadow-color);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            border: 1px solid var(--card-border-color);
+        }
+
+        .auth-title-svg-alphax { /* Reusing existing SVG style for title */
+            width: 100%;
+            max-width: 350px; /* Adjusted for slightly smaller title */
+            margin: 0 auto 1.5rem auto;
+        }
+        .auth-title-svg-alphax svg text {
+            font-family: 'El Messiri', sans-serif; text-anchor: middle; dominant-baseline: middle;
+            text-transform: uppercase; animation: strokeLoginDark 5s infinite alternate;
+            stroke-width: 1.2; stroke: var(--accent-primary);
+            font-size: 50px; /* Adjusted font size */
+            fill: rgba(26, 32, 44, 0); letter-spacing: 1px;
+        }
+         @keyframes strokeLoginDark { /* Copied from existing alphax for consistency */
+            0% { fill: rgba(26, 32, 44, 0); stroke: var(--accent-primary); stroke-dashoffset: 25%; stroke-dasharray: 0 50%; stroke-width: 1.2; }
+            70% { fill: rgba(26, 32, 44, 0); stroke: var(--accent-secondary); }
+            80% { fill: rgba(26, 32, 44, 0); stroke: var(--accent-primary); stroke-width: 2.5; }
+            100% { fill: var(--text-light-primary); stroke: rgba(56, 178, 172, 0); stroke-dashoffset: -25%; stroke-dasharray: 50% 0; stroke-width: 0; }
+        }
+
+
+        .auth-subtitle-alphax {
+            font-size: 0.9rem;
+            color: var(--text-light-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-input-alphax {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border: 1px solid var(--input-border-dark);
+            border-radius: 1rem; /* Consistent with AlphaX input */
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            background-color: var(--input-bg-dark);
+            color: var(--text-light-primary);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-input-alphax:focus {
+            outline: none;
+            border-color: var(--input-focus-border-dark);
+            box-shadow: 0 0 0 4px var(--input-focus-shadow-dark);
+        }
+
+        .auth-button-alphax { /* Adapting .login-btn-main style */
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--bg-dark-tertiary);
+            padding: 0.9rem 1.8rem; border-radius: 1rem; font-weight: 600;
+            transition: all 0.3s ease; border: none; cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.2); width: 100%;
+        }
+        .auth-button-alphax:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 8px 18px var(--shadow-accent-glow);
+        }
+        .auth-button-alphax:disabled {
+            background: #4a5568; color: var(--text-light-secondary);
+            cursor: not-allowed; opacity: 0.8;
+        }
+
+        .device-id-display-alphax {
+            background-color: rgba(45, 55, 72, 0.6); /* From .login-device-id-display */
+            border: 1px dashed var(--card-border-color);
+            color: var(--text-light-secondary);
+            padding: 1rem; border-radius: 0.75rem; margin-bottom: 1.5rem;
+            text-align: left; font-size: 0.9rem;
+        }
+        .device-id-display-alphax strong {
+            font-weight: 600; user-select: all; cursor: pointer;
+            word-break: break-all; color: var(--accent-primary); /* Teal for Device ID */
+        }
+        .copy-btn-sm-alphax {
+            background: none; border: none; color: var(--accent-primary);
+            cursor: pointer; font-size: 0.9em; margin-left: 0.5rem;
+        }
+        .copy-feedback-alphax { /* From .login-copy-feedback */
+            display: none; color: var(--win-color); font-size: 0.75rem;
+            margin-left: 0.5rem; font-weight: 500; opacity: 0;
+        }
+        .copy-feedback-alphax.show { display: inline; animation: fadeInOutLoginFeedback 2.5s forwards; }
+        @keyframes fadeInOutLoginFeedback { /* Copied from AlphaX */
+          0% { opacity: 0; transform: translateY(5px); }
+          20% { opacity: 1; transform: translateY(0); }
+          80% { opacity: 1; transform: translateY(0); }
+          100% { opacity: 0; transform: translateY(-5px); }
+        }
+
+
+        .status-message-container-alphax {
+            margin-top: 1.5rem; padding: 0.75rem; border-radius: 1rem;
+            font-size: 0.9rem; min-height: 60px;
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            border: 1px solid var(--card-border-color);
+        }
+        .status-pending-alphax { background-color: var(--pending-color); color: var(--bg-dark-tertiary); }
+        .status-approved-alphax { background-color: var(--win-color); color: var(--bg-dark-tertiary); }
+        .status-rejected-alphax { background-color: var(--loss-color); color: var(--text-light-primary); }
+        .status-expired-alphax { background-color: var(--warning-color); color: var(--bg-dark-tertiary); }
+        .status-info-alphax { background-color: var(--input-bg-dark); color: var(--text-light-secondary); }
+
+        .tick-animation-alphax { display: inline-block; }
+        .tick-animation-alphax svg { width: 30px; height: 30px; }
+        .tick-animation-alphax .tick-circle { stroke-dasharray: 166; stroke-dashoffset: 166; animation: strokeAlphaX 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; fill: none; stroke: var(--win-color); stroke-width:3; stroke-linecap: round; }
+        .tick-animation-alphax .tick-path { transform-origin: 50% 50%; stroke-dasharray: 48; stroke-dashoffset: 48; animation: strokeAlphaX 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.4s forwards; fill: none; stroke: var(--win-color); stroke-width:3; stroke-linecap: round; stroke-linejoin: round; }
+        @keyframes strokeAlphaX { 100% { stroke-dashoffset: 0; } }
+
+        .auth-footer-link-alphax { margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-light-secondary); }
+        .auth-footer-link-alphax a { color: var(--accent-primary); text-decoration: none; font-weight: 500; }
+        .auth-footer-link-alphax a:hover { text-decoration: underline; color: var(--accent-secondary); }
+
+        /* Existing AlphaX styles */
+        #maintenanceContainer { display: none; width:100%; max-width:450px; padding:2rem; animation: fadeInLogin 0.8s ease-in-out;}
+        #maintenanceContainer.active { display: block; }
+        .maintenance-card { background: var(--bg-dark-secondary); border-radius: 1.5rem; box-shadow: 0 10px 25px var(--shadow-color); padding: 2.5rem; border: 1px solid var(--card-border-color); text-align: center;}
+        .maintenance-card i { font-size: 3rem; color: var(--maintenance-text-color); margin-bottom: 1rem; }
+        .maintenance-card h2 { color: var(--maintenance-text-color); margin-bottom: 0.5rem; }
+
+        #appContainer { display: none; width: 100%; }
+        #appContainer.active { display: block; }
+
+        .popup, .modal {
+            display: none; position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); background: rgba(45, 55, 72, 0.95);
+            padding: 1.5rem; border-radius: 1.5rem; box-shadow: 0 6px 16px var(--shadow-color);
+            backdrop-filter: blur(8px); z-index: 1000; width: 90%; max-width: 400px;
+            border: 1px solid var(--accent-primary); text-align: center;
+        }
+        .popup h3, .modal h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-light-primary); }
+        .popup p, .modal p { margin-bottom: 1.5rem; color: var(--text-light-secondary); font-size: 0.9rem; }
+        .popup .button-group, .modal .button-group { display: flex; justify-content: space-around; gap: 1rem; }
+        .popup button, .modal button {
+            padding: 0.6rem 1.2rem; border-radius: 0.75rem; font-weight: 500;
+            transition: all 0.2s ease; border: none; cursor: pointer;
+            min-width: 100px;
+        }
+        .popup button.primary, .modal button.primary { background: var(--accent-primary); color: var(--bg-dark-tertiary); }
+        .popup button.primary:hover, .modal button.primary:hover { background: var(--accent-secondary); }
+        .popup button.secondary, .modal button.secondary { background: var(--bg-dark-tertiary); color: var(--text-light-primary); border: 1px solid var(--card-border-color); }
+        .popup button.secondary:hover, .modal button.secondary:hover { background: var(--card-border-color); }
+        .popup button.danger, .modal button.danger { background: var(--loss-color); color: var(--text-light-primary); }
+        .popup button.danger:hover, .modal button.danger:hover { background: #c53030; }
+
+
+        .popup.active, .modal.active { display: block; animation: fadeInPopup 0.3s ease-out; }
+        @keyframes fadeInPopup {
+            from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .card {
+            transition: all 0.3s ease; background: var(--bg-dark-secondary);
+            border-radius: 1.5rem; box-shadow: 0 6px 12px var(--shadow-color);
+            backdrop-filter: blur(5px); position: relative; margin: 0.75rem;
+            overflow: hidden; border: 1px solid var(--card-border-color);
+        }
+        .card:hover {
+            transform: translateY(-6px) scale(1.03);
+            box-shadow: 0 8px 16px var(--shadow-accent-glow);
+            border-color: var(--accent-primary);
+        }
+        .gradient-bg { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); }
+        #appHeaderSvgContainer svg { width: 100%; height: auto; margin: 0 auto; display: block; }
+        #appHeaderSvgContainer svg text {
+            text-anchor: middle; dominant-baseline: middle; text-transform: uppercase;
+            animation: strokeAppHeaderDark 5s infinite alternate; stroke-width: 1.2;
+            stroke: var(--accent-primary); font-size: 130px; fill: rgba(26, 32, 44, 0);
+        }
+        @media (max-width: 768px) { #appHeaderSvgContainer svg text { font-size: 90px; } }
+        @keyframes strokeAppHeaderDark {
+            0% { fill: rgba(26, 32, 44, 0); stroke: var(--accent-primary); stroke-dashoffset: 25%; stroke-dasharray: 0 50%; stroke-width: 1.2; }
+            70% { fill: rgba(26, 32, 44, 0); stroke: var(--accent-secondary); }
+            80% { fill: rgba(26, 32, 44, 0); stroke: var(--accent-primary); stroke-width: 2.5; }
+            100% { fill: var(--text-light-primary); stroke: rgba(56, 178, 172, 0); stroke-dashoffset: -25%; stroke-dasharray: 50% 0; stroke-width: 0; }
+        }
+        .history-container { display: flex; flex-direction: column; gap: 1rem; max-height: none; overflow: visible; position: relative; }
+        .history-item {
+            transition: all 0.3s ease; width: 100%; max-width: 100%; margin: 0; border-radius: 1.2rem;
+            /* background: var(--bg-dark-tertiary); */ /* Base background set by JS, status classes add gradients */
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2); position: relative; overflow: hidden; padding: 1.2rem;
+            border-left: 4px solid transparent;
+        }
+        .history-item.win { border-left-color: var(--win-color); background: linear-gradient(135deg, rgba(56, 161, 105, 0.2), var(--bg-dark-secondary)) !important; }
+        .history-item.loss { border-left-color: var(--loss-color); background: linear-gradient(135deg, rgba(229, 62, 62, 0.2), var(--bg-dark-secondary)) !important; }
+        .history-item.pending { border-left-color: var(--pending-color); background: linear-gradient(135deg, rgba(221, 107, 32, 0.2), var(--bg-dark-secondary)) !important; }
+        .history-item.skipped { border-left-color: var(--skipped-color); background: linear-gradient(135deg, rgba(113, 128, 150, 0.2), var(--bg-dark-secondary)) !important; }
+
+        .history-item:hover { transform: scale(1.02); box-shadow: 0 6px 18px var(--shadow-accent-glow); }
+        .history-item.fade-out { animation: fadeOut 0.5s ease forwards; }
+        @keyframes fadeOut { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.95); height: 0; padding: 0; margin: 0; } }
+        .history-item .watermark {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 1.5rem; color: rgba(74, 85, 104, 0.2);
+            pointer-events: none; z-index: 0; text-transform: uppercase; font-weight: bold;
+        }
+        .small-dot {
+            position: absolute; width: 6px; height: 6px; background: var(--accent-secondary);
+            border-radius: 50%; animation: float 4s infinite; z-index: 1;
+        }
+        @keyframes float { 0% { transform: translate(0, 0); opacity: 0.7; } 50% { transform: translate(12px, -12px); opacity: 0.3; } 100% { transform: translate(0, 0); opacity: 0.7; } }
+        .delete-btn:hover { color: var(--accent-primary); transform: scale(1.3); }
+        .status-icon {
+            width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 18px; position: relative; overflow: hidden;
+        }
+        .status-icon::after {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            opacity: 0.1; background: radial-gradient(circle, currentColor 0%, transparent 70%);
+        }
+        .win-icon { color: var(--win-color); animation: pulseWin 1.5s infinite; }
+        .loss-icon { color: var(--loss-color); animation: pulseLoss 1s infinite; }
+        .pending-icon { color: var(--pending-color); animation: rotate 2s infinite linear; }
+        .skipped-icon { color: var(--skipped-color); animation: pulseSkip 1.5s infinite; }
+        @keyframes pulseWin { 0%, 100% { box-shadow: 0 0 0 0 rgba(56, 161, 105, 0.5); } 50% { box-shadow: 0 0 0 10px rgba(56, 161, 105, 0); } }
+        @keyframes pulseLoss { 0%, 100% { box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.5); } 50% { box-shadow: 0 0 0 10px rgba(229, 62, 62, 0); } }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes pulseSkip { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+
+        /* Animation for new history items */
+        @keyframes bounceInItem { 0% { transform: scale(0.95) translateY(8px); opacity: 0; } 70% { transform: scale(1.01) translateY(-1px); opacity: 1; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
+        .animate-bounceIn { animation-name: bounceInItem; animation-duration: 0.35s; animation-timing-function: ease-out; animation-fill-mode: forwards; opacity:0; }
+        @keyframes win-animation { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        @keyframes loss-animation { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-3px); } 75% { transform: translateX(3px); } }
+
+
+        .dashboard-card {
+            background: var(--bg-dark-tertiary); border-radius: 1.5rem; padding: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); backdrop-filter: blur(5px); transition: all 0.3s ease;
+            border: 1px solid var(--card-border-color);
+        }
+        .dashboard-card:hover { transform: translateY(-4px); box-shadow: 0 6px 14px var(--shadow-accent-glow); border-color: var(--accent-primary); }
+        .confidence-meter { height: 10px; background: var(--bg-dark-primary); border-radius: 5px; overflow: hidden; position: relative; }
+        .confidence-fill { height: 100%; background: var(--accent-primary); transition: width 0.5s ease; }
+
+        /* Navigation Styles - Revised Indicator */
+        .navigation {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 380px; height: 70px; background: rgba(45, 55, 72, 0.9);
+            backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center;
+            border-radius: 1.5rem; box-shadow: 0 6px 12px var(--shadow-color); z-index: 1000;
+            border: 1px solid var(--card-border-color);
+        }
+        .navigation ul { display: flex; width: 100%; justify-content: space-around; padding: 0 10px; }
+        .navigation ul li { position: relative; list-style: none; width: 25%; height: 70px; z-index: 1; display: flex; align-items: center; justify-content: center;}
+        .navigation ul li a {
+            position: relative; display: flex; justify-content: center; align-items: center;
+            flex-direction: column; width: 100%; text-align: center; font-weight: 500;
+            padding-top: 5px; /* Space for icon movement */
+        }
+        .navigation ul li a .icon {
+            position: relative; display: block; line-height: initial; /* Adjusted for better centering */
+            font-size: 1.5em; text-align: center; transition: 0.5s ease; color: var(--text-light-secondary);
+            transform: translateY(0px); /* Initial position */
+        }
+        .navigation ul li.active a .icon {
+            transform: translateY(-18px); /* Move icon up */
+            color: var(--accent-primary);
+        }
+        .navigation ul li a .text {
+            position: absolute; font-weight: 400; font-size: 0.75em; letter-spacing: 0.05em;
+            transition: 0.5s ease; opacity: 0; transform: translateY(20px); color: var(--text-light-primary);
+            bottom: 8px; /* Position text at the bottom */
+        }
+        .navigation ul li.active a .text {
+            opacity: 1; transform: translateY(0px); /* Text appears below icon */
+            color: var(--accent-primary);
+        }
+        /* New Underline Indicator */
+        .navigation ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; /* Position underline slightly below the item */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background-color: var(--accent-primary);
+            border-radius: 3px;
+            transition: width 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Smooth elastic transition */
+        }
+        .navigation ul li.active a::after {
+            width: 50%; /* Width of the underline for active item */
+        }
+
+
+        /* Mode Toggle Styles & Settings Organization */
+        .settings-group {
+            background-color: rgba(0,0,0,0.1);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--card-border-color);
+        }
+        .settings-group-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-secondary);
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--card-border-color);
+        }
+        .mode-toggle { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0; }
+        .mode-toggle label { font-size: 0.9rem; color: var(--text-light-secondary); flex-grow: 1; }
+        .mode-switch { position: relative; display: inline-block; width: 50px; height: 26px; flex-shrink: 0; margin-left:1rem; }
+        .mode-switch input { opacity: 0; width: 0; height: 0; }
+        .mode-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--input-bg-dark); transition: .4s; border-radius: 26px; border: 1px solid var(--card-border-color); }
+        .mode-slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 3px; background-color: var(--text-light-secondary); transition: .4s; border-radius: 50%; }
+        input:checked + .mode-slider { background-color: var(--accent-primary); }
+        input:checked + .mode-slider:before { transform: translateX(24px); background-color: var(--bg-dark-tertiary); }
+        .mode-icons { display: flex; justify-content: space-between; width: 50px; /* Fixed width for icons */ flex-shrink: 0; margin-left:0.5rem; }
+        .mode-icons span, .mode-icons i { font-size: 0.8rem; color: var(--text-light-secondary); line-height: 26px; /* Align with switch height */ }
+        input:checked ~ .mode-icons span:first-child, input:checked ~ .mode-icons i:first-child { color: var(--text-light-secondary); opacity: 0.6; }
+        input:not(:checked) ~ .mode-icons span:last-child, input:not(:checked) ~ .mode-icons i:last-child { color: var(--text-light-secondary); opacity: 0.6; }
+        input:checked ~ .mode-icons span:last-child, input:checked ~ .mode-icons i:last-child { color: var(--accent-primary); opacity: 1; }
+        input:not(:checked) ~ .mode-icons span:first-child, input:not(:checked) ~ .mode-icons i:first-child { color: var(--accent-primary); opacity: 1; }
+
+
+        .period-id { font-family: monospace; letter-spacing: 2px; font-size: 1.2rem; color: var(--accent-secondary); }
+        #currentPeriod, #currentResult {
+            border: none !important; background-color: var(--bg-dark-tertiary) !important;
+            color: var(--text-light-primary) !important; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .video-container { position: relative; padding-bottom: 56.25%; /* 16:9 */ height: 0; overflow: hidden; max-width: 100%; background: #000; border-radius: 1rem; margin-top: 1rem;}
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 1rem; }
+
+        button, .btn {
+            padding: 0.6rem 1.2rem; border-radius: 0.75rem; font-weight: 600;
+            transition: all 0.3s ease; border: none; cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+        button.primary-btn, .btn.primary-btn { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: var(--bg-dark-tertiary); }
+        button.primary-btn:hover, .btn.primary-btn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 5px 12px var(--shadow-accent-glow); }
+        button.secondary-btn, .btn.secondary-btn { background: var(--bg-dark-tertiary); color: var(--text-light-primary); border: 1px solid var(--card-border-color); }
+        button.secondary-btn:hover, .btn.secondary-btn:hover { background: var(--card-border-color); color: var(--text-light-primary); }
+
+
+        .bad-trend-indicator {
+            background-color: var(--loss-color); color: var(--text-light-primary);
+            padding: 0.75rem 1rem; border-radius: 0.75rem; margin: 0.5rem auto;
+            text-align: center; font-size: 0.9rem; display: flex; align-items: center; justify-content: center;
+            gap: 0.5rem; animation: pulseWarning 1.5s infinite; max-width: 95%;
+        }
+        @keyframes pulseWarning { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.02); } }
+
+        .toast-login {
+            position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
+            background-color: var(--bg-dark-tertiary); color: var(--text-light-primary);
+            padding: 1rem 1.5rem; border-radius: 1rem; box-shadow: 0 4px 12px var(--shadow-color);
+            z-index: 2000; display: flex; align-items: center; gap: 0.75rem;
+            font-size: 0.9rem; border: 1px solid var(--card-border-color);
+            animation: toast-slide-in-out-login 4s forwards;
+        }
+        @keyframes toast-slide-in-out-login {
+            0% { bottom: -60px; opacity: 0; }
+            15% { bottom: 90px; opacity: 1; }
+            85% { bottom: 90px; opacity: 1; }
+            100% { bottom: -60px; opacity: 0; }
+        }
+        .toast-login .icon { font-size: 1.2rem; }
+        .toast-login .icon.success { color: var(--win-color); }
+        .toast-login .icon.error { color: var(--loss-color); }
+        .toast-login .icon.info { color: var(--accent-secondary); }
+
+        /* Toast from new logic */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--accent-primary);
+            color: var(--bg-dark-tertiary);
+            padding: 10px 20px;
+            border-radius: 8px;
+            z-index: 1001; /* Above navigation */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease, bottom 0.3s ease;
+        }
+        .toast.show {
+            opacity: 1;
+            bottom: 90px; /* Above navigation bar */
+        }
+
+
+        .text-slate-700 { color: var(--text-light-secondary) !important; }
+        .bg-slate-100 { background-color: var(--bg-dark-primary) !important; }
+        .border-slate-300 { border-color: var(--card-border-color) !important; }
+
+        .content-section { display: none; animation: fadeInSection 0.5s ease-out; padding-bottom: 80px; /* Space for nav */ }
+        .content-section.active { display: block; }
+        @keyframes fadeInSection { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+
+        /* Pause Indicator Styling */
+        #pauseIndicator {
+            position: fixed;
+            top: 20px; /* Adjusted for better visibility */
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--warning-color); /* Amber color for pause */
+            color: var(--bg-dark-tertiary); /* Dark text for contrast */
+            padding: 0.8rem 1.5rem; /* Increased padding */
+            border-radius: 1rem; /* Consistent rounded corners */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* More prominent shadow */
+            z-index: 2000; /* Ensure it's above most elements */
+            display: flex;
+            align-items: center;
+            gap: 0.75rem; /* Space between icon and text */
+            font-size: 1rem; /* Larger font size */
+            font-weight: 600; /* Bolder text */
+            animation: fadeInPauseIndicator 0.5s ease-out;
+        }
+
+        #pauseIndicator.fade-out {
+            animation: fadeOutPauseIndicator 0.5s ease-in forwards;
+        }
+
+        @keyframes fadeInPauseIndicator {
+            from { opacity: 0; top: -50px; }
+            to { opacity: 1; top: 20px; }
+        }
+        @keyframes fadeOutPauseIndicator {
+            from { opacity: 1; top: 20px; }
+            to { opacity: 0; top: -50px; }
+        }
+
+
+        @media (max-width: 768px) {
+            .auth-container-alphax { padding: 1.5rem; }
+            .auth-title-svg-alphax svg text { font-size: 40px; }
+            .navigation { width: 95%; }
+            .navigation ul li a .icon { font-size: 1.3em; }
+            .navigation ul li.active a .icon { transform: translateY(-15px); } /* Adjusted for smaller screens */
+            .navigation ul li a .text { bottom: 5px; font-size: 0.7em; }
+            .navigation ul li.active a::after { width: 40%; }
+            .card { margin: 0.5rem; }
+            .popup, .modal { width: 95%; }
+            #pauseIndicator { padding: 0.6rem 1.2rem; font-size: 0.9rem; top: 15px;}
+        }
+    </style>
+</head>
+<body>
+    <div id="loginPage1AlphaX" class="auth-screen active">
+        <div class="auth-container-alphax">
+            <div class="auth-title-svg-alphax">
+                <svg viewBox="0 0 500 100"> <text x="50%" y="50%">ALPHA X AI</text> </svg>
+            </div>
+            <p class="auth-subtitle-alphax">Enter your Telegram Username to begin.</p>
+            <input type="text" id="telegramUsernameInputAlphaX" class="form-input-alphax" placeholder="YourTelegramUsername (no @)">
+            <button id="submitUsernameBtnAlphaX" class="auth-button-alphax mt-4">Continue</button>
+            <p id="usernameErrorAlphaX" class="text-xs mt-2" style="color: var(--loss-color); display: none;">Please enter a valid username.</p>
+        </div>
+    </div>
+
+    <div id="loginPage2AlphaX" class="auth-screen">
+        <div class="auth-container-alphax">
+            <h2 class="text-xl font-semibold text-center mb-2 text-text-light-primary">Device Verification</h2>
+            <p class="auth-subtitle-alphax">Your unique Device ID is below. Share it with the admin for approval.</p>
+
+            <div class="device-id-display-alphax">
+                <p>Your Device ID:</p>
+                <p>
+                    <strong id="displayedDeviceIdAlphaX">Loading...</strong>
+                    <button id="copyDeviceIdBtnAlphaX" class="copy-btn-sm-alphax" title="Copy Device ID"><i class="fas fa-copy"></i></button>
+                    <span id="copyFeedbackAlphaX" class="copy-feedback-alphax">Copied!</span>
+                </p>
+            </div>
+
+            <div id="approvalStatusContainerAlphaX" class="status-message-container-alphax status-info-alphax">
+                <i class="fas fa-spinner fa-spin mr-2"></i> Checking status...
+            </div>
+
+            <button id="logoutFromDevicePageBtnAlphaX" class="auth-button-alphax w-full mt-6" style="background: var(--skipped-color); color:var(--text-light-primary);">
+                <i class="fas fa-sign-out-alt mr-2"></i>Logout
+            </button>
+            <p class="auth-footer-link-alphax">Need help? Contact <a href="https://t.me/ALPHAXAIWEB" target="_blank" rel="noopener noreferrer">Support</a>.</p>
+        </div>
+    </div>
+
+    <div id="maintenanceContainer">
+        <div class="maintenance-card">
+            <i class="fas fa-tools"></i>
+            <h2 class="text-2xl font-bold mb-2">Under Maintenance</h2>
+            <p id="maintenanceMessage" class="text-text-light-secondary">The platform is currently undergoing scheduled maintenance. Please try again later.</p>
+        </div>
+    </div>
+
+    <div id="appContainer" class="pb-20">
+        <div id="badTrendIndicator" class="bad-trend-indicator" style="display: none;">
+            <i class="fas fa-shield-alt"></i> <span id="badTrendMessage">Prediction temporarily disabled - Unstable trend detected</span>
+        </div>
+
+        <header id="appHeaderSvgContainer" class="text-center mt-0 mb-2 animate__animated animate__fadeInDown">
+            <svg viewBox="0 0 800 120">
+                <text x="50%" y="50%">ALPHA X AI</text>
+            </svg>
+        </header>
+
+        <div class="max-w-full mx-auto p-2 w-full">
+            <div class="max-w-4xl mx-auto p-2 w-full">
+                <div id="homeSection" class="content-section active">
+                    <div class="card mb-4 overflow-hidden gradient-bg animate__animated animate__zoomIn relative">
+                        <div class="bg-dark-tertiary bg-opacity-80 p-6 rounded-lg pulse-animation">
+                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4"> <div class="relative">
+                                    <div class="pl-2">
+                                        <div class="flex items-center space-x-2 mb-2">
+                                            <i class="fas fa-calendar-alt text-2xl animate__animated animate__bounce text-accent-secondary"></i>
+                                            <h2 class="text-2xl font-bold" data-lang-key="period">Period</h2>
+                                        </div>
+                                        <p id="currentPeriod" class="text-2xl font-semibold p-3 rounded-lg shadow-inner period-id">-</p>
+                                    </div>
+                                </div>
+                                <div class="relative text-right">
+                                    <div class="pr-2">
+                                        <div class="flex items-center justify-end space-x-2 mb-2">
+                                            <h2 class="text-2xl font-bold" data-lang-key="prediction">Prediction</h2>
+                                            <i class="fas fa-poll text-2xl animate__animated animate__bounce text-accent-secondary"></i>
+                                        </div>
+                                        <p id="currentResult" class="text-2xl font-semibold p-3 rounded-lg shadow-inner">-</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <p class="text-sm text-text-light-secondary" data-lang-key="confidence">Confidence</p>
+                                <div class="confidence-meter">
+                                    <div id="confidenceFill" class="confidence-fill" style="width: 0%"></div>
+                                </div>
+                                <p id="confidenceText" class="text-sm mt-1 text-text-light-secondary">0%</p>
+                            </div>
+                        </div>
+                        <div class="small-dot" style="top: 15%; left: 15%; animation-delay: 0.2s;"></div>
+                        <div class="small-dot" style="top: 25%; left: 75%; animation-delay: 0.5s;"></div>
+                        <div class="small-dot" style="top: 65%; left: 25%; animation-delay: 0.8s;"></div>
+                        <div class="small-dot" style="top: 80%; left: 85%; animation-delay: 1.1s;"></div>
+                        <div class="small-dot" style="top: 50%; left: 5%; animation-delay: 1.4s;"></div>
+                        <div class="small-dot" style="top: 5%; left: 50%; animation-delay: 1.7s;"></div>
+                    </div>
+                    <div class="card mb-4 p-6 animate__animated animate__fadeInUp relative">
+                        <h2 class="text-3xl font-bold text-center mb-4 relative text-accent-primary">
+                            <span class="relative z-10 pulse-animation" data-lang-key="analysis_dashboard">Analysis Dashboard</span>
+                            <span class="absolute top-1/2 left-0 w-full h-1 bg-accent-primary opacity-30 -translate-y-1/2 rounded-full"></span>
+                        </h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                            <div class="dashboard-card animate__animated animate__fadeIn" style="animation-delay: 0s;">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-star text-lg text-accent-secondary"></i>
+                                    <div>
+                                        <p class="text-sm text-text-light-secondary" data-lang-key="most_frequent_bs">Most Frequent (B/S)</p>
+                                        <p id="mostFrequentBigSmall" class="text-xl font-bold text-text-light-primary">-</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-card animate__animated animate__fadeIn" style="animation-delay: 0.1s;">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-moon text-lg text-accent-secondary"></i>
+                                    <div>
+                                        <p class="text-sm text-text-light-secondary" data-lang-key="least_frequent_bs">Least Frequent (B/S)</p>
+                                        <p id="leastFrequentBigSmall" class="text-xl font-bold text-text-light-primary">-</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-card animate__animated animate__fadeIn" style="animation-delay: 0.2s;">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-chart-line text-lg text-accent-secondary"></i>
+                                    <div>
+                                        <p class="text-sm text-text-light-secondary" data-lang-key="win_rate">Win Rate</p>
+                                        <p id="winRate" class="text-xl font-bold text-text-light-primary">-%</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-card animate__animated animate__fadeIn" style="animation-delay: 0.3s;">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-trophy text-lg text-win-color"></i>
+                                    <div>
+                                        <p class="text-sm text-text-light-secondary" data-lang-key="wins">Wins</p>
+                                        <p id="totalWinBets" class="text-xl font-bold text-text-light-primary">-</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-card animate__animated animate__fadeIn" style="animation-delay: 0.4s;">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-thumbs-down text-lg text-loss-color"></i>
+                                    <div>
+                                        <p class="text-sm text-text-light-secondary" data-lang-key="losses">Losses</p>
+                                        <p id="totalLossBets" class="text-xl font-bold text-text-light-primary">-</p>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="dashboard-card flex items-center justify-between animate__animated animate__fadeIn" style="animation-delay: 0.5s;">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-server text-lg text-accent-secondary"></i>
+                                    <div>
+                                        <p class="text-sm text-text-light-secondary" data-lang-key="server_status">Server Status</p>
+                                        <p id="serverStatus" class="font-semibold text-text-light-primary" data-lang-key="connected">Connected</p>
+                                    </div>
+                                </div>
+                                <div id="serverStatusIndicator" class="w-3 h-3 bg-win-color rounded-full animate-ping"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="historySection" class="content-section">
+                     <div class="card p-6 animate__animated animate__fadeInUp relative">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-3xl font-bold text-center relative text-accent-primary">
+                                <span class="relative z-10 pulse-animation" data-lang-key="history">History</span>
+                                <span class="absolute top-1/2 left-0 w-full h-1 bg-accent-primary opacity-30 -translate-y-1/2 rounded-full"></span>
+                            </h2>
+                            <button id="deleteAllHistoryBtn" class="secondary-btn px-4 py-2 rounded-lg transition flex items-center">
+                                <i class="fas fa-trash-alt mr-2"></i><span data-lang-key="delete">Delete All</span>
+                            </button>
+                        </div>
+                        <div id="historyContainer" class="history-container">
+                            <p class="text-center text-text-light-secondary p-4" data-lang-key="no_history">No history yet.</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="statsSection" class="content-section">
+                    <div class="card p-6 animate__animated animate__fadeInUp relative">
+                        <h2 class="text-3xl font-bold text-center mb-4 relative text-accent-primary">
+                            <span class="relative z-10 pulse-animation" data-lang-key="statistics">Statistics</span>
+                             <span class="absolute top-1/2 left-0 w-full h-1 bg-accent-primary opacity-30 -translate-y-1/2 rounded-full"></span>
+                        </h2>
+                        <div class="stats-grid">
+                           <div class="dashboard-card">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-trophy text-win-color text-lg"></i>
+                                    <div>
+                                        <p class="text-sm text-text-light-secondary" data-lang-key="total_wins">Total Wins</p>
+                                        <p id="statsTotalWins" class="text-xl font-bold text-text-light-primary">-</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-heart-broken text-loss-color text-lg"></i>
+                                    <div>
+                                        <p class="text-sm text-text-light-secondary" data-lang-key="total_losses">Total Losses</p>
+                                        <p id="statsTotalLosses" class="text-xl font-bold text-text-light-primary">-</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-percentage text-accent-secondary text-lg"></i>
+                                    <div>
+                                        <p class="text-sm text-text-light-secondary" data-lang-key="win_rate">Win Rate</p>
+                                        <p id="statsWinRate" class="text-xl font-bold text-text-light-primary">-%</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-card">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-fire text-orange-400 text-lg"></i>
+                                    <div>
+                                        <p class="text-sm text-text-light-secondary" data-lang-key="current_streak">Current Streak</p>
+                                        <p id="currentStreak" class="text-xl font-bold text-text-light-primary">-</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-card col-span-full sm:col-span-1 md:col-span-2">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-history text-accent-primary text-lg"></i>
+                                    <div>
+                                        <p class="text-sm text-text-light-secondary" data-lang-key="last_five_actuals">Last 5 Actuals</p>
+                                        <p id="lastFiveActuals" class="text-lg font-mono text-text-light-primary">-</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="aboutSection" class="content-section">
+                     <div class="card p-6 animate__animated animate__fadeInUp relative">
+                        <h2 class="text-3xl font-bold text-center mb-6 relative text-accent-primary">
+                            <span class="relative z-10 pulse-animation" data-lang-key="about_aura_x_ai">About ALPHA X AI</span> <span class="absolute top-1/2 left-0 w-full h-1 bg-accent-primary opacity-30 -translate-y-1/2 rounded-full"></span>
+                        </h2>
+                         <div class="space-y-6 text-text-light-secondary">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2 text-accent-primary" data-lang-key="predictor_intro_title">Our Prediction Engine</h3>
+                                <p data-lang-key="predictor_intro_p1">ALPHA X AI employs a sophisticated prediction engine designed to analyze trends and patterns from historical data. Our goal is to provide insightful predictions, but it's important to remember that these are based on statistical analysis and not guarantees of future outcomes.</p>
+                                <p data-lang-key="predictor_intro_p2">The system uses an advanced multi-model approach, combining numerous analytical techniques to enhance accuracy and adapt to changing conditions. This version incorporates enhanced pattern recognition, transitional analysis, and weighted historical data to provide more nuanced predictions. It now also includes the "Omega Mind" protocol, an adaptive risk management system that adjusts prediction confidence and strategy based on recent performance to mitigate prolonged loss streaks.</p>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2 text-accent-primary" data-lang-key="how_it_works_title">How It Works (Advanced)</h3>
+                                <ul class="list-disc list-inside space-y-1 pl-4">
+                                    <li data-lang-key="how_it_works_li1_adv"><strong>Multi-Period Frequency Analysis:</strong> Tracks "BIG" vs "SMALL" occurrences over short, medium, and long-term windows.</li>
+                                    <li data-lang-key="how_it_works_li2_adv"><strong>Transition Matrix Analysis:</strong> Calculates probabilities of B->S, S->B, B->B, S->S transitions.</li>
+                                    <li data-lang-key="how_it_works_li3_adv"><strong>Advanced Pattern Matching:</strong> Identifies recurring sequences (e.g., BSBS, BBSS) and alternating trends.</li>
+                                    <li data-lang-key="how_it_works_li4_adv"><strong>Streak Dynamics:</strong> Analyzes current and historical win/loss streaks for both outcomes, assessing continuation or reversal likelihood.</li>
+                                    <li data-lang-key="how_it_works_li11_adv"><strong>Relative Strength Index (RSI) Analysis:</strong> Measures the speed and change of recent number movements (0-9) to identify potential overbought (predict SMALL) or oversold (predict BIG) conditions.</li>
+                                    <li data-lang-key="how_it_works_li_macd"><strong>Moving Average Convergence Divergence (MACD) Analyzer:</strong> Tracks the relationship between two moving averages of numerical outcomes to identify momentum shifts.</li>
+                                    <li data-lang-key="how_it_works_li_bollinger"><strong>Bollinger Bands Analyzer:</strong> Uses standard deviation bands around a moving average to assess volatility and potential overextension.</li>
+                                    <li data-lang-key="how_it_works_li_inter_signal"><strong>Inter-Signal Confirmation Engine:</strong> Assesses the level of agreement among various analytical engines to adjust overall confidence.</li>
+                                    <li data-lang-key="how_it_works_li_omega_mind"><strong>Omega Mind Protocol:</strong> An adaptive risk management layer.
+                                        <ul class="list-['-_'] list-inside pl-4">
+                                            <li>Level 0 (Normal): Standard prediction logic.</li>
+                                            <li>Level 1 (Caution - 1 Loss): Reduced confidence, heightened sensitivity to counter-signals.</li>
+                                            <li>Level 2 (Warning - 2 Losses): Significantly reduced confidence, strong bias towards breaking the pattern of the last losing prediction.</li>
+                                            <li>Level 3 (Critical - 3+ Losses): Prediction temporarily disabled or uses extremely conservative fallback; focus on system stabilization.</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2 text-accent-primary" data-lang-key="important_note_title">Important Note</h3>
+                                <p data-lang-key="important_note_p1">All predictions provided by ALPHA X AI are for informational and entertainment purposes only. Past performance is not indicative of future results. Please use this information responsibly. Predictions are based on the device's local history and may vary if histories differ across devices.</p>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2 text-accent-primary" data-lang-key="meet_the_team_title">Meet The Team</h3>
+                                <p data-lang-key="owner_info"><strong>Owner/Developer:</strong> @ALPHAXAIWEB</p>
+                                <a href="https://t.me/ALPHAXAIWEB" target="_blank" rel="noopener noreferrer" class="inline-block mt-1 px-4 py-2 primary-btn text-sm rounded-lg">
+                                    <i class="fab fa-telegram-plane mr-2"></i><span data-lang-key="owner_telegram">Telegram Profile</span>
+                                </a>
+                            </div>
+                            <hr class="border-card-border-color my-6">
+                            
+                            <div class="settings-group">
+                                <h3 class="settings-group-title" data-lang-key="general_settings_title">General Settings</h3>
+                                <div class="space-y-2"> <div class="mode-toggle">
+                                        <label for="languageToggle" data-lang-key="language">Language</label>
+                                        <div class="flex items-center">
+                                            <span class="mode-icons mr-2"><span>EN</span></span>
+                                            <label class="mode-switch">
+                                                <input type="checkbox" id="languageToggle">
+                                                <span class="mode-slider"></span>
+                                            </label>
+                                            <span class="mode-icons ml-2"><span>HI</span></span>
+                                        </div>
+                                    </div>
+                                    <div class="mode-toggle">
+                                        <label for="notificationToggle" data-lang-key="notifications">Notifications</label>
+                                        <div class="flex items-center">
+                                            <span class="mode-icons mr-2"><i class="fas fa-bell-slash"></i></span>
+                                            <label class="mode-switch">
+                                                <input type="checkbox" id="notificationToggle">
+                                                <span class="mode-slider"></span>
+                                            </label>
+                                            <span class="mode-icons ml-2"><i class="fas fa-bell"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="mode-toggle">
+                                        <label for="soundToggle" data-lang-key="sound">Sound</label>
+                                        <div class="flex items-center">
+                                            <span class="mode-icons mr-2"><i class="fas fa-volume-mute"></i></span>
+                                            <label class="mode-switch">
+                                                <input type="checkbox" id="soundToggle">
+                                                <span class="mode-slider"></span>
+                                            </label>
+                                            <span class="mode-icons ml-2"><i class="fas fa-volume-up"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="mode-toggle">
+                                        <label for="predictionModeToggle" data-lang-key="prediction_mode">Prediction Mode</label>
+                                        <div class="flex items-center">
+                                             <span class="mode-icons mr-2"><span>Normal</span></span>
+                                            <label class="mode-switch">
+                                                <input type="checkbox" id="predictionModeToggle">
+                                                <span class="mode-slider"></span>
+                                            </label>
+                                            <span class="mode-icons ml-2"><span>Advanced</span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <button id="resetSettingsBtn" class="w-full secondary-btn mt-4" onclick="alphaX_resetSettings()">
+                                <i class="fas fa-undo mr-2"></i><span data-lang-key="reset_settings">Reset Settings</span>
+                            </button>
+                            <hr class="border-card-border-color my-6">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-3 text-accent-primary" data-lang-key="more_info_title">More Information</h3>
+                                <div class="space-y-3">
+                                    <button class="w-full secondary-btn" onclick="alphaX_openVideoPopup()">
+                                        <i class="fas fa-play-circle mr-2"></i><span data-lang-key="how_to_use">How To Use</span> (<span data-lang-key="watch_video">Watch Video</span>)
+                                    </button>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <ul>
+                <li class="active">
+                    <a href="#" data-section="homeSection">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="text" data-lang-key="home">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="historySection">
+                        <span class="icon"><ion-icon name="time-outline"></ion-icon></span>
+                        <span class="text" data-lang-key="history">History</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="statsSection">
+                        <span class="icon"><ion-icon name="bar-chart-outline"></ion-icon></span>
+                        <span class="text" data-lang-key="stats">Stats</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" data-section="aboutSection">
+                        <span class="icon"><ion-icon name="information-circle-outline"></ion-icon></span>
+                        <span class="text" data-lang-key="about">About</span>
+                    </a>
+                </li>
+                </ul>
+        </div>
+
+        <div id="videoPopup" class="popup">
+            <h3 data-lang-key="how_to_use_aura_x_ai">How To Use ALPHA X AI</h3>
+            <div class="video-container">
+                <iframe id="youtubeVideo" width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="button-group mt-4">
+                <button class="secondary-btn" onclick="alphaX_closeVideoPopup()"><i class="fas fa-times mr-2"></i><span data-lang-key="cancel">Close</span></button>
+            </div>
+        </div>
+
+        <div id="confirmModal" class="modal">
+            <h3 data-lang-key="confirm_action">Confirm Action</h3>
+            <p id="modalMessage">Are you sure?</p>
+            <div class="button-group">
+                <button id="cancelModalBtn" class="secondary-btn"><i class="fas fa-times mr-2"></i><span data-lang-key="cancel">Cancel</span></button>
+                <button id="confirmModalBtn" class="primary-btn"><i class="fas fa-check mr-2"></i><span data-lang-key="confirm">Confirm</span></button>
+            </div>
+        </div>
+
+        <div id="streakBreakPopup" class="popup"> <h3><i class="fas fa-fire-alt text-orange-400 mr-2"></i><span data-lang-key="streak_alert">Win Streak Alert!</span></h3>
+            <p id="streakBreakMessage">You're on a 7-win streak! Consider taking a break?</p>
+            <div class="button-group">
+                <button id="cancelStreakModalBtn" class="secondary-btn"><i class="fas fa-play mr-2"></i><span data-lang-key="continue_predicting">Keep Going</span></button>
+                <button class="primary-btn" onclick="alphaX_pausePredictionsUserInitiated(30)"><i class="fas fa-pause mr-2"></i><span data-lang-key="pause_predictions">Pause (30min)</span></button>
+            </div>
+        </div>
+
+        <div id="badTrendPopup" class="popup"> <h3><i class="fas fa-exclamation-triangle text-warning-color mr-2"></i><span data-lang-key="trend_alert">Trend Alert!</span></h3>
+            <p id="badTrendPopupMessage">Unstable trend detected. Prediction accuracy might be affected.</p>
+            <div class="button-group">
+                <button id="cancelBadTrendModalBtn" class="secondary-btn"><i class="fas fa-play mr-2"></i><span data-lang-key="continue_predicting_anyway">Continue Anyway</span></button>
+                <button class="danger-btn" onclick="alphaX_disablePredictionsUserInitiated(60)"><i class="fas fa-stop-circle mr-2"></i><span data-lang-key="disable_predictions">Disable (1hr)</span></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="loginToast" class="toast-login" style="display: none;">
+        <span class="icon"></span>
+        <p id="loginToastMessage" class="text-base"></p>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <script>
+        // --- Firebase Configuration ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyAV8WCu5kXbs85NtYiwiOtiAsYQ72SA27M",
+            authDomain: "aipredictor-cf4b8.firebaseapp.com",
+            databaseURL: "https://aipredictor-cf4b8-default-rtdb.firebaseio.com",
+            projectId: "aipredictor-cf4b8",
+            storageBucket: "aipredictor-cf4b8.appspot.com",
+            messagingSenderId: "1036472549306",
+            appId: "1:1036472549306:web:dc3630c08d41f84369a783",
+            measurementId: "G-0YR80TMFPX"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+        console.log("Firebase initialized.");
+
+        // Firebase Paths
+        const SHARED_GAME_HISTORY_PATH = "shared_alpha_x_ai/game_history";
+        const SHARED_CURRENT_PREDICTION_PATH = "shared_alpha_x_ai/current_prediction";
+        const SHARED_STATS_PATH = "shared_alpha_x_ai/stats"; // For streak, winLevel, consecutiveLosses
+        const MAX_SHARED_HISTORY_LENGTH = 50; // Number of game results to keep in shared history
+
+        // --- Auth State & Config (Retained from previous full script for shell functionality) ---
+        const USER_DEVICE_ID_STORAGE_KEY_ALPHAX = 'userGeneratedDeviceId_AlphaXAI_V3';
+        const TELEGRAM_USERNAME_STORAGE_KEY_ALPHAX = 'telegramUsername_AlphaXAI_V3';
+        const PREDICTOR_LOGGED_IN_KEY_ALPHAX = 'predictorLoggedIn_AlphaXAI_V3';
+        let currentDeviceIdAlphaX = null;
+        let approvalCheckIntervalAlphaX = null;
+        const APPROVAL_CHECK_INTERVAL_MS_ALPHAX = 5000;
+        let alphaX_isMaintenanceModeActive = false;
+
+        // --- Global Settings State (Retained from previous full script for UI interaction) ---
+        let alphaX_currentLanguage = localStorage.getItem('alphaXAiLanguage') || 'en';
+        let alphaX_isSoundEnabled = localStorage.getItem('alphaXAiSound') === null ? true : localStorage.getItem('alphaXAiSound') === 'true';
+        let alphaX_isNotificationsEnabled = localStorage.getItem('alphaXAiNotifications') === 'true' || false;
+        let alphaX_isAdvancedModeActive = localStorage.getItem('alphaXAiPredictionMode') === null ? true : localStorage.getItem('alphaXAiPredictionMode') === 'advanced';
+        let isMuted = !alphaX_isSoundEnabled; // For new showToast function
+
+        // --- Translations (Minimal for new logic, can be expanded) ---
+        const translations = {
+            en: { 
+                period: "Period", 
+                prediction: "Prediction",
+                confidence: "Confidence",
+                analysis_dashboard: "Analysis Dashboard", most_frequent_bs: "Most Frequent (B/S)",
+                least_frequent_bs: "Least Frequent (B/S)", win_rate: "Win Rate", wins: "Wins", losses: "Losses",
+                server_status: "Server Status", connected: "Connected", disconnected: "Disconnected", under_maintenance: "Under Maintenance",
+                history: "History", delete: "Delete All", statistics: "Statistics", total_wins: "Total Wins",
+                total_losses: "Total Losses", current_streak: "Current Streak", last_five_actuals: "Last 5 Actuals",
+                about: "About", home: "Home", stats: "Stats",
+                about_aura_x_ai: "About ALPHA X AI",
+                predictor_intro_title: "Our Prediction Engine",
+                predictor_intro_p1: "ALPHA X AI employs a sophisticated prediction engine designed to analyze trends and patterns from historical data. Our goal is to provide insightful predictions, but it's important to remember that these are based on statistical analysis and not guarantees of future outcomes.",
+                predictor_intro_p2: "The system uses an advanced multi-model approach, combining numerous analytical techniques to enhance accuracy and adapt to changing conditions. This version incorporates enhanced pattern recognition, transitional analysis, and weighted historical data to provide more nuanced predictions. It now also includes the \"Omega Mind\" protocol, an adaptive risk management system that adjusts prediction confidence and strategy based on recent performance to mitigate prolonged loss streaks.",
+                how_it_works_title: "How It Works (Advanced)",
+                how_it_works_li1_adv: "<strong>Multi-Period Frequency Analysis:</strong> Tracks \"BIG\" vs \"SMALL\" occurrences over short, medium, and long-term windows.",
+                how_it_works_li2_adv: "<strong>Transition Matrix Analysis:</strong> Calculates probabilities of B->S, S->B, B->B, S->S transitions.",
+                how_it_works_li3_adv: "<strong>Advanced Pattern Matching:</strong> Identifies recurring sequences (e.g., BSBS, BBSS) and alternating trends.",
+                how_it_works_li4_adv: "<strong>Streak Dynamics:</strong> Analyzes current and historical win/loss streaks for both outcomes, assessing continuation or reversal likelihood.",
+                how_it_works_li11_adv: "<strong>Relative Strength Index (RSI) Analysis:</strong> Measures the speed and change of recent number movements (0-9) to identify potential overbought (predict SMALL) or oversold (predict BIG) conditions.",
+                how_it_works_li_macd: "<strong>Moving Average Convergence Divergence (MACD) Analyzer:</strong> Tracks the relationship between two moving averages of numerical outcomes to identify momentum shifts.",
+                how_it_works_li_bollinger: "<strong>Bollinger Bands Analyzer:</strong> Uses standard deviation bands around a moving average to assess volatility and potential overextension.",
+                how_it_works_li_inter_signal: "<strong>Inter-Signal Confirmation Engine:</strong> Assesses the level of agreement among various analytical engines to adjust overall confidence.",
+                how_it_works_li_omega_mind: "<strong>Omega Mind Protocol:</strong> An adaptive risk management layer.<ul><li>Level 0 (Normal): Standard prediction logic.</li><li>Level 1 (Caution - 1 Loss): Reduced confidence, heightened sensitivity.</li><li>Level 2 (Warning - 2 Losses): Significantly reduced confidence, strong bias against last losing pattern.</li><li>Level 3 (Critical - 3+ Losses): Prediction auto-disabled or uses extreme fallback; focus on stabilization.</li></ul>",
+                important_note_title: "Important Note",
+                important_note_p1: "All predictions provided by ALPHA X AI are for informational and entertainment purposes only. Past performance is not indicative of future results. Please use this information responsibly. Predictions are based on the device's local history and may vary if histories differ across devices.",
+                meet_the_team_title: "Meet The Team", owner_info: "<strong>Owner/Developer:</strong> @ALPHAXAIWEB", owner_telegram: "Telegram Profile",
+                general_settings_title: "General Settings", more_info_title: "More Information", status: "Status",
+                language: "Language", notifications: "Notifications", sound: "Sound", reset_settings: "Reset Settings",
+                reset: "Reset", prediction_mode: "Prediction Mode", how_to_use: "How To Use", watch_video: "Watch Video",
+                privacy_policy: "Privacy Policy", read_more: "Read More", how_to_use_aura_x_ai: "How To Use ALPHA X AI",
+                confirm_action: "Confirm Action", cancel: "Cancel", confirm: "Confirm", pending: "Pending",
+                win: "Win", loss: "Loss", delete_item_confirm: "Are you sure you want to delete this history item?",
+                delete_all_confirm: "Are you sure you want to delete all history items?",
+                reset_settings_confirm: "Are you sure you want to reset all settings to default?",
+                api_error: "API Error. Please try again later.", fetching_data: "Fetching data...",
+                streak_alert: "Win Streak Alert", trend_alert: "Trend Alert", pause_predictions: "Pause Predictions",
+                disable_predictions: "Disable Predictions", continue_predicting: "Keep Going", continue_predicting_anyway: "Continue Anyway",
+                predictions_paused_user: "Predictions Paused by User", predictions_resuming_in: "Resuming in",
+                predictions_disabled_auto: "Predictions Auto-Disabled (Omega Protocol L3)",
+                resume_predictions: "Resume Predictions",
+                unstable_trend_detected: "Unstable trend detected - Predictions temporarily disabled",
+                bad_trend_message: "The current trend analysis shows unstable patterns. Predictions are temporarily disabled to protect against potential losses.",
+                trend_will_auto_resume: "Predictions will automatically resume when the trend stabilizes or timer ends.",
+                no_history: "No history yet.",
+                omega_level_0: "Omega Protocol: Level 0 (Normal Operations)",
+                omega_level_1: "Omega Protocol: Level 1 (Caution Mode)",
+                omega_level_2: "Omega Protocol: Level 2 (Warning Mode - High Risk)",
+                omega_level_3: "Omega Protocol: Level 3 (Critical - Predictions Disabled)",
+            },
+            hi: { // Basic Hindi translations, can be expanded
+                period: "अवधि", prediction: "भविष्यवाणी", confidence: "आत्मविश्वास",
+                analysis_dashboard: "विश्लेषण डैशबोर्ड", most_frequent_bs: "सबसे लगातार (बड़ा/छोटा)",
+                least_frequent_bs: "कम से कम लगातार (बड़ा/छोटा)", win_rate: "जीत दर", wins: "जीत", losses: "हार",
+                server_status: "सर्वर स्थिति", connected: "जुड़ा हुआ", disconnected: "डिस्कनेक्ट किया गया", under_maintenance: "रखरखाव के अधीन",
+                history: "इतिहास", delete: "सब हटा दो", statistics: "आंकड़े", total_wins: "कुल जीत",
+                total_losses: "कुल हार", current_streak: "वर्तमान स्ट्रीक", last_five_actuals: "अंतिम 5 वास्तविक",
+                about: "विवरण", home: "होम", stats: "आंकड़े",
+                about_aura_x_ai: "अल्फा एक्स एआई के बारे में",
+                predictor_intro_title: "हमारा भविष्यवाणी इंजन",
+                predictor_intro_p1: "अल्फा एक्स एआई एक परिष्कृत भविष्यवाणी इंजन का उपयोग करता है जो ऐतिहासिक डेटा से रुझानों और पैटर्न का विश्लेषण करने के लिए डिज़ाइन किया गया है। हमारा लक्ष्य अंतर्दृष्टिपूर्ण भविष्यवाणियां प्रदान करना है, लेकिन यह याद रखना महत्वपूर्ण है कि ये सांख्यिकीय विश्लेषण पर आधारित हैं और भविष्य के परिणामों की गारंटी नहीं हैं।",
+                predictor_intro_p2: "यह प्रणाली भविष्यवाणियां उत्पन्न करने के लिए एक उन्नत बहु-मॉडल दृष्टिकोण का उपयोग करती है, सटीकता बढ़ाने और बदलती परिस्थितियों के अनुकूल होने के लिए कई विश्लेषणात्मक तकनीकों का संयोजन करती है। यह संस्करण अधिक सूक्ष्म भविष्यवाणियां प्रदान करने के लिए उन्नत पैटर्न पहचान, संक्रमणकालीन विश्लेषण, भारित ऐतिहासिक डेटा और 'ओमेगा माइंड' प्रोटोकॉल को शामिल करता है।",
+                how_it_works_title: "यह कैसे काम करता है (उन्नत)",
+                how_it_works_li1_adv: "<strong>बहु-अवधि आवृत्ति विश्लेषण:</strong> छोटी, मध्यम और लंबी अवधि की खिड़कियों पर \"बड़ा\" बनाम \"छोटा\" घटनाओं को ट्रैक करता है।",
+                how_it_works_li2_adv: "<strong>संक्रमण मैट्रिक्स विश्लेषण:</strong> B->S, S->B, B->B, S->S संक्रमणों की संभावनाओं की गणना करता है।",
+                how_it_works_li3_adv: "<strong>उन्नत पैटर्न मिलान:</strong> आवर्ती अनुक्रमों (जैसे, BSBS, BBSS) और वैकल्पिक प्रवृत्तियों की पहचान करता है।",
+                how_it_works_li4_adv: "<strong>स्ट्रीक गतिशीलता:</strong> दोनों परिणामों के लिए वर्तमान और ऐतिहासिक जीत/हार की लकीरों का विश्लेषण करता है, निरंतरता या उत्क्रमण की संभावना का आकलन करता है।",
+                how_it_works_li11_adv: "<strong>रिलेटिव स्ट्रेंथ इंडेक्स (RSI) विश्लेषण:</strong> हालिया संख्या गतिविधियों (0-9) की गति और परिवर्तन को मापता है ताकि संभावित ओवरबॉट (SMALL की भविष्यवाणी) या ओवरसोल्ड (BIG की भविष्यवाणी) स्थितियों की पहचान की जा सके।",
+                how_it_works_li_macd: "<strong>मूविंग एवरेज कन्वर्जेंस डाइवर्जेंस (MACD) विश्लेषक:</strong> मोमेंटम शिफ्ट की पहचान करने के लिए संख्यात्मक परिणामों के दो मूविंग एवरेज के बीच संबंध को ट्रैक करता है।",
+                how_it_works_li_bollinger: "<strong>बोलिंगर बैंड विश्लेषक:</strong> अस्थिरता और संभावित अतिविस्तार का आकलन करने के लिए मूविंग एवरेज के आसपास मानक विचलन बैंड का उपयोग करता है।",
+                how_it_works_li_inter_signal: "<strong>अंतर-सिग्नल पुष्टिकरण इंजन:</strong> समग्र आत्मविश्वास को समायोजित करने के लिए विभिन्न विश्लेषणात्मक इंजनों के बीच समझौते के स्तर का आकलन करता है।",
+                how_it_works_li_omega_mind: "<strong>ओमेगा माइंड प्रोटोकॉल:</strong> एक अनुकूली जोखिम प्रबंधन परत।<ul><li>स्तर 0 (सामान्य): मानक भविष्यवाणी तर्क।</li><li>स्तर 1 (सावधानी - 1 हार): कम आत्मविश्वास, बढ़ी हुई संवेदनशीलता।</li><li>स्तर 2 (चेतावनी - 2 हार): काफी कम आत्मविश्वास, पिछली हार के पैटर्न के प्रति मजबूत पूर्वाग्रह।</li><li>स्तर 3 (गंभीर - 3+ हार): भविष्यवाणी स्वतः अक्षम या अत्यधिक रूढ़िवादी फ़ॉलबैक का उपयोग; स्थिरीकरण पर ध्यान केंद्रित करें।</li></ul>",
+                important_note_title: "महत्वपूर्ण लेख",
+                important_note_p1: "अल्फा एक्स एआई द्वारा प्रदान की गई सभी भविष्यवाणियां केवल सूचनात्मक और मनोरंजन प्रयोजनों के लिए हैं। पिछला प्रदर्शन भविष्य के परिणामों का संकेतक नहीं है। कृपया इस जानकारी का जिम्मेदारी से उपयोग करें। भविष्यवाणियां डिवाइस के स्थानीय इतिहास पर आधारित होती हैं और यदि विभिन्न उपकरणों पर इतिहास भिन्न होता है तो भिन्न हो सकती हैं।",
+                meet_the_team_title: "टीम से मिलें", owner_info: "<strong>मालिक/डेवलपर:</strong> @ALPHAXAIWEB", owner_telegram: "टेलीग्राम प्रोफाइल",
+                general_settings_title: "सामान्य सेटिंग्स", more_info_title: "और जानकारी", status: "स्थिति",
+                language: "भाषा", notifications: "सूचनाएं", sound: "ध्वनि", reset_settings: "सेटिंग्स रीसेट करें",
+                reset: "रीसेट", prediction_mode: "भविष्यवाणी मोड", how_to_use: "उपयोग कैसे करें", watch_video: "वीडियो देखें",
+                privacy_policy: "गोपनीयता नीति", read_more: "और पढ़ें", how_to_use_aura_x_ai: "अल्फा एक्स एआई का उपयोग कैसे करें",
+                confirm_action: "कार्रवाई की पुष्टि करें", cancel: "रद्द करें", confirm: "पुष्टि करें", pending: "लंबित",
+                win: "जीत", loss: "हार", delete_item_confirm: "क्या आप निश्चित रूप से इस इतिहास आइटम को हटाना चाहते हैं?",
+                delete_all_confirm: "क्या आप निश्चित रूप से सभी इतिहास आइटम हटाना चाहते हैं?",
+                reset_settings_confirm: "क्या आप निश्चित रूप से सभी सेटिंग्स को डिफ़ॉल्ट पर रीसेट करना चाहते हैं?",
+                api_error: "एपीआई त्रुटि। कृपया बाद में पुन: प्रयास करें।", fetching_data: "डेटा प्राप्त किया जा रहा है...",
+                streak_alert: "जीत की लकीर चेतावनी", trend_alert: "ट्रेंड चेतावनी", pause_predictions: "भविष्यवाणियाँ रोकें",
+                disable_predictions: "भविष्यवाणियाँ अक्षम करें", continue_predicting: "जारी रखें", continue_predicting_anyway: "वैसे भी जारी रखें",
+                predictions_paused_user: "उपयोगकर्ता द्वारा भविष्यवाणियाँ रोकी गईं", predictions_resuming_in: "में फिर से शुरू हो रहा है",
+                predictions_disabled_auto: "भविष्यवाणियाँ स्वतः अक्षम (ओमेगा प्रोटोकॉल L3)",
+                resume_predictions: "भविष्यवाणियाँ फिर से शुरू करें",
+                unstable_trend_detected: "अस्थिर ट्रेंड का पता चला - भविष्यवाणियाँ अस्थायी रूप से अक्षम हैं",
+                bad_trend_message: "वर्तमान ट्रेंड विश्लेषण अस्थिर पैटर्न दिखाता है। संभावित नुकसान से बचाने के लिए भविष्यवाणियाँ अस्थायी रूप से अक्षम कर दी गई हैं।",
+                trend_will_auto_resume: "ट्रेंड स्थिर होने पर या टाइमर समाप्त होने पर भविष्यवाणियाँ स्वचालित रूप से फिर से शुरू हो जाएंगी।",
+                no_history: "अभी तक कोई इतिहास नहीं है।",
+                omega_level_0: "ओमेगा प्रोटोकॉल: स्तर 0 (सामान्य संचालन)",
+                omega_level_1: "ओमेगा प्रोटोकॉल: स्तर 1 (सावधानी मोड)",
+                omega_level_2: "ओमेगा प्रोटोकॉल: स्तर 2 (चेतावनी मोड - उच्च जोखिम)",
+                omega_level_3: "ओमेगा प्रोटोकॉल: स्तर 3 (गंभीर - भविष्यवाणियां अक्षम)",
+            }
+        };
+        
+        // --- DOM Elements (Retained from previous full script) ---
+        const alphaX_currentPeriodEl = document.getElementById('currentPeriod');
+        const alphaX_currentResultEl = document.getElementById('currentResult'); 
+        const alphaX_confidenceFillEl = document.getElementById('confidenceFill');
+        const alphaX_confidenceTextEl = document.getElementById('confidenceText');
+        const alphaX_mostFrequentBigSmallEl = document.getElementById('mostFrequentBigSmall');
+        const alphaX_leastFrequentBigSmallEl = document.getElementById('leastFrequentBigSmall');
+        const alphaX_winRateEl = document.getElementById('winRate'); 
+        const alphaX_totalWinBetsEl = document.getElementById('totalWinBets'); 
+        const alphaX_totalLossBetsEl = document.getElementById('totalLossBets'); 
+        const alphaX_serverStatusEl = document.getElementById('serverStatus');
+        const alphaX_serverStatusIndicator = document.getElementById('serverStatusIndicator');
+        const alphaX_historyContainer = document.getElementById('historyContainer'); 
+        const alphaX_statsTotalWinsEl = document.getElementById('statsTotalWins'); 
+        const alphaX_statsTotalLossesEl = document.getElementById('statsTotalLosses'); 
+        const alphaX_statsWinRateEl = document.getElementById('statsWinRate'); 
+        const alphaX_currentStreakEl = document.getElementById('currentStreak');
+        const alphaX_lastFiveActualsEl = document.getElementById('lastFiveActuals');
+        const alphaX_videoPopupEl = document.getElementById('videoPopup');
+        const alphaX_youtubeVideoEl = document.getElementById('youtubeVideo');
+        const alphaX_confirmModalEl = document.getElementById('confirmModal');
+        const alphaX_modalMessageEl = document.getElementById('modalMessage');
+        const alphaX_streakBreakPopupEl = document.getElementById('streakBreakPopup');
+        const alphaX_streakBreakMessageEl = document.getElementById('streakBreakMessage');
+        const alphaX_badTrendIndicatorEl = document.getElementById('badTrendIndicator');
+        const alphaX_badTrendMessageTextEl = document.getElementById('badTrendMessage');
+        const alphaX_badTrendPopupEl = document.getElementById('badTrendPopup');
+        const alphaX_badTrendPopupMessageEl = document.getElementById('badTrendPopupMessage');
+
+
+        // --- MODIFIED JAVASCRIPT LOGIC (Client-Side for Netlify) ---
+        let localHistoryData = []; // Local cache of shared history for UI rendering
+        let globalPredictionData = null; // Holds { prediction, confidence, logicSource } for the *next* period from Firebase
+        
+        // Stats like streak, winLevel, consecutiveLosses will be primarily read from Firebase
+        // and updated in Firebase by the backend.
+        // These window variables are for UI updates via Firebase listeners.
+        window.streak = 0; 
+        window.winLevel = 0; 
+        window.consecutiveLosses = 0; 
+        
+        // IMPORTANT: Replace with your actual Replit backend URL
+        const BACKEND_PREDICT_URL = "https://a433d4ec-3f61-452f-90b7-f4a5743e90e3-00-25ssmvi7nn4pw.sisko.replit.dev/api/v1/predict"; // EXAMPLE - REPLACE THIS
+
+        // --- UI Update Functions (Listen to Firebase) ---
+        function setupFirebaseListeners() {
+            // Listen for changes in the current shared prediction (set by backend)
+            db.ref(SHARED_CURRENT_PREDICTION_PATH).on('value', (snapshot) => {
+                const currentPredData = snapshot.val();
+                if (currentPredData) {
+                    globalPredictionData = currentPredData; 
+                    if(alphaX_currentPeriodEl) alphaX_currentPeriodEl.textContent = currentPredData.periodDisplay || currentPredData.periodFull?.slice(-5) || '-';
+                    if(alphaX_currentResultEl) alphaX_currentResultEl.textContent = currentPredData.prediction || '-';
+                    if(alphaX_confidenceTextEl) alphaX_confidenceTextEl.textContent = `${currentPredData.confidence || 0}%`;
+                    if(alphaX_confidenceFillEl) alphaX_confidenceFillEl.style.width = `${currentPredData.confidence || 0}%`;
+                    console.log("Firebase: Current prediction updated UI", currentPredData);
+                } else {
+                    globalPredictionData = null;
+                    if(alphaX_currentPeriodEl) alphaX_currentPeriodEl.textContent = '-';
+                    if(alphaX_currentResultEl) alphaX_currentResultEl.textContent = '-';
+                    if(alphaX_confidenceTextEl) alphaX_confidenceTextEl.textContent = `0%`;
+                    if(alphaX_confidenceFillEl) alphaX_confidenceFillEl.style.width = `0%`;
+                }
+            });
+
+            // Listen for changes in shared game history (updated by backend)
+            db.ref(SHARED_GAME_HISTORY_PATH).orderByChild("timestamp").limitToLast(MAX_SHARED_HISTORY_LENGTH).on('value', (snapshot) => {
+                const newHistory = [];
+                if (snapshot.exists()) {
+                    snapshot.forEach(childSnapshot => {
+                        newHistory.unshift({ id: childSnapshot.key, ...childSnapshot.val() }); 
+                    });
+                }
+                localHistoryData = newHistory; 
+                updateHistoryUI_V2(); 
+                updateStatsUI_V2();   
+                console.log("Firebase: Shared history updated, UI refreshed.");
+            });
+
+            // Listen for changes in shared stats (updated by backend)
+            db.ref(SHARED_STATS_PATH).on('value', (snapshot) => {
+                const stats = snapshot.val() || { streak: 0, winLevel: 0, consecutiveLosses: 0 };
+                window.streak = stats.streak; 
+                window.winLevel = stats.winLevel;
+                window.consecutiveLosses = stats.consecutiveLosses;
+                updateStatsUI_V2(); 
+                console.log("Firebase: Shared stats updated, UI refreshed.", stats);
+            });
+        }
+
+        function updateHistoryUI_V2() {
+            const container = document.getElementById("historyContainer");
+            if (!container) { console.error("History container not found!"); return; }
+
+            container.innerHTML = localHistoryData.map((item, index) => {
+                const itemStatus = item.status || "Pending"; 
+                const itemPrediction = item.prediction || "-";
+
+                return `
+                <div class="history-item ${itemStatus.toLowerCase()} bg-[var(--bg-dark-secondary)] p-3 md:p-4 rounded-xl border border-[var(--card-border-color)] flex flex-col md:flex-row justify-between items-start md:items-center animate-bounceIn" 
+                     data-id="${item.id}" 
+                     style="animation-delay: ${index * 0.05}s;">
+                
+                  <div class="flex items-center space-x-2 md:space-x-3 mb-2 md:mb-0 flex-grow">
+                    <div class="w-8 h-8 md:w-10 md:h-10 bg-[var(--accent-secondary)] bg-opacity-20 rounded-full flex items-center justify-center">
+                      <i class="fas fa-history text-sm md:text-base text-[var(--accent-secondary)] opacity-80"></i>
+                    </div>
+                    <div>
+                      <p class="text-[var(--text-light-secondary)] text-xs md:text-sm">${translations[alphaX_currentLanguage]?.period || 'Period'}</p>
+                      <p class="font-semibold text-[var(--text-light-primary)] text-sm md:text-base">${item.periodDisplay || '-'}</p>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center space-x-2 md:space-x-3 text-center md:text-left">
+                    <div>
+                      <p class="text-[var(--text-light-secondary)] text-xs md:text-sm">${translations[alphaX_currentLanguage]?.prediction || 'Prediction'}</p>
+                      <p class="font-semibold text-[var(--text-light-primary)] text-sm md:text-base">${itemPrediction}</p> 
+                    </div>
+                     ${item.confidence !== undefined ? `
+                        <div>
+                          <p class="text-[var(--text-light-secondary)] text-xs md:text-sm">Conf.</p>
+                          <p class="font-semibold text-[var(--text-light-primary)] text-xs md:text-sm">${item.confidence}%</p>
+                        </div>` : ''
+                     }
+                  </div>
+                
+                  <div class="flex items-center space-x-2 md:space-x-3 mt-2 md:mt-0 md:ml-auto">
+                     <div class="text-center">
+                        <p class="text-[var(--text-light-secondary)] text-xs md:text-sm">Actual</p>
+                        <p class="font-semibold text-[var(--text-light-primary)] text-sm md:text-base">
+                          ${item.actual !== undefined ? `${item.actual} (${item.resultType || ''})` : '-'}
+                        </p>
+                      </div>
+                    <div class="w-8 h-8 md:w-9 md:h-9 rounded-full flex items-center justify-center text-base
+                      ${itemStatus === 'WIN' ? 'bg-green-100' : itemStatus === 'LOSS' ? 'bg-red-100' : itemStatus === 'Skipped' ? 'bg-gray-200' : 'bg-yellow-100'}">
+                      <i class="fas ${itemStatus === 'WIN' ? 'fa-check-circle text-green-500 win-animation' : 
+                                    itemStatus === 'LOSS' ? 'fa-times-circle text-red-500 loss-animation' : 
+                                    itemStatus === 'Skipped' ? 'fa-ban text-gray-500' :
+                                    'fa-clock text-yellow-500 animate-spin'}"></i>
+                    </div>
+                    <button class="delete-btn text-[var(--text-light-secondary)] hover:text-[var(--loss-color)] transition p-1.5 rounded-full" data-id="${item.id}" aria-label="Delete history item">
+                      <i class="fas fa-trash-alt text-sm md:text-base"></i>
+                    </button>
+                  </div>
+                </div>
+            `}).join("");
+
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.removeEventListener('click', handleDeleteSharedHistoryItem); 
+                button.addEventListener('click', handleDeleteSharedHistoryItem);
+            });
+        }
+        
+        async function handleDeleteSharedHistoryItem(event) {
+            const button = event.currentTarget;
+            const itemId = button.getAttribute('data-id');
+            if (!itemId) return;
+            
+            alphaX_showConfirmModal('delete_item_confirm', async () => {
+                try {
+                    // This should ideally also be an API call to the backend to delete,
+                    // if strict data ownership by backend is maintained.
+                    // For now, client directly removes from shared history.
+                    await db.ref(SHARED_GAME_HISTORY_PATH).child(itemId).remove();
+                    showToast("History item deleted.", "info"); // Toast from old logic
+                    alphaX_playSound('confirm');
+                } catch (error) {
+                    console.error("Error deleting shared history item:", error);
+                    showToast("Failed to delete item.", "error");
+                }
+            });
+        }
+
+
+        function updateStatsUI_V2() {
+            const currentSharedStats = {
+                streak: window.streak || 0,
+                winLevel: window.winLevel || 0,
+                consecutiveLosses: window.consecutiveLosses || 0
+            };
+
+            // Calculate wins/losses/accuracy based on the localHistoryData which reflects shared history
+            const actualWins = localHistoryData.filter(i => i.status === "WIN").length;
+            const actualLosses = localHistoryData.filter(i => i.status === "LOSS").length;
+            const totalPlayed = actualWins + actualLosses;
+            const accuracyRate = totalPlayed > 0 ? ((actualWins / totalPlayed) * 100).toFixed(1) : 0;
+
+            if(alphaX_totalWinBetsEl) alphaX_totalWinBetsEl.textContent = actualWins;
+            if(alphaX_totalLossBetsEl) alphaX_totalLossBetsEl.textContent = actualLosses;
+            if(alphaX_winRateEl) alphaX_winRateEl.textContent = `${accuracyRate}%`;
+
+            if(alphaX_statsTotalWinsEl) alphaX_statsTotalWinsEl.textContent = actualWins;
+            if(alphaX_statsTotalLossesEl) alphaX_statsTotalLossesEl.textContent = actualLosses;
+            if(alphaX_statsWinRateEl) alphaX_statsWinRateEl.textContent = `${accuracyRate}%`;
+            
+            if(alphaX_currentStreakEl) {
+                if (currentSharedStats.streak > 0) { alphaX_currentStreakEl.textContent = `W${currentSharedStats.streak}`; alphaX_currentStreakEl.className = 'text-xl font-bold text-win-color'; }
+                else if (currentSharedStats.streak < 0) { alphaX_currentStreakEl.textContent = `L${Math.abs(currentSharedStats.streak)}`; alphaX_currentStreakEl.className = 'text-xl font-bold text-loss-color'; }
+                else { alphaX_currentStreakEl.textContent = '-'; alphaX_currentStreakEl.className = 'text-xl font-bold text-text-light-primary'; }
+            }
+            if(alphaX_lastFiveActualsEl) {
+                const lastFive = localHistoryData.filter(p => p.actual !== undefined).slice(0, 5).map(p => p.actual).join(', ') || '-';
+                alphaX_lastFiveActualsEl.textContent = lastFive;
+            }
+
+            // Update Most/Least Frequent B/S based on localHistoryData
+            const bigSmallCounts = { BIG: 0, SMALL: 0 };
+            localHistoryData.forEach(entry => { 
+                if(entry.resultType === "BIG") bigSmallCounts.BIG++; 
+                else if (entry.resultType === "SMALL") bigSmallCounts.SMALL++; 
+            });
+            if(alphaX_mostFrequentBigSmallEl && alphaX_leastFrequentBigSmallEl) {
+                if (bigSmallCounts.BIG === 0 && bigSmallCounts.SMALL === 0) { alphaX_mostFrequentBigSmallEl.textContent = '-'; alphaX_leastFrequentBigSmallEl.textContent = '-'; }
+                else if (bigSmallCounts.BIG >= bigSmallCounts.SMALL) { alphaX_mostFrequentBigSmallEl.textContent = 'BIG'; alphaX_leastFrequentBigSmallEl.textContent = bigSmallCounts.SMALL > 0 || bigSmallCounts.BIG === 0 ? 'SMALL' : (bigSmallCounts.BIG > 0 ? 'BIG' : '-'); }
+                else { alphaX_mostFrequentBigSmallEl.textContent = 'SMALL'; alphaX_leastFrequentBigSmallEl.textContent = bigSmallCounts.BIG > 0 || bigSmallCounts.SMALL === 0 ? 'BIG' : (bigSmallCounts.SMALL > 0 ? 'SMALL' : '-'); }
+            }
+        }
+        
+        // --- Function to trigger backend prediction cycle ---
+        let backendCallInterval = null;
+        async function triggerBackendPredictionCycle() {
+            if (BACKEND_PREDICT_URL === "YOUR_REPLIT_BACKEND_URL/api/v1/predict" || !BACKEND_PREDICT_URL.startsWith("https://")) {
+                console.warn("Backend URL not set or invalid. Please update BACKEND_PREDICT_URL in the script.");
+                alphaX_updateServerStatusUI(false, "Backend URL Missing");
+                if(alphaX_currentResultEl) alphaX_currentResultEl.textContent = "Setup Needed";
+                return;
+            }
+            console.log("Frontend: Triggering backend prediction cycle via:", BACKEND_PREDICT_URL);
+            if(alphaX_currentResultEl) alphaX_currentResultEl.textContent = translations[alphaX_currentLanguage]?.fetching_data || "Fetching...";
+
+            try {
+                const response = await fetch(BACKEND_PREDICT_URL); // GET request by default
+                if (!response.ok) {
+                    const errorData = await response.text();
+                    console.error("Frontend: Backend API call failed:", response.status, errorData);
+                    alphaX_updateServerStatusUI(false, `Backend Error: ${response.status}`);
+                     if(alphaX_currentResultEl) alphaX_currentResultEl.textContent = translations[alphaX_currentLanguage]?.api_error || "API Error";
+                } else {
+                    const predictionData = await response.json();
+                    console.log("Frontend: Received data from backend (UI updates via Firebase listeners):", predictionData);
+                    // The UI will update based on Firebase listeners for SHARED_CURRENT_PREDICTION_PATH,
+                    // which the backend is responsible for updating.
+                    alphaX_updateServerStatusUI(true, translations[alphaX_currentLanguage]?.connected || "Connected");
+                }
+            } catch (error) {
+                console.error("Frontend: Error calling backend API:", error);
+                alphaX_updateServerStatusUI(false, "Backend Call Failed");
+                if(alphaX_currentResultEl) alphaX_currentResultEl.textContent = "Connect Err";
+            }
+        }
+
+        // --- Toast function from user's logic (adapted) ---
+        function showToast(message, type = 'info') { 
+            isMuted = !alphaX_isSoundEnabled; 
+            if (isMuted && type === 'notify') return; 
+
+            const toast = document.createElement("div");
+            toast.className = "toast"; 
+            
+            if (type === 'success') toast.style.backgroundColor = 'var(--win-color)';
+            else if (type === 'error') toast.style.backgroundColor = 'var(--loss-color)';
+            else if (type === 'notify') toast.style.backgroundColor = 'var(--accent-secondary)';
+            else toast.style.backgroundColor = 'var(--accent-primary)';
+
+            toast.innerText = message;
+            document.body.appendChild(toast);
+            // Force reflow to enable transition
+            void toast.offsetWidth; 
+            toast.classList.add('show'); 
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300); 
+            }, 3000);
+        }
+        // --- END OF MODIFIED JAVASCRIPT LOGIC ---
+
+
+        // --- Shell/UI Functions (Retained from previous full script) ---
+        function showScreenAlphaX(screenId) {
+            const page1 = document.getElementById('loginPage1AlphaX');
+            const page2 = document.getElementById('loginPage2AlphaX');
+            const app = document.getElementById('appContainer');
+            const maintenance = document.getElementById('maintenanceContainer');
+
+            if(page1) page1.classList.remove('active');
+            if(page2) page2.classList.remove('active');
+            if(app) app.classList.remove('active');
+            if(maintenance) maintenance.classList.remove('active');
+
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+                gsap.fromTo(targetScreen, {opacity: 0, y: 15}, {opacity: 1, y: 0, duration: 0.4, ease: "power2.out"});
+            }
+
+            if (screenId === 'appContainer') {
+                document.body.style.justifyContent = 'flex-start';
+                document.body.style.alignItems = 'stretch';
+            } else {
+                document.body.style.justifyContent = 'center';
+                document.body.style.alignItems = 'center';
+            }
+        }
+
+        function showMaintenancePageAlphaX(message) {
+            const msgEl = document.getElementById('maintenanceMessage');
+            if (msgEl) {
+                msgEl.textContent = message || "The platform is currently under maintenance. Please try again later.";
+            }
+            showScreenAlphaX('maintenanceContainer');
+        }
+
+        function generateUniqueIdAlphaX() {
+            return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+                (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+            );
+        }
+
+        function getOrGenerateUserDeviceIdAlphaX() {
+            let deviceId = localStorage.getItem(USER_DEVICE_ID_STORAGE_KEY_ALPHAX);
+            if (!deviceId) {
+                deviceId = "AX-USER-" + generateUniqueIdAlphaX().substring(0,10).toUpperCase();
+                localStorage.setItem(USER_DEVICE_ID_STORAGE_KEY_ALPHAX, deviceId);
+            }
+            currentDeviceIdAlphaX = deviceId;
+            const deviceIdDisplayEl = document.getElementById('displayedDeviceIdAlphaX');
+            if (deviceIdDisplayEl) deviceIdDisplayEl.textContent = deviceId;
+            return deviceId;
+        }
+
+        async function handleSubmitUsernameAlphaX() {
+            const usernameInput = document.getElementById('telegramUsernameInputAlphaX');
+            const errorEl = document.getElementById('usernameErrorAlphaX');
+            const submitBtn = document.getElementById('submitUsernameBtnAlphaX');
+
+            if(!usernameInput || !errorEl || !submitBtn) {
+                console.error("handleSubmitUsernameAlphaX: Critical DOM elements missing.");
+                return;
+            }
+
+            const username = usernameInput.value.trim().replace(/^@/, '');
+            if (!username || !/^[a-zA-Z0-9_]{5,32}$/.test(username)) {
+                errorEl.textContent = 'Please enter a valid Telegram username (5-32 chars, a-z, 0-9, _).';
+                errorEl.style.display = 'block';
+                return;
+            }
+            errorEl.style.display = 'none';
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+
+            currentDeviceIdAlphaX = getOrGenerateUserDeviceIdAlphaX();
+
+            try {
+                const deviceRef = db.ref(`alphax_user_access_requests/${currentDeviceIdAlphaX}`);
+                const snapshot = await deviceRef.get();
+                const deviceData = snapshot.val();
+
+                let updates = {
+                    telegramUsername: username,
+                    requestedAt: firebase.database.ServerValue.TIMESTAMP,
+                    deviceId: currentDeviceIdAlphaX
+                };
+
+                if (deviceData && deviceData.telegramUsername && deviceData.telegramUsername !== username) {
+                    updates.status = 'pending';
+                    updates.approvedAt = null;
+                    updates.expiryTimestamp = null;
+                    updates.validityValue = null;
+                    updates.validityUnit = null;
+                    localStorage.removeItem(PREDICTOR_LOGGED_IN_KEY_ALPHAX);
+                } else if (!deviceData) {
+                    updates.status = 'pending';
+                }
+                await deviceRef.update(updates);
+                localStorage.setItem(TELEGRAM_USERNAME_STORAGE_KEY_ALPHAX, username);
+                showScreenAlphaX('loginPage2AlphaX');
+                updateApprovalStatusUIAlphaX(updates.status || deviceData?.status || 'pending');
+                startApprovalCheckAlphaX();
+            } catch (error) {
+                console.error("Error submitting AlphaX username:", error);
+                if(errorEl) { errorEl.textContent = 'Failed to submit. Check connection or try again.'; errorEl.style.display = 'block';}
+            } finally {
+                if(submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = 'Continue';}
+            }
+        }
+
+        function copyCurrentDeviceIdAlphaX() {
+            const deviceIdDisplayEl = document.getElementById('displayedDeviceIdAlphaX');
+            const feedbackEl = document.getElementById('copyFeedbackAlphaX');
+            if(!deviceIdDisplayEl || !feedbackEl) return;
+            const deviceIdToCopy = deviceIdDisplayEl.textContent;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(deviceIdToCopy).then(() => {
+                    feedbackEl.classList.add('show');
+                    setTimeout(() => feedbackEl.classList.remove('show'), 2000);
+                }).catch(err => { console.error('Failed to copy device ID:', err); alphaX_showLoginToast('Failed to copy Device ID.', 'error'); });
+            } else {
+                const textArea = document.createElement("textarea"); textArea.value = deviceIdToCopy; document.body.appendChild(textArea);
+                textArea.select(); document.execCommand('copy'); document.body.removeChild(textArea);
+                feedbackEl.classList.add('show'); setTimeout(() => feedbackEl.classList.remove('show'), 2000);
+            }
+        }
+
+        function handleLogoutAlphaX(showLoginPage1 = true) {
+            localStorage.removeItem(PREDICTOR_LOGGED_IN_KEY_ALPHAX);
+            if (approvalCheckIntervalAlphaX) clearInterval(approvalCheckIntervalAlphaX);
+            approvalCheckIntervalAlphaX = null;
+            if (showLoginPage1) {
+                const usernameInput = document.getElementById('telegramUsernameInputAlphaX');
+                if(usernameInput) usernameInput.value = localStorage.getItem(TELEGRAM_USERNAME_STORAGE_KEY_ALPHAX) || '';
+                showScreenAlphaX('loginPage1AlphaX');
+            } else {
+                if (document.getElementById('appContainer')?.classList.contains('active')) {
+                    showScreenAlphaX('loginPage1AlphaX');
+                }
+            }
+            alphaX_showLoginToast('Successfully logged out.', 'info');
+        }
+
+        function updateApprovalStatusUIAlphaX(status, message = '') {
+            const container = document.getElementById('approvalStatusContainerAlphaX');
+            if (!container) return;
+            container.classList.remove('status-pending-alphax', 'status-approved-alphax', 'status-rejected-alphax', 'status-expired-alphax', 'status-info-alphax');
+            let iconHtml = '<i class="fas fa-spinner fa-spin mr-2"></i>';
+            let fullMessage = message || 'Checking status...';
+            switch(status) {
+                case 'pending': container.classList.add('status-pending-alphax'); iconHtml = '<i class="fas fa-hourglass-half mr-2"></i>'; fullMessage = message || 'Waiting for admin approval...'; break;
+                case 'approved': container.classList.add('status-approved-alphax'); iconHtml = `<span class="tick-animation-alphax mr-2"><svg viewBox="0 0 52 52"><circle class="tick-circle" cx="26" cy="26" r="25"/><path class="tick-path" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></span>`; fullMessage = message || 'Access Approved! Redirecting...'; break;
+                case 'rejected': container.classList.add('status-rejected-alphax'); iconHtml = '<i class="fas fa-times-circle mr-2"></i>'; fullMessage = message || 'Access Denied.'; break;
+                case 'expired': container.classList.add('status-expired-alphax'); iconHtml = '<i class="fas fa-clock mr-2"></i>'; fullMessage = message || 'Access Expired.'; break;
+                default: container.classList.add('status-info-alphax'); break;
+            }
+            container.innerHTML = `${iconHtml} ${fullMessage}`;
+        }
+
+        function startApprovalCheckAlphaX() {
+            if (approvalCheckIntervalAlphaX) clearInterval(approvalCheckIntervalAlphaX);
+            const check = async () => {
+                if (!currentDeviceIdAlphaX) currentDeviceIdAlphaX = getOrGenerateUserDeviceIdAlphaX();
+                if (!currentDeviceIdAlphaX) return;
+                try {
+                    const maintenanceSnapshot = await db.ref("alphax_maintenanceStatus/status").get();
+                    alphaX_isMaintenanceModeActive = maintenanceSnapshot.val() === true;
+                    if (alphaX_isMaintenanceModeActive) {
+                        const msgSnapshot = await db.ref("alphax_maintenanceStatus/message").get();
+                        showMaintenancePageAlphaX(msgSnapshot.val() || "ALPHA X AI is under maintenance.");
+                        if (approvalCheckIntervalAlphaX) clearInterval(approvalCheckIntervalAlphaX); return;
+                    }
+                    const deviceSnapshot = await db.ref(`alphax_user_access_requests/${currentDeviceIdAlphaX}`).get();
+                    const deviceData = deviceSnapshot.val();
+                    if (deviceData) {
+                        if (deviceData.telegramUsername !== localStorage.getItem(TELEGRAM_USERNAME_STORAGE_KEY_ALPHAX)) { updateApprovalStatusUIAlphaX('pending', 'Username mismatch.'); return; }
+                        if (deviceData.status === 'approved') {
+                            if (deviceData.expiryTimestamp && Date.now() > deviceData.expiryTimestamp) { updateApprovalStatusUIAlphaX('expired'); handleLogoutAlphaX(false); }
+                            else { clearInterval(approvalCheckIntervalAlphaX); approvalCheckIntervalAlphaX = null; updateApprovalStatusUIAlphaX('approved'); localStorage.setItem(PREDICTOR_LOGGED_IN_KEY_ALPHAX, 'true'); alphaX_showLoginToast('Access Approved! Welcome!', 'success'); setTimeout(() => { showScreenAlphaX('appContainer'); initializeAppPredictor(); }, 1500); }
+                        } else if (deviceData.status === 'rejected') { updateApprovalStatusUIAlphaX('rejected'); }
+                        else { updateApprovalStatusUIAlphaX('pending'); }
+                    } else { updateApprovalStatusUIAlphaX('pending', 'Device not registered.'); }
+                } catch (error) { console.error("Error checking approval:", error); updateApprovalStatusUIAlphaX('info', 'Error checking status.');}
+            };
+            check(); approvalCheckIntervalAlphaX = setInterval(check, APPROVAL_CHECK_INTERVAL_MS_ALPHAX);
+        }
+
+        function alphaX_showLoginToast(message, type = 'info') {
+            const toastEl = document.getElementById('loginToast');
+            const messageEl = document.getElementById('loginToastMessage');
+            const iconEl = toastEl.querySelector('.icon');
+            if (!toastEl || !messageEl || !iconEl) return;
+            messageEl.textContent = message;
+            iconEl.className = 'icon fas ';
+            if (type === 'success') iconEl.classList.add('fa-check-circle', 'success');
+            else if (type === 'error') iconEl.classList.add('fa-times-circle', 'error');
+            else iconEl.classList.add('fa-info-circle', 'info');
+            toastEl.style.display = 'flex';
+            setTimeout(() => { toastEl.style.display = 'none'; }, 4000);
+        }
+        
+        function alphaX_updateLanguage() {
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                const translation = translations[alphaX_currentLanguage]?.[key] || translations['en']?.[key]; 
+                if (translation) {
+                    if (translation.includes('<') && translation.includes('>')) {
+                        element.innerHTML = translation;
+                    } else {
+                        element.textContent = translation;
+                    }
+                }
+            });
+            updateHistoryUI_V2(); 
+            updateStatsUI_V2();   
+
+            const serverIndicator = document.getElementById('serverStatusIndicator');
+            const isConnected = serverIndicator && serverIndicator.classList.contains('bg-win-color');
+            alphaX_updateServerStatusUI(isConnected);
+        }
+
+        function alphaX_playSound(type) { // Retained basic sound player
+            if (!alphaX_isSoundEnabled) return;
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                gainNode.gain.setValueAtTime(0.08, audioContext.currentTime); 
+
+                switch(type) {
+                    case 'win': oscillator.type = 'sine'; oscillator.frequency.setValueAtTime(600, audioContext.currentTime); break;
+                    case 'loss': oscillator.type = 'square'; oscillator.frequency.setValueAtTime(200, audioContext.currentTime); break;
+                    case 'notify': oscillator.type = 'triangle'; oscillator.frequency.setValueAtTime(440, audioContext.currentTime); break;
+                    case 'confirm': case 'toggle': oscillator.type = 'sine'; oscillator.frequency.setValueAtTime(500, audioContext.currentTime); break;
+                    default: gainNode.gain.setValueAtTime(0, audioContext.currentTime); 
+                }
+                if (gainNode.gain.value > 0) { 
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 0.15); 
+                }
+            } catch (e) { console.warn("Sound play failed:", e); }
+        }
+        
+        function alphaX_updateServerStatusUI(isConnected, message = null) {
+            const lang = alphaX_currentLanguage; 
+            if(alphaX_serverStatusEl && alphaX_serverStatusIndicator) {
+                if (alphaX_isMaintenanceModeActive) {
+                    alphaX_serverStatusEl.textContent = message || translations[lang]?.under_maintenance || translations['en']?.under_maintenance;
+                    alphaX_serverStatusIndicator.className = 'w-3 h-3 bg-warning-color rounded-full';
+                } else if (isConnected) {
+                    alphaX_serverStatusEl.textContent = message || translations[lang]?.connected || translations['en']?.connected;
+                    alphaX_serverStatusIndicator.className = 'w-3 h-3 bg-win-color rounded-full animate-ping';
+                } else {
+                    alphaX_serverStatusEl.textContent = message || translations[lang]?.disconnected || translations['en']?.disconnected;
+                    alphaX_serverStatusIndicator.className = 'w-3 h-3 bg-loss-color rounded-full';
+                }
+            }
+        }
+
+        function alphaX_openVideoPopup() { if(alphaX_youtubeVideoEl) alphaX_youtubeVideoEl.src = "https://www.youtube.com/embed/dQw4w9WgXcQ"; if(alphaX_videoPopupEl) alphaX_videoPopupEl.classList.add('active'); alphaX_playSound('toggle'); }
+        function alphaX_closeVideoPopup() { if(alphaX_youtubeVideoEl) alphaX_youtubeVideoEl.src = ""; if(alphaX_videoPopupEl) alphaX_videoPopupEl.classList.remove('active'); alphaX_playSound('toggle'); }
+        let alphaX_currentConfirmCallback = null;
+        function alphaX_showConfirmModal(messageKey, onConfirm) { const message = translations[alphaX_currentLanguage]?.[messageKey] || translations['en']?.[messageKey] || "Are you sure?"; if(alphaX_modalMessageEl) alphaX_modalMessageEl.textContent = message; if(alphaX_confirmModalEl) alphaX_confirmModalEl.classList.add('active'); alphaX_currentConfirmCallback = onConfirm; alphaX_playSound('notify'); }
+        function alphaX_resetSettings() { alphaX_showConfirmModal('reset_settings_confirm', () => { alphaX_currentLanguage = 'en'; alphaX_isSoundEnabled = true; alphaX_isNotificationsEnabled = false; alphaX_isAdvancedModeActive = true; localStorage.setItem('alphaXAiLanguage', alphaX_currentLanguage); localStorage.setItem('alphaXAiSound', alphaX_isSoundEnabled.toString()); localStorage.setItem('alphaXAiNotifications', alphaX_isNotificationsEnabled.toString()); localStorage.setItem('alphaXAiPredictionMode', alphaX_isAdvancedModeActive ? 'advanced' : 'normal'); document.getElementById('languageToggle').checked = false; document.getElementById('notificationToggle').checked = false; document.getElementById('soundToggle').checked = true; document.getElementById('predictionModeToggle').checked = true; alphaX_updateLanguage(); showToast('Settings reset to default.', 'info'); alphaX_playSound('confirm'); }); }
+        function alphaX_pausePredictionsUserInitiated(minutes) { showToast(`Pause for ${minutes}min requested - logic to be fully implemented.`, 'info');} 
+        function alphaX_disablePredictionsUserInitiated(minutes) {showToast(`Disable for ${minutes}min requested - logic to be fully implemented.`, 'info');} 
+
+
+        function initializeAppPredictor() {
+            console.log("Initializing AlphaX Predictor with Backend Integration...");
+            
+            const langToggle = document.getElementById('languageToggle');
+            if(langToggle) langToggle.checked = alphaX_currentLanguage === 'hi';
+            const notifToggle = document.getElementById('notificationToggle');
+            if(notifToggle) notifToggle.checked = alphaX_isNotificationsEnabled;
+            const soundToggle = document.getElementById('soundToggle');
+            if(soundToggle) soundToggle.checked = alphaX_isSoundEnabled;
+            isMuted = !alphaX_isSoundEnabled;
+            const predModeToggle = document.getElementById('predictionModeToggle');
+            if(predModeToggle) predModeToggle.checked = alphaX_isAdvancedModeActive;
+
+            alphaX_updateLanguage(); 
+            setupFirebaseListeners(); 
+
+            triggerBackendPredictionCycle().catch(error => console.error("Initial backend trigger failed:", error)); 
+            if(backendCallInterval) clearInterval(backendCallInterval); 
+            backendCallInterval = setInterval(() => {
+                triggerBackendPredictionCycle().catch(error => console.error("Scheduled backend trigger failed:", error));
+            }, 15000); 
+
+            if (alphaX_isNotificationsEnabled && Notification.permission !== 'granted') {
+                Notification.requestPermission().then(permission => {
+                    if (permission !== 'granted') {
+                        alphaX_isNotificationsEnabled = false;
+                        localStorage.setItem('alphaXAiNotifications', 'false');
+                        if(notifToggle) notifToggle.checked = false;
+                        showToast('Notifications permission denied.', 'error');
+                    } else {
+                         showToast('Notifications enabled!', 'success');
+                    }
+                });
+            }
+
+            const alphaX_navItems = document.querySelectorAll('#appContainer .navigation ul li');
+            const alphaX_sections = document.querySelectorAll('#appContainer .content-section');
+            alphaX_navItems.forEach((item) => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alphaX_navItems.forEach(nav => nav.classList.remove('active'));
+                    item.classList.add('active');
+                    const sectionId = item.querySelector('a').getAttribute('data-section');
+                    alphaX_sections.forEach(section => section.classList.remove('active'));
+                    const targetSection = document.getElementById(sectionId);
+                    if (targetSection) {
+                        targetSection.classList.add('active');
+                        gsap.fromTo(targetSection, {opacity: 0, y: 10}, {opacity: 1, y: 0, duration: 0.3, ease: "power1.out"});
+                    }
+                    alphaX_playSound('toggle'); 
+                });
+            });
+            const homeNavLi = document.querySelector('#appContainer .navigation ul li a[data-section="homeSection"]')?.closest('li');
+            if (homeNavLi) {
+                alphaX_navItems.forEach(li => li.classList.remove('active'));
+                homeNavLi.classList.add('active');
+            }
+            const homeSection = document.getElementById('homeSection');
+            if(homeSection && !homeSection.classList.contains('active')) {
+                 alphaX_sections.forEach(section => section.classList.remove('active'));
+                homeSection.classList.add('active');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const submitUsernameBtnAlphaX_el = document.getElementById('submitUsernameBtnAlphaX');
+            const copyDeviceIdBtnAlphaX_el = document.getElementById('copyDeviceIdBtnAlphaX');
+            const logoutFromDevicePageBtnAlphaX_el = document.getElementById('logoutFromDevicePageBtnAlphaX');
+
+            if(submitUsernameBtnAlphaX_el) submitUsernameBtnAlphaX_el.addEventListener('click', handleSubmitUsernameAlphaX);
+            if(copyDeviceIdBtnAlphaX_el) copyDeviceIdBtnAlphaX_el.addEventListener('click', copyCurrentDeviceIdAlphaX);
+            if(logoutFromDevicePageBtnAlphaX_el) logoutFromDevicePageBtnAlphaX_el.addEventListener('click', () => handleLogoutAlphaX(true));
+
+            const langToggle = document.getElementById('languageToggle');
+            if(langToggle) langToggle.addEventListener('change', (e) => { alphaX_currentLanguage = e.target.checked ? 'hi' : 'en'; localStorage.setItem('alphaXAiLanguage', alphaX_currentLanguage); alphaX_updateLanguage(); alphaX_playSound('toggle'); });
+            const notifToggle = document.getElementById('notificationToggle');
+            if(notifToggle) notifToggle.addEventListener('change', (e) => { alphaX_isNotificationsEnabled = e.target.checked; localStorage.setItem('alphaXAiNotifications', alphaX_isNotificationsEnabled.toString()); if(alphaX_isNotificationsEnabled && Notification.permission !== "granted") { Notification.requestPermission().then(p => { if(p !== 'granted') { alphaX_isNotificationsEnabled = false; localStorage.setItem('alphaXAiNotifications', 'false'); e.target.checked = false; showToast('Notifications denied.', 'error');} else {showToast('Notifications enabled!', 'success');} }); } else if (!alphaX_isNotificationsEnabled) { showToast('Notifications disabled.', 'info');} alphaX_playSound('toggle'); });
+            const soundToggle = document.getElementById('soundToggle');
+            if(soundToggle) soundToggle.addEventListener('change', (e) => { alphaX_isSoundEnabled = e.target.checked; localStorage.setItem('alphaXAiSound', alphaX_isSoundEnabled.toString()); isMuted = !alphaX_isSoundEnabled; if (alphaX_isSoundEnabled) alphaX_playSound('toggle'); });
+            const predModeToggle = document.getElementById('predictionModeToggle');
+            if(predModeToggle) predModeToggle.addEventListener('change', (e) => { alphaX_isAdvancedModeActive = e.target.checked; localStorage.setItem('alphaXAiPredictionMode', alphaX_isAdvancedModeActive ? 'advanced' : 'normal'); alphaX_playSound('toggle'); showToast(`Prediction mode set to ${alphaX_isAdvancedModeActive ? 'Advanced' : 'Normal'}.`, 'info'); });
+            
+            const deleteAllHistoryBtn = document.getElementById('deleteAllHistoryBtn');
+            if(deleteAllHistoryBtn) deleteAllHistoryBtn.addEventListener('click', () => { 
+                alphaX_showConfirmModal('delete_all_confirm', async () => { 
+                    try {
+                        await db.ref(SHARED_GAME_HISTORY_PATH).remove(); 
+                        await db.ref(SHARED_STATS_PATH).set({ streak: 0, winLevel: 0, consecutiveLosses: 0, lastUpdated: firebase.database.ServerValue.TIMESTAMP }); 
+                        localHistoryData = []; 
+                        window.streak = 0; window.winLevel = 0; window.consecutiveLosses = 0; // Reset local window vars
+                        lastFetchedPeriod = null; // Reset last fetched period
+                        
+                        showToast('All history and stats cleared from server.', 'info'); 
+                        alphaX_playSound('confirm'); 
+                    } catch (error) {
+                        console.error("Error deleting all history/stats:", error);
+                        showToast("Failed to clear all history.", "error");
+                    }
+                }); 
+            });
+
+            const confirmModalBtn = document.getElementById('confirmModalBtn');
+            if(confirmModalBtn) confirmModalBtn.addEventListener('click', () => { if (alphaX_currentConfirmCallback) alphaX_currentConfirmCallback(); if(alphaX_confirmModalEl) alphaX_confirmModalEl.classList.remove('active'); alphaX_playSound('confirm'); alphaX_currentConfirmCallback = null; });
+            const cancelModalBtn = document.getElementById('cancelModalBtn');
+            if(cancelModalBtn) cancelModalBtn.addEventListener('click', () => { if(alphaX_confirmModalEl) alphaX_confirmModalEl.classList.remove('active'); alphaX_playSound('toggle'); alphaX_currentConfirmCallback = null; });
+            
+            const videoPopupEl_listener = document.getElementById('videoPopup');
+            const videoPopupCloseButtons = videoPopupEl_listener ? videoPopupEl_listener.querySelectorAll('button[onclick*="alphaX_closeVideoPopup"]') : []; 
+            videoPopupCloseButtons.forEach(btn => btn.addEventListener('click', alphaX_closeVideoPopup));
+
+            const streakBreakPopupEl_listener = document.getElementById('streakBreakPopup');
+            const streakBreakContinueButton = streakBreakPopupEl_listener ? streakBreakPopupEl_listener.querySelector('#cancelStreakModalBtn') : null;
+            if(streakBreakContinueButton) streakBreakContinueButton.addEventListener('click', () => { if(alphaX_streakBreakPopupEl) alphaX_streakBreakPopupEl.classList.remove('active'); alphaX_playSound('toggle');});
+            
+            const badTrendPopupEl_listener = document.getElementById('badTrendPopup');
+            const badTrendContinueButton = badTrendPopupEl_listener ? badTrendPopupEl_listener.querySelector('#cancelBadTrendModalBtn') : null;
+            if(badTrendContinueButton) badTrendContinueButton.addEventListener('click', () => { if(alphaX_badTrendPopupEl) alphaX_badTrendPopupEl.classList.remove('active'); alphaX_playSound('toggle');});
+
+            currentDeviceIdAlphaX = getOrGenerateUserDeviceIdAlphaX();
+            const isLoggedInAlphaX = localStorage.getItem(PREDICTOR_LOGGED_IN_KEY_ALPHAX) === 'true';
+            const storedUsernameAlphaX = localStorage.getItem(TELEGRAM_USERNAME_STORAGE_KEY_ALPHAX);
+            const telegramUsernameInputAlphaX_el_check = document.getElementById('telegramUsernameInputAlphaX');
+
+            db.ref("alphax_maintenanceStatus/status").get().then(statusSnapshot => {
+                alphaX_isMaintenanceModeActive = statusSnapshot.val() === true;
+                if (alphaX_isMaintenanceModeActive) {
+                    db.ref("alphax_maintenanceStatus/message").get().then(messageSnapshot => {
+                        showMaintenancePageAlphaX(messageSnapshot.val() || "ALPHA X AI is currently under maintenance.");
+                    }).catch(err => { console.error("Error fetching maintenance message:", err); showMaintenancePageAlphaX(); });
+                } else {
+                    if (isLoggedInAlphaX && storedUsernameAlphaX && currentDeviceIdAlphaX) {
+                        if(telegramUsernameInputAlphaX_el_check) telegramUsernameInputAlphaX_el_check.value = storedUsernameAlphaX;
+                        showScreenAlphaX('loginPage2AlphaX'); updateApprovalStatusUIAlphaX('info', 'Verifying access...'); startApprovalCheckAlphaX();
+                    } else if (storedUsernameAlphaX && currentDeviceIdAlphaX) {
+                        if(telegramUsernameInputAlphaX_el_check) telegramUsernameInputAlphaX_el_check.value = storedUsernameAlphaX;
+                        showScreenAlphaX('loginPage2AlphaX'); startApprovalCheckAlphaX();
+                    } else { showScreenAlphaX('loginPage1AlphaX'); }
+                }
+            }).catch(error => {
+                console.error("Error checking maintenance status:", error);
+                alphaX_isMaintenanceModeActive = false;
+                 if (isLoggedInAlphaX && storedUsernameAlphaX && currentDeviceIdAlphaX) { if(telegramUsernameInputAlphaX_el_check) telegramUsernameInputAlphaX_el_check.value = storedUsernameAlphaX; showScreenAlphaX('loginPage2AlphaX'); updateApprovalStatusUIAlphaX('info', 'Verifying access...'); startApprovalCheckAlphaX(); }
+                 else if (storedUsernameAlphaX && currentDeviceIdAlphaX) { if(telegramUsernameInputAlphaX_el_check) telegramUsernameInputAlphaX_el_check.value = storedUsernameAlphaX; showScreenAlphaX('loginPage2AlphaX'); startApprovalCheckAlphaX(); }
+                 else { showScreenAlphaX('loginPage1AlphaX'); }
+            });
+        });
+    </script>
+</body>
+</html>
