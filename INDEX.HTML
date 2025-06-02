@@ -18,7 +18,7 @@
             --bg-tertiary: #171923;
             --text-primary: #edf2f7;
             --text-secondary: #a0aec0;
-            --text-muted: #718096; /* For less prominent text */
+            --text-muted: #718096; 
             --accent-primary: #38b2ac;
             --accent-secondary: #4299e1;
             --card-border-color: #4a5568;
@@ -35,6 +35,11 @@
             --skipped-color: #718096;
             --warning-color: #f59e0b;
             --maintenance-text-color: #ecc94b;
+
+            --history-item-bg: var(--bg-secondary);
+            --history-item-text: var(--text-primary);
+            --history-item-subtext: var(--text-secondary);
+            --history-icon-bg-opacity: 0.2;
         }
 
         html[data-theme="dark"] {
@@ -53,9 +58,10 @@
             --input-border: var(--card-border-color);
             --input-focus-border: var(--accent-primary);
             --input-focus-shadow: var(--shadow-accent-glow);
-            --history-item-bg: var(--bg-dark-secondary); /* For history items in dark mode */
-            --history-item-text: var(--text-light-primary);
-            --history-item-subtext: var(--text-light-secondary);
+            --history-item-bg: var(--bg-secondary);
+            --history-item-text: var(--text-primary);
+            --history-item-subtext: var(--text-secondary);
+            --history-icon-bg-opacity: 0.2;
         }
 
         html[data-theme="light"] {
@@ -74,9 +80,10 @@
             --input-border: #B0C4DE; /* Light Steel Blue */
             --input-focus-border: var(--accent-primary);
             --input-focus-shadow: rgba(95, 158, 160, 0.15);
-            --history-item-bg: rgba(255, 240, 245, 0.9); /* Lavender Blush for history items in light */
-            --history-item-text: #333;
-            --history-item-subtext: #555;
+            --history-item-bg: rgba(255, 240, 245, 0.9); 
+            --history-item-text: #333333;
+            --history-item-subtext: #555555;
+            --history-icon-bg-opacity: 0.1;
         }
 
 
@@ -88,17 +95,13 @@
             position: relative;
             margin: 0;
             padding: 0;
-            color: var(--text-primary); /* Default text color from theme */
+            color: var(--text-primary); 
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center; 
         }
-        * {
-            /* Removed global color override to allow theme variables to take effect */
-            /* color: var(--text-primary); */ 
-        }
-
+        
         .auth-screen {
             display: none; 
             flex-direction: column;
@@ -139,10 +142,10 @@
             text-transform: uppercase; animation: strokeLoginTheme 5s infinite alternate;
             stroke-width: 1.2; stroke: var(--accent-primary);
             font-size: 50px; 
-            fill: rgba(0,0,0,0); /* Transparent fill by default */
+            fill: rgba(0,0,0,0); 
             letter-spacing: 1px;
         }
-         @keyframes strokeLoginTheme { /* Adjusted for theming */
+         @keyframes strokeLoginTheme { 
             0% { fill: transparent; stroke: var(--accent-primary); stroke-dashoffset: 25%; stroke-dasharray: 0 50%; stroke-width: 1.2; }
             70% { fill: transparent; stroke: var(--accent-secondary); }
             80% { fill: transparent; stroke: var(--accent-primary); stroke-width: 2.5; }
@@ -175,7 +178,7 @@
 
         .auth-button-alphax { 
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            color: var(--bg-tertiary); /* Ensure contrast */
+            color: var(--bg-tertiary); 
             padding: 0.9rem 1.8rem; border-radius: 1rem; font-weight: 600;
             transition: all 0.3s ease; border: none; cursor: pointer;
             display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
@@ -252,11 +255,11 @@
 
         .popup, .modal {
             display: none; position: fixed; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); background: var(--bg-secondary); /* Themed background */
+            transform: translate(-50%, -50%); background: var(--bg-secondary); 
             padding: 1.5rem; border-radius: 1.5rem; box-shadow: 0 6px 16px var(--shadow-color);
             backdrop-filter: blur(8px); z-index: 1000; width: 90%; max-width: 400px;
             border: 1px solid var(--accent-primary); text-align: center;
-            color: var(--text-primary); /* Ensure text inside popup is themed */
+            color: var(--text-primary); 
         }
         .popup h3, .modal h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-primary); }
         .popup p, .modal p { margin-bottom: 1.5rem; color: var(--text-secondary); font-size: 0.9rem; }
@@ -266,12 +269,12 @@
             transition: all 0.2s ease; border: none; cursor: pointer;
             min-width: 100px;
         }
-        .popup button.primary, .modal button.primary { background: var(--accent-primary); color: var(--bg-tertiary); } /* Ensure contrast */
+        .popup button.primary, .modal button.primary { background: var(--accent-primary); color: var(--bg-tertiary); } 
         .popup button.primary:hover, .modal button.primary:hover { background: var(--accent-secondary); }
         .popup button.secondary, .modal button.secondary { background: var(--bg-tertiary); color: var(--text-primary); border: 1px solid var(--card-border-color); }
         .popup button.secondary:hover, .modal button.secondary:hover { background: var(--card-border-color); }
         .popup button.danger, .modal button.danger { background: var(--loss-color); color: var(--text-primary); }
-        .popup button.danger:hover, .modal button.danger:hover { background: #c53030; } /* Darken red on hover */
+        .popup button.danger:hover, .modal button.danger:hover { background: #c53030; } 
 
 
         .popup.active, .modal.active { display: block; animation: fadeInPopup 0.3s ease-out; }
@@ -285,7 +288,7 @@
             border-radius: 1.5rem; box-shadow: 0 6px 12px var(--shadow-color);
             backdrop-filter: blur(5px); position: relative; margin: 0.75rem;
             overflow: hidden; border: 1px solid var(--card-border-color);
-            color: var(--text-primary); /* Ensure text inside card is themed */
+            color: var(--text-primary); 
         }
         .card:hover {
             transform: translateY(-6px) scale(1.03);
@@ -300,7 +303,7 @@
             stroke: var(--accent-primary); font-size: 130px; fill: transparent;
         }
         @media (max-width: 768px) { #appHeaderSvgContainer svg text { font-size: 90px; } }
-        @keyframes strokeAppHeaderTheme { /* Adjusted for theming */
+        @keyframes strokeAppHeaderTheme { 
             0% { fill: transparent; stroke: var(--accent-primary); stroke-dashoffset: 25%; stroke-dasharray: 0 50%; stroke-width: 1.2; }
             70% { fill: transparent; stroke: var(--accent-secondary); }
             80% { fill: transparent; stroke: var(--accent-primary); stroke-width: 2.5; }
@@ -309,8 +312,8 @@
         .history-container { display: flex; flex-direction: column; gap: 1rem; max-height: none; overflow: visible; position: relative; }
         .history-item {
             transition: all 0.3s ease; width: 100%; max-width: 100%; margin: 0; border-radius: 1.2rem;
-            background: var(--history-item-bg); /* Themed background */
-            color: var(--history-item-text); /* Themed text */
+            background: var(--history-item-bg); 
+            color: var(--history-item-text); 
             backdrop-filter: blur(5px);
             box-shadow: 0 4px 14px var(--shadow-color); position: relative; overflow: hidden; padding: 0.8rem 1rem; 
             border-left: 4px solid transparent;
@@ -324,28 +327,28 @@
         }
         .history-item .period-info { 
             gap: 0.75rem; 
-            min-width: 100px; /* Adjusted for better alignment */
-            flex-shrink: 0; /* Prevent shrinking */
+            min-width: 100px; 
+            flex-shrink: 0; 
         }
          .history-item .prediction-actual-info { 
-            gap: 0.5rem; /* Reduced gap for tighter packing */
+            gap: 0.5rem; 
             justify-content: center; 
             flex-grow: 1; 
             text-align: center;
-            flex-wrap: nowrap; /* Prevent wrapping if possible */
+            flex-wrap: nowrap; 
         }
         .history-item .prediction-actual-info > div { 
-            min-width: 60px; /* Adjusted min-width */
-            padding: 0 0.25rem; /* Small horizontal padding */
+            min-width: 60px; 
+            padding: 0 0.25rem; 
         }
         .history-item .status-action-info { 
             gap: 0.5rem; 
             justify-content: flex-end; 
-            min-width: 70px; /* Adjusted */
+            min-width: 70px; 
             flex-shrink: 0;
         }
         .history-item p { color: var(--history-item-text); }
-        .history-item p.text-xs { color: var(--history-item-subtext); } /* For subtext like "Conf." */
+        .history-item p.text-xs { color: var(--history-item-subtext); } 
         .history-item strong { color: var(--history-item-text); }
 
 
@@ -1178,7 +1181,7 @@
                 how_it_works_li3_adv: "<strong>उन्नत पैटर्न मिलान:</strong> आवर्ती अनुक्रमों (जैसे, BSBS, BBSS) और वैकल्पिक प्रवृत्तियों की पहचान करता है।",
                 how_it_works_li4_adv: "<strong>स्ट्रीक गतिशीलता:</strong> दोनों परिणामों के लिए वर्तमान और ऐतिहासिक जीत/हार की लकीरों का विश्लेषण करता है, निरंतरता या उत्क्रमण की संभावना का आकलन करता है।",
                 how_it_works_li11_adv: "<strong>रिलेटिव स्ट्रेंथ इंडेक्स (RSI) विश्लेषण:</strong> हालिया संख्या गतिविधियों (0-9) की गति और परिवर्तन को मापता है ताकि संभावित ओवरबॉट (SMALL की भविष्यवाणी) या ओवरसोल्ड (BIG की भविष्यवाणी) स्थितियों की पहचान की जा सके।",
-                how_it_works_li_macd: "<strong>मूविंग एवरेज कन्वर्जेंस डाइवर्जेंस (MACD) विश्लेषक:</strong> मोमेंटम शिफ्ट की पहचान करने के लिए संख्यात्मक परिणामों के दो मूविंग एवरेज के बीच संबंध को ट्रैक करता है।",
+                how_it_works_li_macd: "<strong>मूविंग एवरेज कन्वर्जेंस डाइवर्जेंस (MACD) विश्लेषक:</strong> मोमेंटम शिफ्ट की पहचान करने के लिए संख्यात्मक परिणामों के दो मूवING एवरेज के बीच संबंध को ट्रैक करता है।",
                 how_it_works_li_bollinger: "<strong>बोलिंगर बैंड विश्लेषक:</strong> अस्थिरता और संभावित अतिविस्तार का आकलन करने के लिए मूविंग एवरेज के आसपास मानक विचलन बैंड का उपयोग करता है।",
                 how_it_works_li_inter_signal: "<strong>अंतर-सिग्नल पुष्टिकरण इंजन:</strong> समग्र आत्मविश्वास को समायोजित करने के लिए विभिन्न विश्लेषणात्मक इंजनों के बीच समझौते के स्तर का आकलन करता है।",
                 how_it_works_li_omega_mind: "<strong>ओमेगा माइंड प्रोटोकॉल:</strong> एक अनुकूली जोखिम प्रबंधन परत।<ul><li>स्तर 0 (सामान्य): मानक भविष्यवाणी तर्क।</li><li>स्तर 1 (सावधानी - 1 हार): कम आत्मविश्वास, बढ़ी हुई संवेदनशीलता।</li><li>स्तर 2 (चेतावनी - 2 हार): काफी कम आत्मविश्वास, पिछली हार के पैटर्न के प्रति मजबूत पूर्वाग्रह।</li><li>स्तर 3 (गंभीर - 3+ हार): भविष्यवाणी स्वतः अक्षम या अत्यधिक रूढ़िवादी फ़ॉलबैक का उपयोग; स्थिरीकरण पर ध्यान केंद्रित करें।</li></ul>",
@@ -1304,45 +1307,58 @@
                 const itemConfidence = item.confidence !== undefined ? `${item.confidence}%` : '-';
                 const itemActual = item.actual !== undefined ? `${item.actual} (${item.resultType || ''})` : '-';
 
+                let statusIconClass = 'fa-clock text-yellow-500 animate-spin'; 
+                let itemSpecificClass = itemStatus.toLowerCase(); 
+
+                if (itemStatus === 'WIN') {
+                    statusIconClass = 'fa-check-circle text-green-500 win-animation';
+                } else if (itemStatus === 'LOSS') {
+                    statusIconClass = 'fa-times-circle text-red-500 loss-animation';
+                } else if (itemStatus === 'Skipped') {
+                    statusIconClass = 'fa-ban text-gray-500';
+                }
+                
+                let historyStatusIconBgStyle = `background-color: color-mix(in srgb, var(--${itemStatus.toLowerCase()}-color, var(--pending-color)) var(--history-icon-bg-opacity), transparent);`;
+                 if (itemStatus === 'Pending') { // Explicit for pending to ensure correct variable use
+                     historyStatusIconBgStyle = `background-color: color-mix(in srgb, var(--pending-color) var(--history-icon-bg-opacity), transparent);`;
+                }
+
+
                 return `
-                <div class="history-item ${itemStatus.toLowerCase()} animate-bounceIn" 
+                <div class="history-item ${itemSpecificClass} animate-bounceIn" 
                      data-id="${item.id}" 
                      style="animation-delay: ${index * 0.05}s;">
                 
                   <div class="period-info">
-                    <div class="w-8 h-8 md:w-10 md:h-10 bg-[var(--accent-secondary)] bg-opacity-20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <div class="w-8 h-8 md:w-10 md:h-10 bg-[var(--accent-secondary)] bg-opacity-[var(--history-icon-bg-opacity)] rounded-full flex items-center justify-center flex-shrink-0">
                       <i class="fas fa-history text-sm md:text-base text-[var(--accent-secondary)] opacity-80"></i>
                     </div>
                     <div>
                       <p class="text-xs md:text-sm text-[var(--history-item-subtext)]">${translations[alphaX_currentLanguage]?.period || 'Period'}</p>
-                      <p class="font-semibold text-sm md:text-base">${item.periodDisplay || '-'}</p>
+                      <p class="font-semibold text-sm md:text-base text-[var(--history-item-text)]">${item.periodDisplay || '-'}</p>
                     </div>
                   </div>
 
                   <div class="prediction-actual-info">
                     <div>
                       <p class="text-xs md:text-sm text-[var(--history-item-subtext)]">${translations[alphaX_currentLanguage]?.prediction || 'Prediction'}</p>
-                      <p class="font-semibold text-sm md:text-base">${itemPrediction}</p> 
+                      <p class="font-semibold text-sm md:text-base text-[var(--history-item-text)]">${itemPrediction}</p> 
                     </div>
                     <div>
                       <p class="text-xs md:text-sm text-[var(--history-item-subtext)]">Conf.</p>
-                      <p class="font-semibold text-xs md:text-sm">${itemConfidence}</p>
+                      <p class="font-semibold text-xs md:text-sm text-[var(--history-item-text)]">${itemConfidence}</p>
                     </div>
                      <div>
                         <p class="text-xs md:text-sm text-[var(--history-item-subtext)]">Actual</p>
-                        <p class="font-semibold text-sm md:text-base">${itemActual}</p>
+                        <p class="font-semibold text-sm md:text-base text-[var(--history-item-text)]">${itemActual}</p>
                       </div>
                   </div>
                 
                   <div class="status-action-info">
-                    <div class="history-status-icon 
-                      ${itemStatus === 'WIN' ? 'bg-green-100' : itemStatus === 'LOSS' ? 'bg-red-100' : itemStatus === 'Skipped' ? 'bg-gray-200' : 'bg-yellow-100'}">
-                      <i class="fas ${itemStatus === 'WIN' ? 'fa-check-circle text-green-500 win-animation' : 
-                                    itemStatus === 'LOSS' ? 'fa-times-circle text-red-500 loss-animation' : 
-                                    itemStatus === 'Skipped' ? 'fa-ban text-gray-500' :
-                                    'fa-clock text-yellow-500 animate-spin'}"></i>
+                    <div class="history-status-icon" style="${historyStatusIconBgStyle}">
+                      <i class="fas ${statusIconClass}"></i>
                     </div>
-                    <button class="delete-btn text-[var(--text-light-secondary)] hover:text-[var(--loss-color)] transition p-1.5 rounded-full" data-id="${item.id}" aria-label="Delete history item">
+                    <button class="delete-btn text-[var(--text-muted)] hover:text-[var(--loss-color)] transition p-1.5 rounded-full" data-id="${item.id}" aria-label="Delete history item">
                       <i class="fas fa-trash-alt text-sm md:text-base"></i>
                     </button>
                   </div>
@@ -1421,7 +1437,7 @@
         }
         
         let backendCallInterval = null;
-        let isFetchingBackend = false; // Lock to prevent multiple simultaneous calls
+        let isFetchingBackend = false; 
 
         async function triggerBackendPredictionCycle() {
             if (isFetchingBackend) {
@@ -1504,7 +1520,7 @@
             } else if (systemPrefersDark) {
                 applyTheme('dark');
             } else {
-                applyTheme('light'); // Default to light if no preference or saved theme
+                applyTheme('light'); 
             }
         }
 
@@ -1781,7 +1797,7 @@
         function initializeAppPredictor() {
             console.log("Initializing AlphaX Predictor with Backend Integration...");
             
-            initializeTheme(); // Initialize theme first
+            initializeTheme(); 
 
             const langToggle = document.getElementById('languageToggle');
             if(langToggle) langToggle.checked = alphaX_currentLanguage === 'hi';
@@ -1848,7 +1864,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            initializeTheme(); // Apply theme as soon as DOM is ready
+            initializeTheme(); 
 
             const submitUsernameBtnAlphaX_el = document.getElementById('submitUsernameBtnAlphaX');
             const copyDeviceIdBtnAlphaX_el = document.getElementById('copyDeviceIdBtnAlphaX');
