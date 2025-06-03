@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="dark-mode"> <head>
     <meta charset="UTF-8">
@@ -1626,7 +1627,7 @@
                     finalPrediction = highestConf.prediction;
                     finalConfidence = highestConf.confidence * 0.8; 
                 }
-                finalConfidence *= globalConfidenceAdjustment; // Apply CSSA adjustment
+                finalConfidence *= globalConfidenceAdjustment; 
             }
             
             let omegaAdjustmentFactor = 1.0; let omegaLogicSuffix = ".0_O0";
@@ -1636,6 +1637,13 @@
             finalConfidence *= omegaAdjustmentFactor;
 
             finalConfidence = Math.max(25, Math.min(98, Math.floor(finalConfidence)));
+            
+            // Safeguard against NaN or non-finite numbers for finalConfidence
+            if (!isFinite(finalConfidence)) { 
+                console.warn(`ultraAIPredict: finalConfidence was non-finite (${finalConfidence}). Defaulting to 50. Prediction: ${finalPrediction}, Logic: ${finalLogic}, ActiveLogics: ${activeLogicsList.slice(0,5).join(',')}`);
+                finalConfidence = 50; // Default value if NaN or Infinity occurs
+            }
+
             const dominantSignal = validPredictions.sort((a,b) => b.confidence - a.confidence)[0];
             let finalLogic = dominantSignal ? dominantSignal.logic : 99.0; 
             finalLogic = parseFloat(finalLogic.toString().split('_')[0] + omegaLogicSuffix); 
