@@ -1,9 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="en" class="dark-mode"> <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ALPHA X AI - Quantum Enhanced V3</title>
+    <!--
+        Note: The Tailwind CSS CDN (https://cdn.tailwindcss.com) is used here for ease of development.
+        For production environments, it's recommended to install Tailwind CSS as a PostCSS plugin
+        or use the Tailwind CLI for optimized performance. See https://tailwindcss.com/docs/installation.
+    -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -14,14 +18,14 @@
     <style>
         :root {
             /* Light Theme Variables */
-            --bg-primary-light: #F0F8FF; 
-            --bg-secondary-light: #FFF0F5; 
-            --bg-tertiary-light: #FAF0E6; 
-            --text-primary-light: #2F4F4F; 
-            --text-secondary-light: #708090; 
-            --accent-primary-light: #DDA0DD; 
-            --accent-secondary-light: #ADD8E6; 
-            --card-border-light: #D3D3D3; 
+            --bg-primary-light: #F0F8FF;
+            --bg-secondary-light: #FFF0F5;
+            --bg-tertiary-light: #FAF0E6;
+            --text-primary-light: #2F4F4F;
+            --text-secondary-light: #708090;
+            --accent-primary-light: #DDA0DD;
+            --accent-secondary-light: #ADD8E6;
+            --card-border-light: #D3D3D3;
             --shadow-light: rgba(0, 0, 0, 0.1);
             --input-bg-light: #FFFFFF;
             --input-border-light: #D3D3D3;
@@ -29,25 +33,25 @@
             --input-placeholder-light: #B0C4DE;
             --svg-stroke-light: var(--accent-primary-light);
             --svg-fill-end-light: var(--text-primary-light);
-            --nav-icon-inactive-light: #A9A9A9; 
+            --nav-icon-inactive-light: #A9A9A9;
             --nav-icon-active-light: var(--accent-primary-light);
             --nav-text-light: var(--text-primary-light);
             --nav-indicator-light: var(--accent-primary-light);
-            --button-primary-bg-light: linear-gradient(135deg, #DDA0DD, #DA70D6); 
+            --button-primary-bg-light: linear-gradient(135deg, #DDA0DD, #DA70D6);
             --button-primary-text-light: white;
-            --button-secondary-bg-light: #F5F5F5; 
+            --button-secondary-bg-light: #F5F5F5;
             --button-secondary-text-light: #2F4F4F;
 
 
             /* Dark Theme Variables */
-            --bg-primary-dark: #1a202c; 
-            --bg-secondary-dark: #2d3748; 
-            --bg-tertiary-dark: #171923; 
-            --text-primary-dark: #edf2f7; 
-            --text-secondary-dark: #a0aec0; 
-            --accent-primary-dark: #38b2ac; 
-            --accent-secondary-dark: #4299e1; 
-            --card-border-dark: #4a5568; 
+            --bg-primary-dark: #1a202c;
+            --bg-secondary-dark: #2d3748;
+            --bg-tertiary-dark: #171923;
+            --text-primary-dark: #edf2f7;
+            --text-secondary-dark: #a0aec0;
+            --accent-primary-dark: #38b2ac;
+            --accent-secondary-dark: #4299e1;
+            --card-border-dark: #4a5568;
             --shadow-dark: rgba(0, 0, 0, 0.4);
             --input-bg-dark: rgba(45, 55, 72, 0.7);
             --input-border-dark: var(--card-border-dark);
@@ -55,7 +59,7 @@
             --input-placeholder-dark: #718096;
             --svg-stroke-dark: var(--accent-primary-dark);
             --svg-fill-end-dark: var(--text-primary-dark);
-            --nav-icon-inactive-dark: #a0aec0; 
+            --nav-icon-inactive-dark: #a0aec0;
             --nav-icon-active-dark: var(--accent-primary-dark);
             --nav-text-dark: var(--text-primary-dark);
             --nav-indicator-dark: var(--accent-primary-dark);
@@ -66,12 +70,12 @@
 
 
             /* General Variables (can be overridden by theme) */
-            --win-color: #38a169; 
-            --loss-color: #e53e3e; 
-            --pending-color: #dd6b20; 
-            --skipped-color: #718096; 
-            --warning-color: #f59e0b; 
-            --maintenance-text-color: #ecc94b; 
+            --win-color: #38a169;
+            --loss-color: #e53e3e;
+            --pending-color: #dd6b20;
+            --skipped-color: #718096;
+            --warning-color: #f59e0b;
+            --maintenance-text-color: #ecc94b;
         }
 
         html {
@@ -90,14 +94,14 @@
             position: relative;
             margin: 0;
             padding: 0;
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             transition: background 0.3s ease, color 0.3s ease;
         }
         * {
-            color: inherit; 
+            color: inherit;
             transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
         }
 
@@ -105,11 +109,11 @@
         .auth-screen { display: none; flex-direction: column; justify-content: center; align-items: center; width: 100%; min-height: 95vh; padding: 1rem; animation: fadeInAuthAlphaX 0.7s ease-out; }
         .auth-screen.active { display: flex; }
         @keyframes fadeInAuthAlphaX { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
+
         .auth-container-alphax {
-            background: var(--bg-tertiary-light); 
-            padding: 2rem 2.5rem; border-radius: 1.5rem; 
-            box-shadow: 0 10px 25px var(--shadow-light); 
+            background: var(--bg-tertiary-light);
+            padding: 2rem 2.5rem; border-radius: 1.5rem;
+            box-shadow: 0 10px 25px var(--shadow-light);
             width: 100%; max-width: 450px; text-align: center;
             border: 1px solid var(--card-border-light);
         }
@@ -121,22 +125,22 @@
 
         .auth-title-svg-alphax svg text {
             font-family: 'El Messiri', sans-serif; text-anchor: middle; dominant-baseline: middle;
-            text-transform: uppercase; animation: strokeLoginLight 5s infinite alternate; 
-            stroke-width: 1.2; stroke: var(--svg-stroke-light); 
-            font-size: 50px; fill: rgba(255, 240, 245, 0); letter-spacing: 1px; 
+            text-transform: uppercase; animation: strokeLoginLight 5s infinite alternate;
+            stroke-width: 1.2; stroke: var(--svg-stroke-light);
+            font-size: 50px; fill: rgba(255, 240, 245, 0); letter-spacing: 1px;
         }
         html.dark-mode .auth-title-svg-alphax svg text { animation-name: strokeLoginDark; stroke: var(--svg-stroke-dark); fill: rgba(26, 32, 44, 0); }
-        
+
         @keyframes strokeLoginLight { 0% { fill: rgba(255, 240, 245, 0); stroke: var(--accent-primary-light); stroke-dashoffset: 25%; stroke-dasharray: 0 50%; stroke-width: 1.2; } 70% { fill: rgba(255, 240, 245, 0); stroke: var(--accent-secondary-light); } 80% { fill: rgba(255, 240, 245, 0); stroke: var(--accent-primary-light); stroke-width: 2.5; } 100% { fill: var(--text-primary-light); stroke: rgba(230, 230, 250, 0); stroke-dashoffset: -25%; stroke-dasharray: 50% 0; stroke-width: 0; } }
         @keyframes strokeLoginDark { 0% { fill: rgba(26, 32, 44, 0); stroke: var(--accent-primary-dark); stroke-dashoffset: 25%; stroke-dasharray: 0 50%; stroke-width: 1.2; } 70% { fill: rgba(26, 32, 44, 0); stroke: var(--accent-secondary-dark); } 80% { fill: rgba(26, 32, 44, 0); stroke: var(--accent-primary-dark); stroke-width: 2.5; } 100% { fill: var(--text-primary-dark); stroke: rgba(56, 178, 172, 0); stroke-dashoffset: -25%; stroke-dasharray: 50% 0; stroke-width: 0; } }
-        
+
         .auth-subtitle-alphax { font-size: 0.9rem; color: var(--text-secondary-light); margin-bottom: 1.5rem; }
         html.dark-mode .auth-subtitle-alphax { color: var(--text-secondary-dark); }
 
         .form-input-alphax {
             width: 100%; padding: 0.9rem 1.2rem; border: 1px solid var(--input-border-light);
             border-radius: 1rem; margin-bottom: 1rem; font-size: 1rem;
-            background-color: var(--input-bg-light); color: var(--text-primary-light); 
+            background-color: var(--input-bg-light); color: var(--text-primary-light);
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
         html.dark-mode .form-input-alphax { border-color: var(--input-border-dark); background-color: var(--input-bg-dark); color: var(--text-primary-dark); }
@@ -145,8 +149,8 @@
         .form-input-alphax:focus { outline: none; border-color: var(--input-focus-border-light); box-shadow: 0 0 0 4px rgba(216, 191, 216, 0.3); }
         html.dark-mode .form-input-alphax:focus { border-color: var(--input-focus-border-dark); box-shadow: 0 0 0 4px rgba(56, 178, 172, 0.3); }
 
-        .auth-button-alphax { 
-            background: var(--button-primary-bg-light); color: var(--button-primary-text-light); 
+        .auth-button-alphax {
+            background: var(--button-primary-bg-light); color: var(--button-primary-text-light);
             padding: 0.9rem 1.8rem; border-radius: 1rem; font-weight: 600;
             transition: all 0.3s ease; border: none; cursor: pointer;
             display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
@@ -155,7 +159,7 @@
         }
         html.dark-mode .auth-button-alphax { background: var(--button-primary-bg-dark); color: var(--button-primary-text-dark); box-shadow: 0 5px 12px rgba(0,0,0,0.2); }
         .auth-button-alphax:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 8px 18px rgba(216, 191, 216, 0.5); }
-        html.dark-mode .auth-button-alphax:hover { box-shadow: 0 8px 18px var(--shadow-accent-glow-dark); }
+        html.dark-mode .auth-button-alphax:hover { box-shadow: 0 8px 18px var(--shadow-dark); /* Adjusted for dark mode hover */ }
         .auth-button-alphax:disabled { background: #E6E6FA; color: #B0C4DE; cursor: not-allowed; opacity: 0.8; }
         html.dark-mode .auth-button-alphax:disabled { background: #4a5568; color: var(--text-secondary-dark); }
         .auth-button-alphax i { color: inherit; }
@@ -174,7 +178,7 @@
         .copy-feedback-alphax { display: none; color: var(--win-color); font-size: 0.75rem; margin-left: 0.5rem; font-weight: 500; opacity: 0; }
         .copy-feedback-alphax.show { display: inline; animation: fadeInOutLoginFeedback 2.5s forwards; }
         @keyframes fadeInOutLoginFeedback { 0% { opacity: 0; transform: translateY(5px); } 20% { opacity: 1; transform: translateY(0); } 80% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-5px); } }
-        
+
         .status-message-container-alphax {
             margin-top: 1.5rem; padding: 0.75rem; border-radius: 1rem;
             font-size: 0.9rem; min-height: 60px;
@@ -182,15 +186,15 @@
             border: 1px solid var(--card-border-light);
         }
         html.dark-mode .status-message-container-alphax { border-color: var(--card-border-dark); }
-        .status-pending-alphax { background-color: #FFDAB9; color: #A0522D; } 
-        .status-approved-alphax { background-color: #98FB98; color: #228B22; } 
-        .status-rejected-alphax { background-color: #FFB6C1; color: #DC143C; } 
-        .status-expired-alphax { background-color: #FFE4B5; color: #B8860B; } 
-        .status-info-alphax { background-color: var(--input-bg-light); color: var(--text-secondary-light); } 
+        .status-pending-alphax { background-color: #FFDAB9; color: #A0522D; }
+        .status-approved-alphax { background-color: #98FB98; color: #228B22; }
+        .status-rejected-alphax { background-color: #FFB6C1; color: #DC143C; }
+        .status-expired-alphax { background-color: #FFE4B5; color: #B8860B; }
+        .status-info-alphax { background-color: var(--input-bg-light); color: var(--text-secondary-light); }
         html.dark-mode .status-info-alphax { background-color: var(--input-bg-dark); color: var(--text-secondary-dark); }
-        .status-message-container-alphax i { color: inherit !important; } 
-        .tick-animation-alphax svg .tick-circle, .tick-animation-alphax svg .tick-path { stroke: #228B22 !important; } 
-        html.dark-mode .status-approved-alphax .tick-animation-alphax svg .tick-circle, 
+        .status-message-container-alphax i { color: inherit !important; }
+        .tick-animation-alphax svg .tick-circle, .tick-animation-alphax svg .tick-path { stroke: #228B22 !important; }
+        html.dark-mode .status-approved-alphax .tick-animation-alphax svg .tick-circle,
         html.dark-mode .status-approved-alphax .tick-animation-alphax svg .tick-path { stroke: var(--text-primary-dark) !important; }
 
 
@@ -213,13 +217,13 @@
         .maintenance-card p { color: var(--text-secondary-light); }
         html.dark-mode .maintenance-card p { color: var(--text-secondary-dark); }
 
-        #appContainer { display: none; width: 100%; padding-bottom: 90px; }
+        #appContainer { display: none; width: 100%; padding-bottom: 90px; } /* Ensure enough padding for nav */
         #appContainer.active { display: block; }
 
         /* App Styles */
         .popup, .modal {
             display: none; position: fixed; top: 50%; left: 50%;
-            transform: translate(-50%, -50%); background: var(--bg-secondary-light); 
+            transform: translate(-50%, -50%); background: var(--bg-secondary-light);
             padding: 1.5rem; border-radius: 1.5rem; box-shadow: 0 6px 16px var(--shadow-light);
             z-index: 1000; width: 90%; max-width: 400px;
             border: 1px solid var(--accent-primary-light); text-align: center;
@@ -229,23 +233,23 @@
         html.dark-mode .popup h3, html.dark-mode .modal h3 { color: var(--text-primary-dark); }
         .popup p, .modal p { margin-bottom: 1.5rem; color: var(--text-secondary-light); font-size: 0.9rem; }
         html.dark-mode .popup p, html.dark-mode .modal p { color: var(--text-secondary-dark); }
-        
+
         .popup .button-group, .modal .button-group { display: flex; justify-content: space-around; gap: 1rem; }
         .popup button, .modal button { padding: 0.6rem 1.2rem; border-radius: 0.75rem; font-weight: 500; transition: all 0.2s ease; border: none; cursor: pointer; min-width: 100px; }
-        
-        .popup button.primary, .modal button.primary { background: var(--accent-primary-light); color: white; } 
+
+        .popup button.primary, .modal button.primary { background: var(--accent-primary-light); color: white; }
         html.dark-mode .popup button.primary, html.dark-mode .modal button.primary { background: var(--accent-primary-dark); color: var(--bg-primary-dark); }
         .popup button.primary:hover, .modal button.primary:hover { background: var(--accent-secondary-light); }
         html.dark-mode .popup button.primary:hover, html.dark-mode .modal button.primary:hover { background: var(--accent-secondary-dark); }
 
         .popup button.secondary, .modal button.secondary { background: var(--bg-tertiary-light); color: var(--text-primary-light); border: 1px solid var(--card-border-light); }
         html.dark-mode .popup button.secondary, html.dark-mode .modal button.secondary { background: var(--bg-tertiary-dark); color: var(--text-primary-dark); border-color: var(--card-border-dark); }
-        .popup button.secondary:hover, .modal button.secondary:hover { background: var(--card-border-light); } 
+        .popup button.secondary:hover, .modal button.secondary:hover { background: var(--card-border-light); }
         html.dark-mode .popup button.secondary:hover, html.dark-mode .modal button.secondary:hover { background: var(--card-border-dark); }
 
-        .popup button.danger, .modal button.danger { background: #FFB6C1; color: #A52A2A; } 
+        .popup button.danger, .modal button.danger { background: #FFB6C1; color: #A52A2A; }
         html.dark-mode .popup button.danger, html.dark-mode .modal button.danger { background: var(--loss-color); color: var(--text-primary-dark); }
-        .popup button.danger:hover, .modal button.danger:hover { background: #FFA07A; } 
+        .popup button.danger:hover, .modal button.danger:hover { background: #FFA07A; }
         html.dark-mode .popup button.danger:hover, html.dark-mode .modal button.danger:hover { background: #c53030; }
 
 
@@ -253,19 +257,19 @@
         @keyframes fadeInPopup { from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
 
         .card {
-            transition: all 0.3s ease; background: var(--card-bg-light);
-            border-radius: 1.5rem; box-shadow: 0 6px 12px var(--card-shadow-light);
+            transition: all 0.3s ease; background: var(--bg-tertiary-light); /* Changed from --card-bg-light for consistency */
+            border-radius: 1.5rem; box-shadow: 0 6px 12px var(--shadow-light); /* Changed from --card-shadow-light */
             position: relative; margin: 0.75rem;
             overflow: hidden; border: 1px solid var(--card-border-light);
         }
-        html.dark-mode .card { background: var(--card-bg-dark); box-shadow: 0 6px 12px var(--card-shadow-dark); border-color: var(--card-border-dark); }
+        html.dark-mode .card { background: var(--bg-tertiary-dark); box-shadow: 0 6px 12px var(--shadow-dark); border-color: var(--card-border-dark); } /* Changed from --card-bg-dark and --card-shadow-dark */
         .card:hover { transform: translateY(-6px) scale(1.03); box-shadow: 0 8px 16px var(--shadow-light); border-color: var(--accent-primary-light); }
-        html.dark-mode .card:hover { box-shadow: 0 8px 16px var(--shadow-accent-glow-dark); border-color: var(--accent-primary-dark); }
-        
+        html.dark-mode .card:hover { box-shadow: 0 8px 16px var(--shadow-dark); border-color: var(--accent-primary-dark); } /* Adjusted for dark mode hover consistency */
+
         .gradient-bg { background: linear-gradient(135deg, var(--accent-primary-light), var(--accent-secondary-light)); }
         html.dark-mode .gradient-bg { background: linear-gradient(135deg, var(--accent-primary-dark), var(--accent-secondary-dark)); }
-        
-        #appHeaderSvgContainer svg text { 
+
+        #appHeaderSvgContainer svg text {
             text-anchor: middle; dominant-baseline: middle; text-transform: uppercase;
             animation: strokeMainAppLight 5s infinite alternate; stroke-width: 1.2;
             stroke: var(--svg-stroke-light); font-size: 130px; fill: rgba(255, 240, 245, 0);
@@ -275,17 +279,17 @@
         @media (max-width: 768px) { #appHeaderSvgContainer svg text { font-size: 90px; } }
         @keyframes strokeMainAppLight { 0% { fill: rgba(255, 240, 245, 0); stroke: var(--accent-primary-light); stroke-dashoffset: 25%; stroke-dasharray: 0 50%; stroke-width: 1.2; } 70% { fill: rgba(255, 240, 245, 0); stroke: var(--accent-secondary-light); } 80% { fill: rgba(255, 240, 245, 0); stroke: var(--accent-primary-light); stroke-width: 2.5; } 100% { fill: var(--text-primary-light); stroke: rgba(230, 230, 250, 0); stroke-dashoffset: -25%; stroke-dasharray: 50% 0; stroke-width: 0; } }
         @keyframes strokeMainAppDark { 0% { fill: rgba(26, 32, 44, 0); stroke: var(--accent-primary-dark); stroke-dashoffset: 25%; stroke-dasharray: 0 50%; stroke-width: 1.2; } 70% { fill: rgba(26, 32, 44, 0); stroke: var(--accent-secondary-dark); } 80% { fill: rgba(26, 32, 44, 0); stroke: var(--accent-primary-dark); stroke-width: 2.5; } 100% { fill: var(--text-primary-dark); stroke: rgba(56, 178, 172, 0); stroke-dashoffset: -25%; stroke-dasharray: 50% 0; stroke-width: 0; } }
-        
+
         .history-container { display: flex; flex-direction: column; gap: 1rem; max-height: none; overflow: visible; position: relative; }
         .history-item {
             transition: all 0.3s ease; width: 100%; max-width: 100%; margin: 0; border-radius: 1.2rem;
-            box-shadow: 0 4px 14px var(--shadow-light); 
+            box-shadow: 0 4px 14px var(--shadow-light);
             position: relative; overflow: hidden; padding: 1.2rem;
             border-left: 4px solid transparent;
-            background: var(--bg-tertiary-light); 
+            background: var(--bg-tertiary-light);
         }
         html.dark-mode .history-item { background: var(--bg-tertiary-dark); box-shadow: 0 4px 14px var(--shadow-dark); }
-        
+
         .history-item.win { border-left-color: var(--win-color); }
         html.light-mode .history-item.win { background: linear-gradient(135deg, rgba(56, 161, 105, 0.15), var(--bg-tertiary-light)); }
         html.dark-mode .history-item.win { background: linear-gradient(135deg, rgba(56, 161, 105, 0.2), var(--bg-tertiary-dark)); }
@@ -301,25 +305,25 @@
 
 
         .history-item:hover { transform: scale(1.02); box-shadow: 0 6px 18px var(--shadow-light); }
-        html.dark-mode .history-item:hover { box-shadow: 0 6px 18px var(--shadow-accent-glow-dark); }
+        html.dark-mode .history-item:hover { box-shadow: 0 6px 18px var(--shadow-dark); } /* Adjusted for dark mode hover */
         .history-item.fade-out { animation: fadeOut 0.5s ease forwards; }
         @keyframes fadeOut { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.95); height: 0; padding: 0; margin: 0; } }
         .history-item .watermark {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 1.5rem; color: var(--text-secondary-light); opacity: 0.1; 
+            font-size: 1.5rem; color: var(--text-secondary-light); opacity: 0.1;
             pointer-events: none; z-index: 0; text-transform: uppercase; font-weight: bold;
         }
         html.dark-mode .history-item .watermark { color: var(--text-secondary-dark); }
-        
+
         .small-dot { position: absolute; width: 6px; height: 6px; background: var(--accent-secondary-light); border-radius: 50%; animation: float 4s infinite; z-index: 1; }
         html.dark-mode .small-dot { background: var(--accent-secondary-dark); }
         @keyframes float { 0% { transform: translate(0, 0); opacity: 0.7; } 50% { transform: translate(12px, -12px); opacity: 0.3; } 100% { transform: translate(0, 0); opacity: 0.7; } }
-        
-        .delete-btn { color: var(--text-secondary-light); } 
+
+        .delete-btn { color: var(--text-secondary-light); }
         html.dark-mode .delete-btn { color: var(--text-secondary-dark); }
         .delete-btn:hover { color: var(--accent-primary-light); transform: scale(1.3); }
         html.dark-mode .delete-btn:hover { color: var(--accent-primary-dark); }
-        
+
         .status-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; position: relative; overflow: hidden; }
         .status-icon::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; opacity: 0.1; background: radial-gradient(circle, currentColor 0%, transparent 70%); }
         .win-icon { color: var(--win-color); animation: pulseWin 1.5s infinite; }
@@ -339,16 +343,16 @@
 
         .dashboard-card {
             background: var(--bg-tertiary-light); border-radius: 1.5rem; padding: 1.2rem;
-            box-shadow: 0 4px 10px var(--shadow-light); 
+            box-shadow: 0 4px 10px var(--shadow-light);
             transition: all 0.3s ease;
             border: 1px solid var(--card-border-light);
         }
         html.dark-mode .dashboard-card { background: var(--bg-tertiary-dark); box-shadow: 0 4px 10px var(--shadow-dark); border-color: var(--card-border-dark); }
         .dashboard-card:hover { transform: translateY(-4px); box-shadow: 0 6px 14px var(--shadow-light); border-color: var(--accent-primary-light); }
-        html.dark-mode .dashboard-card:hover { box-shadow: 0 6px 14px var(--shadow-accent-glow-dark); border-color: var(--accent-primary-dark); }
-        .dashboard-card i { color: var(--accent-secondary-light); } 
+        html.dark-mode .dashboard-card:hover { box-shadow: 0 6px 14px var(--shadow-dark); border-color: var(--accent-primary-dark); } /* Adjusted for dark mode hover */
+        .dashboard-card i { color: var(--accent-secondary-light); }
         html.dark-mode .dashboard-card i { color: var(--accent-secondary-dark); }
-        .dashboard-card p.text-sm { color: var(--text-secondary-light) !important; } 
+        .dashboard-card p.text-sm { color: var(--text-secondary-light) !important; }
         html.dark-mode .dashboard-card p.text-sm { color: var(--text-secondary-dark) !important; }
         .dashboard-card p.text-xl { color: var(--text-primary-light) !important; }
         html.dark-mode .dashboard-card p.text-xl { color: var(--text-primary-dark) !important; }
@@ -360,7 +364,7 @@
 
         .navigation {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 380px; height: 70px; background: var(--bg-secondary-light); 
+            width: 90%; max-width: 380px; height: 70px; background: var(--bg-secondary-light);
             display: flex; justify-content: center; align-items: center;
             border-radius: 1.5rem; box-shadow: 0 6px 12px var(--shadow-light); z-index: 1000;
             border: 1px solid var(--card-border-light);
@@ -384,34 +388,34 @@
 
         /* General Settings Toggles */
         .settings-group {
-            background-color: var(--bg-tertiary-light); 
+            background-color: var(--bg-tertiary-light);
             padding: 1rem; border-radius: 0.75rem;
-            margin-bottom: 1.5rem; border: 1px solid var(--card-border-light); 
+            margin-bottom: 1.5rem; border: 1px solid var(--card-border-light);
         }
         html.dark-mode .settings-group { background-color: var(--bg-tertiary-dark); border-color: var(--card-border-dark); }
 
         .settings-group-title {
-            font-size: 1rem; font-weight: 600; color: var(--accent-primary-light); 
+            font-size: 1rem; font-weight: 600; color: var(--accent-primary-light);
             margin-bottom: 0.75rem; padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--card-border-light); 
+            border-bottom: 1px solid var(--card-border-light);
         }
         html.dark-mode .settings-group-title { color: var(--accent-primary-dark); border-color: var(--card-border-dark); }
-        
+
         .settings-toggle-item { display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 0.5rem; border-bottom: 1px solid rgba(224, 255, 255, 0.7); }
         html.dark-mode .settings-toggle-item { border-bottom-color: rgba(74, 85, 104, 0.3); }
         .settings-toggle-item:last-child { border-bottom: none; }
         .settings-toggle-item label { font-size: 0.9rem; color: var(--text-secondary-light); margin-right: 1rem; }
         html.dark-mode .settings-toggle-item label { color: var(--text-secondary-dark); }
-        
+
         .mode-toggle { display: flex; align-items: center; }
         .mode-toggle input { opacity: 0; width: 0; height: 0; }
-        
+
         .mode-switch { position: relative; display: inline-block; width: 50px; height: 26px; flex-shrink: 0; }
         .mode-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--accent-secondary-light); transition: .4s; border-radius: 26px; border: 1px solid var(--accent-primary-light); }
         html.dark-mode .mode-slider { background-color: var(--input-bg-dark); border-color: var(--card-border-dark); }
-        .mode-slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: var(--accent-primary-light); transition: .4s; border-radius: 50%; } 
+        .mode-slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: var(--accent-primary-light); transition: .4s; border-radius: 50%; }
         html.dark-mode .mode-slider:before { background-color: var(--text-secondary-dark); }
-        .mode-switch input:checked + .mode-slider { background-color: var(--accent-primary-light); } 
+        .mode-switch input:checked + .mode-slider { background-color: var(--accent-primary-light); }
         html.dark-mode .mode-switch input:checked + .mode-slider { background-color: var(--accent-primary-dark); }
         .mode-switch input:checked + .mode-slider:before { transform: translateX(24px); background-color: white; }
         html.dark-mode .mode-switch input:checked + .mode-slider:before { background-color: var(--bg-tertiary-dark); }
@@ -419,25 +423,25 @@
         .mode-icons { display: flex; align-items: center; font-size: 0.8rem; color: var(--text-secondary-light); margin: 0 0.5rem; }
         html.dark-mode .mode-icons { color: var(--text-secondary-dark); }
         .mode-icons span, .mode-icons i { padding: 0 0.25rem; }
-        
-        #themeToggle ~ .mode-icons .fa-moon { display: inline-block; } 
-        #themeToggle ~ .mode-icons .fa-sun { display: none; } 
-        #themeToggle:checked ~ .mode-icons .fa-moon { display: none; } 
-        #themeToggle:checked ~ .mode-icons .fa-sun { display: inline-block; } 
+
+        #themeToggle ~ .mode-icons .fa-moon { display: inline-block; }
+        #themeToggle ~ .mode-icons .fa-sun { display: none; }
+        #themeToggle:checked ~ .mode-icons .fa-moon { display: none; }
+        #themeToggle:checked ~ .mode-icons .fa-sun { display: inline-block; }
         html.light-mode #themeToggle ~ .mode-icons .fa-moon { color: var(--accent-primary-light); }
         html.light-mode #themeToggle:checked ~ .mode-icons .fa-sun { color: var(--accent-primary-light); }
         html.dark-mode #themeToggle ~ .mode-icons .fa-moon { color: var(--accent-primary-dark); }
         html.dark-mode #themeToggle:checked ~ .mode-icons .fa-sun { color: var(--accent-primary-dark); }
 
 
-        .period-id { font-family: monospace; letter-spacing: 2px; font-size: 1.2rem; color: var(--accent-secondary-light); } 
+        .period-id { font-family: monospace; letter-spacing: 2px; font-size: 1.2rem; color: var(--accent-secondary-light); }
         html.dark-mode .period-id { color: var(--accent-secondary-dark); }
         #currentPeriod, #currentResult {
-            border: none !important; background-color: var(--bg-tertiary-light) !important; 
-            color: var(--text-primary-light) !important; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); 
+            border: none !important; background-color: var(--bg-tertiary-light) !important;
+            color: var(--text-primary-light) !important; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
         }
         html.dark-mode #currentPeriod, html.dark-mode #currentResult { background-color: var(--bg-tertiary-dark) !important; color: var(--text-primary-dark) !important; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
-        
+
         /* Alignment for Period and Prediction */
         .period-prediction-grid {
             display: grid;
@@ -476,8 +480,8 @@
         button.primary-btn, .btn.primary-btn { background: var(--button-primary-bg-light); color: var(--button-primary-text-light); }
         html.dark-mode button.primary-btn, html.dark-mode .btn.primary-btn { background: var(--button-primary-bg-dark); color: var(--button-primary-text-dark); }
         button.primary-btn:hover, .btn.primary-btn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 5px 12px var(--shadow-light); }
-        html.dark-mode button.primary-btn:hover, html.dark-mode .btn.primary-btn:hover { box-shadow: 0 5px 12px var(--shadow-accent-glow-dark); }
-        button.primary-btn i, .btn.primary-btn i { color: inherit; } 
+        html.dark-mode button.primary-btn:hover, html.dark-mode .btn.primary-btn:hover { box-shadow: 0 5px 12px var(--shadow-dark); } /* Adjusted for dark mode hover */
+        button.primary-btn i, .btn.primary-btn i { color: inherit; }
 
         button.secondary-btn, .btn.secondary-btn { background: var(--button-secondary-bg-light); color: var(--button-secondary-text-light); border: 1px solid var(--card-border-light); }
         html.dark-mode button.secondary-btn, html.dark-mode .btn.secondary-btn { background: var(--button-secondary-bg-dark); color: var(--button-secondary-text-dark); border-color: var(--card-border-dark); }
@@ -487,12 +491,12 @@
 
 
         .bad-trend-indicator {
-            background-color: var(--loss-color); color: var(--text-light-primary); 
+            background-color: var(--loss-color); color: white; /* Ensure text is visible on loss color */
             padding: 0.75rem 1rem; border-radius: 0.75rem; margin: 0.5rem auto;
             text-align: center; font-size: 0.9rem; display: flex; align-items: center; justify-content: center;
             gap: 0.5rem; animation: pulseWarning 1.5s infinite; max-width: 95%;
         }
-        .bad-trend-indicator i { color: var(--text-light-primary) !important; }
+        .bad-trend-indicator i { color: white !important; } /* Ensure icon is visible */
         @keyframes pulseWarning { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.02); } }
 
         .toast-login {
@@ -511,9 +515,9 @@
         .toast-login .icon.info { color: var(--accent-secondary-light); }
         html.dark-mode .toast-login .icon.info { color: var(--accent-secondary-dark); }
 
-        #generalToast { 
+        #generalToast {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            padding: 10px 20px; border-radius: 8px; z-index: 1001; 
+            padding: 10px 20px; border-radius: 8px; z-index: 1001;
             box-shadow: 0 2px 10px var(--shadow-light);
             opacity: 0; transition: opacity 0.3s ease, bottom 0.3s ease;
             background-color: var(--accent-primary-light); color: white;
@@ -525,7 +529,7 @@
         #generalToast.bg-warning-color { background-color: var(--warning-color) !important; color: var(--bg-primary-dark) !important;}
 
 
-        .content-section { display: none; animation: fadeInSection 0.5s ease-out; padding-bottom: 80px; }
+        .content-section { display: none; animation: fadeInSection 0.5s ease-out; padding-bottom: 80px; } /* Consistent padding */
         .content-section.active { display: block; }
         @keyframes fadeInSection { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -533,9 +537,9 @@
 
         #pauseIndicator {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            background-color: var(--warning-color); color: var(--bg-primary-dark); 
+            background-color: var(--warning-color); color: var(--bg-primary-dark);
             padding: 0.8rem 1.5rem; border-radius: 1rem;
-            box-shadow: 0 5px 15px var(--shadow-main);
+            box-shadow: 0 5px 15px var(--shadow-dark); /* Consistent shadow variable */
             z-index: 2000; display: flex; align-items: center; gap: 0.75rem;
             font-size: 1rem; font-weight: 600;
             animation: fadeInPauseIndicator 0.5s ease-out;
@@ -561,22 +565,9 @@
             .period-prediction-grid .text-right .header-flex { justify-content: flex-start; /* Align right column header to start on small screens */ }
 
         }
-        .text-slate-700 { color: var(--text-secondary-light) !important; }
-        html.dark-mode .text-slate-700 { color: var(--text-secondary-dark) !important; }
-        
-        .settings-group {
-            background-color: var(--bg-tertiary-light); 
-            padding: 1rem; border-radius: 0.75rem;
-            margin-bottom: 1.5rem; border: 1px solid var(--card-border-light); 
-        }
-        html.dark-mode .settings-group { background-color: var(--bg-tertiary-dark); border-color: var(--card-border-dark); }
+        .text-slate-700 { color: var(--text-secondary-light) !important; } /* Ensure theme compatibility */
+        html.dark-mode .text-slate-700 { color: var(--text-secondary-dark) !important; } /* Ensure theme compatibility */
 
-        .settings-group-title {
-            font-size: 1rem; font-weight: 600; color: var(--accent-primary-light); 
-            margin-bottom: 0.75rem; padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--card-border-light); 
-        }
-        html.dark-mode .settings-group-title { color: var(--accent-primary-dark); border-color: var(--card-border-dark); }
         /* Standardized heading color for About section */
         #aboutSection .text-xl.font-semibold {
             color: var(--accent-primary-light);
@@ -587,10 +578,12 @@
 
     </style>
 </head>
-<body> <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<body>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
 
-    <div id="loginPage1AlphaX" class="auth-screen active"> <div class="auth-container-alphax">
+    <div id="loginPage1AlphaX" class="auth-screen active">
+        <div class="auth-container-alphax">
             <div class="auth-title-svg-alphax">
                 <svg viewBox="0 0 500 100"> <text x="50%" y="50%">ALPHA X AI</text> </svg>
             </div>
@@ -619,7 +612,7 @@
                 <i class="fas fa-spinner fa-spin mr-2"></i> Checking status...
             </div>
 
-            <button id="logoutFromDevicePageBtnAlphaX" class="auth-button-alphax w-full mt-6" style="background: var(--skipped-color); color:var(--text-light-primary);">
+            <button id="logoutFromDevicePageBtnAlphaX" class="auth-button-alphax w-full mt-6" style="background: var(--skipped-color); color: white;"> {/* Ensure text visibility */}
                 <i class="fas fa-sign-out-alt mr-2"></i>Logout
             </button>
             <p class="auth-footer-link-alphax">Need help? Contact <a href="https://t.me/ALPHAXAIWEB" target="_blank" rel="noopener noreferrer">Support</a>.</p>
@@ -633,7 +626,7 @@
             <p id="maintenanceMessage" class="text-text-light-secondary">The platform is currently undergoing scheduled maintenance. Please try again later.</p>
         </div>
     </div>
-    
+
     <div id="appContainer" class="w-full relative">
         <header id="appHeaderSvgContainer" class="text-center mt-0 mb-2 animate__animated animate__fadeInDown">
             <svg viewBox="0 0 800 120">
@@ -643,11 +636,12 @@
 
         <div class="max-w-full mx-auto p-2 w-full">
             <div class="max-w-4xl mx-auto p-2 w-full">
-                <div id="homeSection" class="content-section"> 
+                <div id="homeSection" class="content-section">
                     <div class="card mb-4 overflow-hidden gradient-bg animate__animated animate__zoomIn relative">
-                        <div class="p-6 rounded-lg pulse-animation" style="background-color: var(--bg-tertiary); opacity: 0.9;">
-                             <div class="period-prediction-grid"> 
-                                <div class="text-left"> 
+                        <div class="p-6 rounded-lg pulse-animation" style="background-color: rgba(var(--bg-tertiary-light-rgb, 250, 240, 230), 0.9); opacity: 0.9;">
+                             <html.dark-mode><div class="p-6 rounded-lg pulse-animation" style="background-color: rgba(var(--bg-tertiary-dark-rgb, 23, 25, 35), 0.9); opacity: 0.9;"></div></html.dark-mode>
+                             <div class="period-prediction-grid">
+                                <div class="text-left">
                                     <div class="header-flex">
                                         <i class="fas fa-calendar-alt text-2xl animate__animated animate__bounce mr-2" style="color: var(--accent-secondary-light);"></i>
                                         <html.dark-mode><i class="fas fa-calendar-alt text-2xl animate__animated animate__bounce mr-2" style="color: var(--accent-secondary-dark);"></i></html.dark-mode>
@@ -655,7 +649,7 @@
                                     </div>
                                     <p id="currentPeriod" class="text-2xl font-semibold p-3 rounded-lg shadow-inner period-id">-</p>
                                 </div>
-                                <div class="text-right"> 
+                                <div class="text-right">
                                     <div class="header-flex">
                                         <h2 class="text-2xl font-bold mr-2" data-lang-key="prediction">Prediction</h2>
                                         <i class="fas fa-poll text-2xl animate__animated animate__bounce" style="color: var(--accent-secondary-light);"></i>
@@ -826,7 +820,7 @@
                      <div class="card p-6 animate__animated animate__fadeInUp relative">
                         <h2 class="text-3xl font-bold text-center mb-6 relative" style="color: var(--accent-primary-light);">
                              <html.dark-mode><h2 class="text-3xl font-bold text-center mb-6 relative" style="color: var(--accent-primary-dark);"></h2></html.dark-mode>
-                            <span class="relative z-10 pulse-animation" data-lang-key="about_aura_x_ai">About ALPHA X AI</span> 
+                            <span class="relative z-10 pulse-animation" data-lang-key="about_aura_x_ai">About ALPHA X AI</span>
                             <span class="absolute top-1/2 left-0 w-full h-1 opacity-30 -translate-y-1/2 rounded-full" style="background-color: var(--accent-primary-light);"></span>
                             <html.dark-mode><span class="absolute top-1/2 left-0 w-full h-1 opacity-30 -translate-y-1/2 rounded-full" style="background-color: var(--accent-primary-dark);"></span></html.dark-mode>
                         </h2>
@@ -850,7 +844,7 @@
                             </div>
                             <hr class="my-6" style="border-color: var(--card-border-light);">
                             <html.dark-mode><hr class="my-6" style="border-color: var(--card-border-dark);"></html.dark-mode>
-                            
+
                             <div class="settings-group">
                                 <h3 class="settings-group-title" data-lang-key="general_settings_title">General Settings</h3>
                                 <div class="space-y-2">
@@ -955,7 +949,8 @@
             </div>
         </div>
 
-        <div id="streakBreakPopup" class="popup"> <h3><i class="fas fa-fire-alt mr-2" style="color: var(--pending-color);"></i><span data-lang-key="streak_alert">Win Streak Alert!</span></h3>
+        <div id="streakBreakPopup" class="popup">
+            <h3><i class="fas fa-fire-alt mr-2" style="color: var(--pending-color);"></i><span data-lang-key="streak_alert">Win Streak Alert!</span></h3>
             <p id="streakBreakMessage">You're on a 7-win streak! Consider taking a break?</p>
             <div class="button-group">
                 <button id="cancelStreakModalBtn" class="secondary-btn"><i class="fas fa-play mr-2"></i><span data-lang-key="continue_predicting">Keep Going</span></button>
@@ -963,7 +958,8 @@
             </div>
         </div>
 
-        <div id="badTrendPopup" class="popup"> <h3><i class="fas fa-exclamation-triangle mr-2" style="color: var(--warning-color);"></i><span data-lang-key="trend_alert">Trend Alert!</span></h3>
+        <div id="badTrendPopup" class="popup">
+            <h3><i class="fas fa-exclamation-triangle mr-2" style="color: var(--warning-color);"></i><span data-lang-key="trend_alert">Trend Alert!</span></h3>
             <p id="badTrendPopupMessage">Unstable trend detected. Prediction accuracy might be affected.</p>
             <div class="button-group">
                 <button id="cancelBadTrendModalBtn" class="secondary-btn"><i class="fas fa-play mr-2"></i><span data-lang-key="continue_predicting_anyway">Continue Anyway</span></button>
@@ -976,7 +972,7 @@
         <span class="icon"></span>
         <p id="loginToastMessage" class="text-base"></p>
     </div>
-    
+
     <div id="generalToast" class="toast" style="display: none;">
         <p id="generalToastMessage"></p>
     </div>
@@ -985,7 +981,7 @@
     <script>
         // --- Firebase Configuration ---
         const firebaseConfig = {
-            apiKey: "AIzaSyAV8WCu5kXbs85NtYiwiOtiAsYQ72SA27M", 
+            apiKey: "AIzaSyAV8WCu5kXbs85NtYiwiOtiAsYQ72SA27M", // Replace with your actual API key if needed
             authDomain: "aipredictor-cf4b8.firebaseapp.com",
             databaseURL: "https://aipredictor-cf4b8-default-rtdb.firebaseio.com",
             projectId: "aipredictor-cf4b8",
@@ -999,17 +995,17 @@
         console.log("Firebase initialized.");
 
         // Firebase Paths (USER-SPECIFIC)
-        const USER_DATA_BASE_PATH = "users_alpha_x_ai_v1"; 
-        let USER_GAME_HISTORY_PATH = ""; 
-        let USER_CURRENT_PREDICTION_PATH = ""; 
-        let USER_STATS_PATH = ""; 
-        
-        const MAX_USER_HISTORY_LENGTH = 75; 
-        const USER_ACCESS_REQUESTS_PATH = "alphax_user_access_requests_v1"; 
-        const MAINTENANCE_STATUS_PATH = "alphax_maintenanceStatus_v1"; 
+        const USER_DATA_BASE_PATH = "users_alpha_x_ai_v1";
+        let USER_GAME_HISTORY_PATH = ""; // To be set after login
+        let USER_CURRENT_PREDICTION_PATH = ""; // To be set after login
+        let USER_STATS_PATH = ""; // To be set after login
+
+        const MAX_USER_HISTORY_LENGTH = 75;
+        const USER_ACCESS_REQUESTS_PATH = "alphax_user_access_requests_v1";
+        const MAINTENANCE_STATUS_PATH = "alphax_maintenanceStatus_v1";
 
         // --- Auth State & Config ---
-        const USER_DEVICE_ID_STORAGE_KEY_ALPHAX = 'userGeneratedDeviceId_AlphaXAI_V5_3_QE_V3'; // Incremented version
+        const USER_DEVICE_ID_STORAGE_KEY_ALPHAX = 'userGeneratedDeviceId_AlphaXAI_V5_3_QE_V3';
         const TELEGRAM_USERNAME_STORAGE_KEY_ALPHAX = 'telegramUsername_AlphaXAI_V5_3_QE_V3';
         const PREDICTOR_LOGGED_IN_KEY_ALPHAX = 'predictorLoggedIn_AlphaXAI_V5_3_QE_V3';
         let currentDeviceIdAlphaX = null;
@@ -1018,25 +1014,25 @@
         let alphaX_isMaintenanceModeActive = false;
 
         // --- Global Settings State ---
-        let alphaX_currentTheme = localStorage.getItem('alphaXAiTheme_QE_V3') || 'dark'; 
+        let alphaX_currentTheme = localStorage.getItem('alphaXAiTheme_QE_V3') || 'dark';
         let alphaX_currentLanguage = localStorage.getItem('alphaXAiLanguage_QE_V3') || 'en';
         let alphaX_isSoundEnabled = localStorage.getItem('alphaXAiSound_QE_V3') === null ? true : localStorage.getItem('alphaXAiSound_QE_V3') === 'true';
         let alphaX_isNotificationsEnabled = localStorage.getItem('alphaXAiNotifications_QE_V3') === 'true' || false;
         let alphaX_isAdvancedModeActive = localStorage.getItem('alphaXAiPredictionMode_QE_V3') === null ? true : localStorage.getItem('alphaXAiPredictionMode_QE_V3') === 'advanced';
-        
+
         // --- Prediction State ---
-        let localUserHistoryData = []; 
-        let lastUserFetchedPeriod = null; 
-        let globalUserPredictionData = null; 
-        
-        window.userStreak = 0; 
-        window.userWinLevel = 0;
-        window.userConsecutiveLosses = 0;
-        let isMuted = !alphaX_isSoundEnabled; 
+        let localUserHistoryData = [];
+        let lastUserFetchedPeriod = null;
+        let globalUserPredictionData = null; // Stores the latest prediction from Firebase
+
+        window.userStreak = 0; // Tracks current win/loss streak
+        window.userWinLevel = 0; // Tracks win level for specific logic
+        window.userConsecutiveLosses = 0; // Tracks consecutive losses for Omega Protocol
+        let isMuted = !alphaX_isSoundEnabled; // Sound mute state
 
         // --- Translations (Added new keys for enhanced version) ---
         const translations = {
-            en: { 
+            en: { /* English translations as provided */
                 theme: "Theme", period: "Period", prediction: "Prediction", confidence: "Confidence",
                 analysis_dashboard: "Analysis Dashboard", most_frequent_bs: "Most Frequent (B/S)",
                 least_frequent_bs: "Least Frequent (B/S)", win_rate: "Win Rate", wins: "Wins", losses: "Losses",
@@ -1044,8 +1040,8 @@
                 history: "History", delete: "Delete All", statistics: "Statistics", total_wins: "Total Wins",
                 total_losses: "Total Losses", current_streak: "Current Streak", last_five_actuals: "Last 5 Actuals",
                 about: "About", home: "Home", stats: "Stats",
-                about_aura_x_ai: "About ALPHA X AI", 
-                predictor_intro_title: "Our Advanced Prediction Engine", 
+                about_aura_x_ai: "About ALPHA X AI",
+                predictor_intro_title: "Our Advanced Prediction Engine",
                 predictor_intro_p1_adv: "ALPHA X AI now integrates a vastly expanded prediction engine, featuring over 100 distinct logical modules and calculation methods. While inspired by concepts from advanced computational intelligence, including quantum information theory and complex adaptive systems, these are simulated using classical algorithms to run efficiently in your browser. Our goal is to provide deeply insightful predictions by analyzing historical data through a multi-faceted lens.",
                 predictor_intro_p2_adv: "This enhanced system employs a hierarchical ensemble of analytical techniques, including advanced pattern recognition, transitional probability matrices, chaos theory-inspired volatility assessments, and simulated quantum annealing for parameter optimization. The \"Omega Mind\" protocol remains a core component, now augmented by a \"Sigma Swarm\" consensus mechanism that weighs inputs from diverse analytical clusters. This allows for dynamic strategy adjustments and robust risk management, especially during volatile market phases.",
                 important_note_title: "Important Note",
@@ -1076,46 +1072,46 @@
             },
             hi: { /* ... Hindi translations ... */ }
         };
-        
+
         // --- DOM Elements ---
         const alphaX_currentPeriodEl = document.getElementById('currentPeriod');
-        const alphaX_currentResultEl = document.getElementById('currentResult'); 
+        const alphaX_currentResultEl = document.getElementById('currentResult');
         const alphaX_confidenceFillEl = document.getElementById('confidenceFill');
         const alphaX_confidenceTextEl = document.getElementById('confidenceText');
         const alphaX_mostFrequentBigSmallEl = document.getElementById('mostFrequentBigSmall');
         const alphaX_leastFrequentBigSmallEl = document.getElementById('leastFrequentBigSmall');
-        const alphaX_winRateEl = document.getElementById('winRate'); 
-        const alphaX_totalWinBetsEl = document.getElementById('totalWinBets'); 
-        const alphaX_totalLossBetsEl = document.getElementById('totalLossBets'); 
+        const alphaX_winRateEl = document.getElementById('winRate');
+        const alphaX_totalWinBetsEl = document.getElementById('totalWinBets');
+        const alphaX_totalLossBetsEl = document.getElementById('totalLossBets');
         const alphaX_serverStatusEl = document.getElementById('serverStatus');
         const alphaX_serverStatusIndicator = document.getElementById('serverStatusIndicator');
-        const alphaX_historyContainer = document.getElementById('historyContainer'); 
-        const alphaX_statsTotalWinsEl = document.getElementById('statsTotalWins'); 
-        const alphaX_statsTotalLossesEl = document.getElementById('statsTotalLosses'); 
-        const alphaX_statsWinRateEl = document.getElementById('statsWinRate'); 
+        const alphaX_historyContainer = document.getElementById('historyContainer');
+        const alphaX_statsTotalWinsEl = document.getElementById('statsTotalWins');
+        const alphaX_statsTotalLossesEl = document.getElementById('statsTotalLosses');
+        const alphaX_statsWinRateEl = document.getElementById('statsWinRate');
         const alphaX_currentStreakEl = document.getElementById('currentStreak');
         const alphaX_lastFiveActualsEl = document.getElementById('lastFiveActuals');
         const alphaX_confirmModalEl = document.getElementById('confirmModal');
         const alphaX_modalMessageEl = document.getElementById('modalMessage');
         const alphaX_streakBreakPopupEl = document.getElementById('streakBreakPopup');
-        const generalToastEl = document.getElementById('generalToast'); 
-        const loginToastEl = document.getElementById('loginToast');
+        const generalToastEl = document.getElementById('generalToast'); // General purpose toast
+        const loginToastEl = document.getElementById('loginToast'); // Toast specific to login actions
         const loginToastMessageEl = document.getElementById('loginToastMessage');
 
 
         // --- Prediction Logic & State ---
-        const MAX_WIN_LEVEL = 3; 
-        const RSI_PERIOD = 7; 
-        const MA_SHORT_PERIOD = 3;
-        const MA_LONG_PERIOD = 7;
-        const BOLLINGER_PERIOD = 10; 
-        const BOLLINGER_STD_DEV = 2;
+        const MAX_WIN_LEVEL = 3; // Max win level for certain logic adjustments
+        const RSI_PERIOD = 7; // Period for RSI calculation
+        const MA_SHORT_PERIOD = 3; // Short period for Moving Average
+        const MA_LONG_PERIOD = 7;  // Long period for Moving Average
+        const BOLLINGER_PERIOD = 10; // Period for Bollinger Bands
+        const BOLLINGER_STD_DEV = 2; // Standard deviations for Bollinger Bands
         // Additional "Quantum-Inspired" constants
         const Q_FLUC_PERIOD = 5;
-        const Q_ENTANGLE_TRIGGER_LEN = 2; 
+        const Q_ENTANGLE_TRIGGER_LEN = 2;
         const Q_ENTANGLE_LOOKBACK = 15;
         const Q_COLLAPSE_LOOKBACK = 12;
-        const Q_COLLAPSE_AMBIGUITY = 0.08; 
+        const Q_COLLAPSE_AMBIGUITY = 0.08;
         const Q_TUNNEL_LOSS_STREAK = 3; // Consecutive losses to trigger tunneling
         const Q_TUNNEL_CONFIDENCE_BOOST = 15; // Temporary confidence boost after tunneling
         const HDPA_INDICATOR_THRESHOLD = 2; // How many indicators need to align for HDPA
@@ -1134,342 +1130,356 @@
 
         // --- RSI Calculation Function ---
         function calculateRSI(numericalHistory, period = RSI_PERIOD) {
-            if (!numericalHistory || numericalHistory.length < period + 1) { return { rsiValue: 50, signal: null, confidence: 50, logic: 31.0 }; }
+            if (!numericalHistory || numericalHistory.length < period + 1) { return { prediction: null, rsiValue: 50, confidence: 50, logic: 31.0 }; } // Ensure 'prediction' property
             const prices = numericalHistory.map(item => parseFloat(item)).filter(n => !isNaN(n));
-            if (prices.length < period + 1) { return { rsiValue: 50, signal: null, confidence: 50, logic: 31.01 }; }
-            const dataForRSI = prices.slice(0, period + 1).reverse(); 
+            if (prices.length < period + 1) { return { prediction: null, rsiValue: 50, confidence: 50, logic: 31.01 }; }
+            const dataForRSI = prices.slice(0, period + 1).reverse(); // Use reversed slice for correct chronological order
             let gains = 0; let losses = 0;
             for (let i = 1; i < dataForRSI.length; i++) { const change = dataForRSI[i] - dataForRSI[i-1]; if (change > 0) gains += change; else losses += Math.abs(change); }
             const avgGain = gains / period; const avgLoss = losses / period;
-            if (avgLoss === 0) return { rsiValue: 100, signal: "SMALL", confidence: 75, logic: 31.1 }; 
+            if (avgLoss === 0) return { prediction: "SMALL", rsiValue: 100, confidence: 75, logic: 31.1 }; // RSI is 100, strong overbought
             const rs = avgGain / avgLoss; const rsi = 100 - (100 / (1 + rs));
             let signal = null; let confidence = 60; let logic = 31.2;
-            if (rsi > 70) { signal = "SMALL"; confidence = Math.min(85, 60 + (rsi - 70) * 1.5); logic = 31.3; }
-            else if (rsi < 30) { signal = "BIG"; confidence = Math.min(85, 60 + (30 - rsi) * 1.5); logic = 31.4; }
-            return { rsiValue: parseFloat(rsi.toFixed(2)), signal: signal, confidence: Math.floor(confidence), logic: logic };
+            if (rsi > 70) { signal = "SMALL"; confidence = Math.min(85, 60 + (rsi - 70) * 1.5); logic = 31.3; } // Overbought, expect SMALL
+            else if (rsi < 30) { signal = "BIG"; confidence = Math.min(85, 60 + (30 - rsi) * 1.5); logic = 31.4; } // Oversold, expect BIG
+            return { prediction: signal, rsiValue: parseFloat(rsi.toFixed(2)), confidence: Math.floor(confidence), logic: logic };
         }
 
         // --- Moving Average Crossover Signal ---
-        function getMACrossoverSignal(numericalHistory, shortPeriod = MA_SHORT_PERIOD, longPeriod = MA_LONG_PERIOD) { if (numericalHistory.length < longPeriod) return { signal: null, confidence: 50, logic: 32.0 }; const smaShort = calculateSMA(numericalHistory, shortPeriod); const smaLong = calculateSMA(numericalHistory, longPeriod); if (smaShort === null || smaLong === null) return { signal: null, confidence: 50, logic: 32.01 }; let signal = null; let confidence = 65; let logic = 32.1; if (smaShort > smaLong) { signal = "BIG"; logic = 32.2; } else if (smaShort < smaLong) { signal = "SMALL"; logic = 32.3; } if (numericalHistory.length >= longPeriod + 1) { const prevSmaShort = calculateSMA(numericalHistory.slice(1), shortPeriod); const prevSmaLong = calculateSMA(numericalHistory.slice(1), longPeriod); if (prevSmaShort !== null && prevSmaLong !== null) { if (prevSmaShort <= prevSmaLong && smaShort > smaLong) { signal = "BIG"; confidence = 75; logic = 32.4; } else if (prevSmaShort >= prevSmaLong && smaShort < smaLong) { signal = "SMALL"; confidence = 75; logic = 32.5;} } } return { signal, confidence, logic }; }
+        function getMACrossoverSignal(numericalHistory, shortPeriod = MA_SHORT_PERIOD, longPeriod = MA_LONG_PERIOD) { if (numericalHistory.length < longPeriod) return { prediction: null, confidence: 50, logic: 32.0 }; const smaShort = calculateSMA(numericalHistory, shortPeriod); const smaLong = calculateSMA(numericalHistory, longPeriod); if (smaShort === null || smaLong === null) return { prediction: null, confidence: 50, logic: 32.01 }; let signal = null; let confidence = 65; let logic = 32.1; if (smaShort > smaLong) { signal = "BIG"; logic = 32.2; } else if (smaShort < smaLong) { signal = "SMALL"; logic = 32.3; } if (numericalHistory.length >= longPeriod + 1) { const prevSmaShort = calculateSMA(numericalHistory.slice(1), shortPeriod); const prevSmaLong = calculateSMA(numericalHistory.slice(1), longPeriod); if (prevSmaShort !== null && prevSmaLong !== null) { if (prevSmaShort <= prevSmaLong && smaShort > smaLong) { signal = "BIG"; confidence = 75; logic = 32.4; } else if (prevSmaShort >= prevSmaLong && smaShort < smaLong) { signal = "SMALL"; confidence = 75; logic = 32.5;} } } return { prediction: signal, confidence, logic }; }
         // --- Bollinger Bands Signal ---
-        function getBollingerBandsSignal(numericalHistory, period = BOLLINGER_PERIOD, stdDevMultiplier = BOLLINGER_STD_DEV) { if (numericalHistory.length < period) return { signal: null, confidence: 50, logic: 33.0 }; const sma = calculateSMA(numericalHistory, period); const stdDev = calculateStdDev(numericalHistory, period); if (sma === null || stdDev === null) return { signal: null, confidence: 50, logic: 33.01 }; const upperBand = sma + (stdDev * stdDevMultiplier); const lowerBand = sma - (stdDev * stdDevMultiplier); const lastValue = numericalHistory[0]; let signal = null; let confidence = 60; let logic = 33.1; if (lastValue > upperBand) { signal = "SMALL"; confidence = 70; logic = 33.2; } else if (lastValue < lowerBand) { signal = "BIG"; confidence = 70; logic = 33.3; } return { signal, confidence, upperBand: upperBand.toFixed(2), lowerBand: lowerBand.toFixed(2), sma: sma.toFixed(2), logic }; }
+        function getBollingerBandsSignal(numericalHistory, period = BOLLINGER_PERIOD, stdDevMultiplier = BOLLINGER_STD_DEV) { if (numericalHistory.length < period) return { prediction: null, confidence: 50, logic: 33.0 }; const sma = calculateSMA(numericalHistory, period); const stdDev = calculateStdDev(numericalHistory, period); if (sma === null || stdDev === null) return { prediction: null, confidence: 50, logic: 33.01 }; const upperBand = sma + (stdDev * stdDevMultiplier); const lowerBand = sma - (stdDev * stdDevMultiplier); const lastValue = numericalHistory[0]; let signal = null; let confidence = 60; let logic = 33.1; if (lastValue > upperBand) { signal = "SMALL"; confidence = 70; logic = 33.2; } else if (lastValue < lowerBand) { signal = "BIG"; confidence = 70; logic = 33.3; } return { prediction: signal, confidence, upperBand: upperBand.toFixed(2), lowerBand: lowerBand.toFixed(2), sma: sma.toFixed(2), logic }; }
         // --- Simplified MACD-Inspired Signal ---
-        function getMACDSimpleSignal(numericalHistory, fastPeriod = 5, slowPeriod = 10) { if (numericalHistory.length < slowPeriod) return { signal: null, confidence: 50, logic: 34.0 }; const smaFast = calculateSMA(numericalHistory, fastPeriod); const smaSlow = calculateSMA(numericalHistory, slowPeriod); if (smaFast === null || smaSlow === null) return { signal: null, confidence: 50, logic: 34.01 }; let signal = null; let confidence = 60; let logic = 34.1; if (smaFast > smaSlow) { signal = "BIG"; confidence = 65; logic = 34.2; } else if (smaFast < smaSlow) { signal = "SMALL"; confidence = 65; logic = 34.3; } return { signal, confidence, logic }; }
+        function getMACDSimpleSignal(numericalHistory, fastPeriod = 5, slowPeriod = 10) { if (numericalHistory.length < slowPeriod) return { prediction: null, confidence: 50, logic: 34.0 }; const smaFast = calculateSMA(numericalHistory, fastPeriod); const smaSlow = calculateSMA(numericalHistory, slowPeriod); if (smaFast === null || smaSlow === null) return { prediction: null, confidence: 50, logic: 34.01 }; let signal = null; let confidence = 60; let logic = 34.1; if (smaFast > smaSlow) { signal = "BIG"; confidence = 65; logic = 34.2; } else if (smaFast < smaSlow) { signal = "SMALL"; confidence = 65; logic = 34.3; } return { prediction: signal, confidence, logic }; }
         // --- Consecutive Outcome Analysis ---
-        function getConsecutiveOutcomeSignal(recentResultTypes) { if (recentResultTypes.length < 2) return { signal: null, confidence: 50, logic: 35.0 }; let signal = null; let confidence = 50; let logic = 35.1; if (recentResultTypes.length >= 3 && recentResultTypes[0] === recentResultTypes[1] && recentResultTypes[1] === recentResultTypes[2]) { signal = recentResultTypes[0] === "BIG" ? "SMALL" : "BIG"; confidence = 70; logic = 35.2; } else if (recentResultTypes[0] === recentResultTypes[1]) { signal = recentResultTypes[0] === "BIG" ? "SMALL" : "BIG"; confidence = 65; logic = 35.3; } return { signal, confidence, logic }; }
-        
+        function getConsecutiveOutcomeSignal(recentResultTypes) { if (recentResultTypes.length < 2) return { prediction: null, confidence: 50, logic: 35.0 }; let signal = null; let confidence = 50; let logic = 35.1; if (recentResultTypes.length >= 3 && recentResultTypes[0] === recentResultTypes[1] && recentResultTypes[1] === recentResultTypes[2]) { signal = recentResultTypes[0] === "BIG" ? "SMALL" : "BIG"; confidence = 70; logic = 35.2; } else if (recentResultTypes[0] === recentResultTypes[1]) { signal = recentResultTypes[0] === "BIG" ? "SMALL" : "BIG"; confidence = 65; logic = 35.3; } return { prediction: signal, confidence, logic }; }
+
         // --- START OF "QUANTUM-INSPIRED" & ADVANCED AI LOGIC MODULES ---
 
         // Module 36: Volatility Breakout Signal
         function getVolatilityBreakoutSignal(numericalHistory, period = 10, thresholdMultiplier = 1.5) {
-            if (numericalHistory.length < period) return { signal: null, confidence: 50, logic: 36.0 };
+            if (numericalHistory.length < period) return { prediction: null, confidence: 50, logic: 36.0 };
             const recentValues = numericalHistory.slice(0, period);
             const sma = calculateSMA(recentValues, period);
             const stdDev = calculateStdDev(recentValues, period);
-            if (sma === null || stdDev === null) return { signal: null, confidence: 50, logic: 36.01 };
+            if (sma === null || stdDev === null) return { prediction: null, confidence: 50, logic: 36.01 };
             const upperThreshold = sma + (stdDev * thresholdMultiplier);
             const lowerThreshold = sma - (stdDev * thresholdMultiplier);
             const lastValue = numericalHistory[0];
             let signal = null; let confidence = 60; let logic = 36.1;
-            if (lastValue > upperThreshold) { signal = "BIG"; confidence = 68; logic = 36.2; } 
-            else if (lastValue < lowerThreshold) { signal = "SMALL"; confidence = 68; logic = 36.3; } 
-            return { signal, confidence, logic };
+            if (lastValue > upperThreshold) { signal = "BIG"; confidence = 68; logic = 36.2; }
+            else if (lastValue < lowerThreshold) { signal = "SMALL"; confidence = 68; logic = 36.3; }
+            return { prediction: signal, confidence, logic };
         }
 
         // Module 37: Trend Strength Indicator (Simplified ADX)
         function getTrendStrengthSignal(numericalHistory, period = 14) {
-            if (numericalHistory.length < period * 2) return { signal: null, confidence: 50, logic: 37.0 };
+            if (numericalHistory.length < period * 2) return { prediction: null, confidence: 50, logic: 37.0 };
             const currentSlice = numericalHistory.slice(0, period);
             const prevSlice = numericalHistory.slice(period, period * 2);
             const currentStdDev = calculateStdDev(currentSlice, period);
             const prevStdDev = calculateStdDev(prevSlice, period);
-            if (currentStdDev === null || prevStdDev === null || prevStdDev === 0) return { signal: null, confidence: 50, logic: 37.01 };
+            if (currentStdDev === null || prevStdDev === null || prevStdDev === 0) return { prediction: null, confidence: 50, logic: 37.01 };
             const trendStrengthRatio = currentStdDev / prevStdDev;
             let signal = null; let confidence = 55; let logic = 37.1;
-            const maSignal = getMACrossoverSignal(numericalHistory, 5, 10);
-            if (trendStrengthRatio > 1.2 && maSignal.signal) { 
-                signal = maSignal.signal;
+            const maSignal = getMACrossoverSignal(numericalHistory, 5, 10); // Use existing MA crossover
+            if (trendStrengthRatio > 1.2 && maSignal.prediction) { // Stronger trend, follow MA
+                signal = maSignal.prediction;
                 confidence = maSignal.confidence + 5;
                 logic = 37.2;
-            } else if (trendStrengthRatio < 0.8 && maSignal.signal) { 
-                signal = maSignal.signal === "BIG" ? "SMALL" : "BIG";
+            } else if (trendStrengthRatio < 0.8 && maSignal.prediction) { // Weaker trend, potentially reverse MA
+                signal = maSignal.prediction === "BIG" ? "SMALL" : "BIG";
                 confidence = maSignal.confidence;
                 logic = 37.3;
             }
-            return { signal, confidence: Math.min(80, Math.floor(confidence)), logic };
+            return { prediction: signal, confidence: Math.min(80, Math.floor(confidence)), logic };
         }
 
         // Module 38: Fibonacci Retracement Levels (Simplified)
         function getFibonacciRetracementSignal(numericalHistory) {
-            if (numericalHistory.length < 10) return { signal: null, confidence: 50, logic: 38.0 };
-            const recentValues = numericalHistory.slice(0, 10).reverse(); 
+            if (numericalHistory.length < 10) return { prediction: null, confidence: 50, logic: 38.0 };
+            const recentValues = numericalHistory.slice(0, 10).reverse(); // Oldest to newest for high/low
             const high = Math.max(...recentValues);
             const low = Math.min(...recentValues);
             const range = high - low;
-            if (range === 0) return { signal: null, confidence: 50, logic: 38.01 };
+            if (range === 0) return { prediction: null, confidence: 50, logic: 38.01 };
             const levels = {
                 l236: high - range * 0.236, l382: high - range * 0.382,
                 l500: high - range * 0.500, l618: high - range * 0.618,
             };
-            const lastVal = numericalHistory[0];
+            const lastVal = numericalHistory[0]; // Current value
             let signal = null; let confidence = 60; let logic = 38.1;
-            if (Math.abs(lastVal - levels.l618) < range * 0.05) { signal = "BIG"; confidence = 68; logic = 38.2; } 
-            else if (Math.abs(lastVal - levels.l382) < range * 0.05) { signal = "SMALL"; confidence = 68; logic = 38.3; } 
-            return { signal, confidence, logic };
+            // Example: If near 61.8% retracement from high (support), expect BIG
+            if (Math.abs(lastVal - levels.l618) < range * 0.05) { signal = "BIG"; confidence = 68; logic = 38.2; }
+            // Example: If near 38.2% retracement from high (resistance), expect SMALL
+            else if (Math.abs(lastVal - levels.l382) < range * 0.05) { signal = "SMALL"; confidence = 68; logic = 38.3; }
+            return { prediction: signal, confidence, logic };
         }
 
         // Module 39: Pattern Recognition (Double Top/Bottom - Simplified)
         function getDoublePatternSignal(resultTypeHistory) {
-            if (resultTypeHistory.length < 5) return { signal: null, confidence: 50, logic: 39.0 };
-            if (resultTypeHistory[0] === "BIG" && resultTypeHistory[1] === "SMALL" && resultTypeHistory[2] === "BIG" && resultTypeHistory[3] === "SMALL") { return { signal: "BIG", confidence: 72, logic: 39.1 }; }
-            if (resultTypeHistory[0] === "SMALL" && resultTypeHistory[1] === "BIG" && resultTypeHistory[2] === "SMALL" && resultTypeHistory[3] === "BIG") { return { signal: "SMALL", confidence: 72, logic: 39.2 }; }
-            return { signal: null, confidence: 50, logic: 39.3 };
+            if (resultTypeHistory.length < 5) return { prediction: null, confidence: 50, logic: 39.0 };
+            // Double Bottom: SMALL, BIG, SMALL, BIG -> expect BIG
+            if (resultTypeHistory[0] === "BIG" && resultTypeHistory[1] === "SMALL" && resultTypeHistory[2] === "BIG" && resultTypeHistory[3] === "SMALL") { return { prediction: "BIG", confidence: 72, logic: 39.1 }; }
+            // Double Top: BIG, SMALL, BIG, SMALL -> expect SMALL
+            if (resultTypeHistory[0] === "SMALL" && resultTypeHistory[1] === "BIG" && resultTypeHistory[2] === "SMALL" && resultTypeHistory[3] === "BIG") { return { prediction: "SMALL", confidence: 72, logic: 39.2 }; }
+            return { prediction: null, confidence: 50, logic: 39.3 };
         }
 
         // Module 40: Periodicity Signal
         function getPeriodicitySignal(resultTypeHistory, checkPeriod = 3) {
-            if (resultTypeHistory.length < checkPeriod * 2) return { signal: null, confidence: 50, logic: 40.0 };
+            if (resultTypeHistory.length < checkPeriod * 2) return { prediction: null, confidence: 50, logic: 40.0 };
             const lastOutcome = resultTypeHistory[0];
-            if (resultTypeHistory[checkPeriod] === lastOutcome && resultTypeHistory[checkPeriod * 2] === lastOutcome) { return { signal: lastOutcome, confidence: 67, logic: 40.1 }; }
-            return { signal: null, confidence: 50, logic: 40.2 };
+            if (resultTypeHistory[checkPeriod] === lastOutcome && resultTypeHistory[checkPeriod * 2] === lastOutcome) { return { prediction: lastOutcome, confidence: 67, logic: 40.1 }; }
+            return { prediction: null, confidence: 50, logic: 40.2 };
         }
-        
+
         // Module 41: Mean Reversion Signal
         function getMeanReversionSignal(numericalHistory, period = 10) {
-            if (numericalHistory.length < period) return { signal: null, confidence: 50, logic: 41.0 };
+            if (numericalHistory.length < period) return { prediction: null, confidence: 50, logic: 41.0 };
             const sma = calculateSMA(numericalHistory, period);
-            if (sma === null) return { signal: null, confidence: 50, logic: 41.01 };
+            if (sma === null) return { prediction: null, confidence: 50, logic: 41.01 };
             const lastValue = numericalHistory[0];
             let signal = null; let confidence = 60; let logic = 41.1;
-            if (lastValue > sma * 1.1) { signal = "SMALL"; confidence = 66; logic = 41.2; } 
-            else if (lastValue < sma * 0.9) { signal = "BIG"; confidence = 66; logic = 41.3; }
-            return { signal, confidence, logic };
+            if (lastValue > sma * 1.1) { signal = "SMALL"; confidence = 66; logic = 41.2; } // Far above mean, expect reversion to SMALL
+            else if (lastValue < sma * 0.9) { signal = "BIG"; confidence = 66; logic = 41.3; } // Far below mean, expect reversion to BIG
+            return { prediction: signal, confidence, logic };
         }
 
         // Module 42: Momentum Oscillator (Stochastic-like)
         function getMomentumOscillatorSignal(numericalHistory, period = 14) {
-            if (numericalHistory.length < period) return { signal: null, confidence: 50, logic: 42.0 };
+            if (numericalHistory.length < period) return { prediction: null, confidence: 50, logic: 42.0 };
             const recentValues = numericalHistory.slice(0, period);
             const high = Math.max(...recentValues);
             const low = Math.min(...recentValues);
             const lastValue = numericalHistory[0];
-            if (high === low) return { signal: null, confidence: 50, logic: 42.01 };
+            if (high === low) return { prediction: null, confidence: 50, logic: 42.01 }; // Avoid division by zero
             const kPercent = ((lastValue - low) / (high - low)) * 100;
             let signal = null; let confidence = 60; let logic = 42.1;
-            if (kPercent > 80) { signal = "SMALL"; confidence = 69; logic = 42.2; } 
-            else if (kPercent < 20) { signal = "BIG"; confidence = 69; logic = 42.3; } 
-            return { signal, confidence, logic };
+            if (kPercent > 80) { signal = "SMALL"; confidence = 69; logic = 42.2; } // Overbought zone
+            else if (kPercent < 20) { signal = "BIG"; confidence = 69; logic = 42.3; } // Oversold zone
+            return { prediction: signal, confidence, logic };
         }
 
         // Module 43: Alternating Pattern Detector
         function getAlternatingPatternSignal(resultTypeHistory, minLength = 4) {
-            if (resultTypeHistory.length < minLength) return { signal: null, confidence: 50, logic: 43.0 };
+            if (resultTypeHistory.length < minLength) return { prediction: null, confidence: 50, logic: 43.0 };
             let isAlternating = true;
             for (let i = 0; i < minLength - 1; i++) { if (resultTypeHistory[i] === resultTypeHistory[i+1]) { isAlternating = false; break; } }
-            if (isAlternating) { return { signal: resultTypeHistory[0] === "BIG" ? "SMALL" : "BIG", confidence: 70, logic: 43.1 }; }
-            return { signal: null, confidence: 50, logic: 43.2 };
+            if (isAlternating) { return { prediction: resultTypeHistory[0] === "BIG" ? "SMALL" : "BIG", confidence: 70, logic: 43.1 }; } // Expect break of alternation
+            return { prediction: null, confidence: 50, logic: 43.2 };
         }
 
         // Module 44: Majority Vote of Last N
         function getMajorityVoteSignal(resultTypeHistory, n = 5) {
-            if (resultTypeHistory.length < n) return { signal: null, confidence: 50, logic: 44.0 };
+            if (resultTypeHistory.length < n) return { prediction: null, confidence: 50, logic: 44.0 };
             const recentN = resultTypeHistory.slice(0, n);
             const bigCount = recentN.filter(r => r === "BIG").length;
             const smallCount = n - bigCount;
             let signal = null; let confidence = 55; let logic = 44.1;
             if (bigCount > smallCount) { signal = "BIG"; confidence = 50 + bigCount * 3; logic = 44.2; }
             else if (smallCount > bigCount) { signal = "SMALL"; confidence = 50 + smallCount * 3; logic = 44.3; }
-            return { signal, confidence: Math.min(75, Math.floor(confidence)), logic };
+            return { prediction: signal, confidence: Math.min(75, Math.floor(confidence)), logic };
         }
 
         // Module 45: Counter-Streak Logic
         function getCounterStreakSignal(resultTypeHistory, streakLength = 3) {
-            if (resultTypeHistory.length < streakLength) return { signal: null, confidence: 50, logic: 45.0 };
+            if (resultTypeHistory.length < streakLength) return { prediction: null, confidence: 50, logic: 45.0 };
             const recentStreak = resultTypeHistory.slice(0, streakLength);
             const firstOutcome = recentStreak[0];
-            if (recentStreak.every(r => r === firstOutcome)) { return { signal: firstOutcome === "BIG" ? "SMALL" : "BIG", confidence: 68, logic: 45.1 }; }
-            return { signal: null, confidence: 50, logic: 45.2 };
+            if (recentStreak.every(r => r === firstOutcome)) { return { prediction: firstOutcome === "BIG" ? "SMALL" : "BIG", confidence: 68, logic: 45.1 }; } // Expect streak to break
+            return { prediction: null, confidence: 50, logic: 45.2 };
         }
-        
+
         // Module 46: Dominant Cycle Detection (Simplified)
         function getDominantCycleSignal(numericalHistory, cycleLengths = [3, 5, 7]) {
-            if (numericalHistory.length < Math.max(...cycleLengths) * 2) return { signal: null, confidence: 50, logic: 46.0 };
+            if (numericalHistory.length < Math.max(...cycleLengths) * 2) return { prediction: null, confidence: 50, logic: 46.0 };
             let bestSignal = null; let maxConfidence = 50; let bestLogic = 46.1;
             for (const len of cycleLengths) {
-                const cycleSlice1 = numericalHistory.slice(0, len).reduce((s, v) => s + v, 0) / len;
-                const cycleSlice2 = numericalHistory.slice(len, len * 2).reduce((s, v) => s + v, 0) / len;
-                if (Math.abs(cycleSlice1 - cycleSlice2) > 1) { 
-                    const currentSignal = cycleSlice1 > cycleSlice2 ? "BIG" : "SMALL";
-                    const currentConfidence = 60 + len; 
+                const cycleSlice1Avg = calculateSMA(numericalHistory, len); // numericalHistory is newest first
+                const cycleSlice2Avg = calculateSMA(numericalHistory.slice(len), len);
+                if (cycleSlice1Avg !== null && cycleSlice2Avg !== null && Math.abs(cycleSlice1Avg - cycleSlice2Avg) > 1) { // Arbitrary threshold for difference
+                    const currentSignal = cycleSlice1Avg > cycleSlice2Avg ? "BIG" : "SMALL"; // If recent cycle avg is higher, predict BIG
+                    const currentConfidence = 60 + len; // Longer cycles might imply stronger patterns
                     if (currentConfidence > maxConfidence) { maxConfidence = currentConfidence; bestSignal = currentSignal; bestLogic = 46.1 + len * 0.1; }
                 }
             }
-            return { signal: bestSignal, confidence: Math.min(75, Math.floor(maxConfidence)), logic: bestLogic };
+            return { prediction: bestSignal, confidence: Math.min(75, Math.floor(maxConfidence)), logic: bestLogic };
         }
 
         // Module 47: Historical Pattern Matching (Simple Sequence)
         function getHistoricalPatternMatchSignal(resultTypeHistory, pattern = ["BIG", "SMALL", "BIG"]) {
-            if (resultTypeHistory.length < pattern.length + 1) return { signal: null, confidence: 50, logic: 47.0 };
+            if (resultTypeHistory.length < pattern.length + 1) return { prediction: null, confidence: 50, logic: 47.0 };
             const recentSequence = resultTypeHistory.slice(0, pattern.length);
-            if (recentSequence.every((val, index) => val === pattern[index])) { return { signal: pattern[pattern.length-1] === "BIG" ? "SMALL" : "BIG", confidence: 65, logic: 47.1 }; }
-            return { signal: null, confidence: 50, logic: 47.2 };
+            if (recentSequence.every((val, index) => val === pattern[index])) {
+                // If pattern matches, predict the opposite of the last element of the pattern as a simple reversal
+                return { prediction: pattern[pattern.length-1] === "BIG" ? "SMALL" : "BIG", confidence: 65, logic: 47.1 };
+            }
+            return { prediction: null, confidence: 50, logic: 47.2 };
         }
 
         // Module 48: Relative Strength Comparison
         function getRelativeStrengthSignal(resultTypeHistory) {
-            if (resultTypeHistory.length < 20) return { signal: null, confidence: 50, logic: 48.0 };
+            if (resultTypeHistory.length < 20) return { prediction: null, confidence: 50, logic: 48.0 };
             const shortTerm = resultTypeHistory.slice(0, 5); const midTerm = resultTypeHistory.slice(0, 10); const longTerm = resultTypeHistory.slice(0, 20);
-            const stBig = shortTerm.filter(r => r === "BIG").length / 5; const mtBig = midTerm.filter(r => r === "BIG").length / 10; const ltBig = longTerm.filter(r => r === "BIG").length / 20;
+            const stBigRatio = shortTerm.filter(r => r === "BIG").length / 5;
+            const mtBigRatio = midTerm.filter(r => r === "BIG").length / 10;
+            const ltBigRatio = longTerm.filter(r => r === "BIG").length / 20;
             let score = 0;
-            if (stBig > mtBig) score++; else if (stBig < mtBig) score--;
-            if (mtBig > ltBig) score++; else if (mtBig < ltBig) score--;
-            if (stBig > 0.6) score++; if (stBig < 0.4) score--;
+            if (stBigRatio > mtBigRatio) score++; else if (stBigRatio < mtBigRatio) score--;
+            if (mtBigRatio > ltBigRatio) score++; else if (mtBigRatio < ltBigRatio) score--;
+            if (stBigRatio > 0.6) score++; if (stBigRatio < 0.4) score--; // Strong short-term bias
+
             let signal = null; let confidence = 55; let logic = 48.1;
             if (score >= 2) { signal = "BIG"; confidence = 60 + score * 5; logic = 48.2; }
             else if (score <= -2) { signal = "SMALL"; confidence = 60 + Math.abs(score) * 5; logic = 48.3; }
-            return { signal, confidence: Math.min(78, Math.floor(confidence)), logic };
+            return { prediction: signal, confidence: Math.min(78, Math.floor(confidence)), logic };
         }
 
         // Module 49: Simulated Quantum Fluctuation Analysis (SQFA)
         function getSQFASignal(numericalHistory, period = Q_FLUC_PERIOD, fluctuationThreshold = 1.5) {
-            if (numericalHistory.length < period) return { signal: null, confidence: 50, logic: 49.0 };
+            if (numericalHistory.length < period) return { prediction: null, confidence: 50, logic: 49.0 };
             const recentValues = numericalHistory.slice(0, period);
             const changes = [];
             for (let i = 0; i < recentValues.length - 1; i++) { changes.push(Math.abs(recentValues[i] - recentValues[i+1])); }
-            if (changes.length === 0) return { signal: null, confidence: 50, logic: 49.01 };
+            if (changes.length === 0) return { prediction: null, confidence: 50, logic: 49.01 };
             const avgChange = changes.reduce((sum, val) => sum + val, 0) / changes.length;
-            const lastChange = Math.abs(numericalHistory[0] - numericalHistory[1]);
+            const lastChange = numericalHistory.length > 1 ? Math.abs(numericalHistory[0] - numericalHistory[1]) : avgChange; // Handle edge case
+
             let signal = null; let confidence = 55; let logic = 49.1;
-            if (lastChange > avgChange * fluctuationThreshold) { 
+            if (lastChange > avgChange * fluctuationThreshold) { // Significant recent fluctuation
                 const lastType = getBigSmallFromNumber(numericalHistory[0]);
-                if (lastType) { signal = lastType === "BIG" ? "SMALL" : "BIG"; confidence = 67; logic = 49.2;}
+                if (lastType) { signal = lastType === "BIG" ? "SMALL" : "BIG"; confidence = 67; logic = 49.2;} // Predict reversal
             }
-            return { signal, confidence, logic };
+            return { prediction: signal, confidence, logic };
         }
-        
+
         // Module 50: Simulated Entanglement-Pattern Recognition (EPR-Sim)
         function getEPRSimSignal(resultTypeHistory, lookback = Q_ENTANGLE_LOOKBACK, triggerLen = Q_ENTANGLE_TRIGGER_LEN, followLen = 1) {
-            if (resultTypeHistory.length < lookback + triggerLen + followLen) return { signal: null, confidence: 50, logic: 50.0 };
-            const triggerPattern = resultTypeHistory.slice(followLen, followLen + triggerLen); 
+            if (resultTypeHistory.length < lookback + triggerLen + followLen) return { prediction: null, confidence: 50, logic: 50.0 };
+            const triggerPattern = resultTypeHistory.slice(followLen, followLen + triggerLen); // Pattern to look for
+            const expectedFollow = resultTypeHistory[0]; // What followed this pattern most recently
+
             let occurrences = 0; let favorableFollows = 0;
-            for (let i = followLen + triggerLen; i <= lookback; i++) {
+            for (let i = followLen + triggerLen; i <= lookback; i++) { // Search in older history
                 const historicalTrigger = resultTypeHistory.slice(i, i + triggerLen);
-                if (historicalTrigger.every((val, idx) => val === triggerPattern[idx])) {
+                if (historicalTrigger.every((val, idx) => val === triggerPattern[idx])) { // Pattern found
                     occurrences++;
-                    const historicalFollow = resultTypeHistory[i - followLen]; 
-                    if (historicalFollow === resultTypeHistory[0]) { 
+                    const historicalFollow = resultTypeHistory[i - followLen]; // What followed it historically
+                    if (historicalFollow === expectedFollow) {
                         favorableFollows++;
                     }
                 }
             }
-            if (occurrences > 2 && (favorableFollows / occurrences) > 0.7) {
-                return { signal: resultTypeHistory[0], confidence: 68 + Math.min(10, occurrences), logic: 50.1 };
+            if (occurrences > 2 && (favorableFollows / occurrences) > 0.7) { // Strong correlation
+                return { prediction: expectedFollow, confidence: 68 + Math.min(10, occurrences), logic: 50.1 };
             }
-            return { signal: null, confidence: 50, logic: 50.2 };
+            return { prediction: null, confidence: 50, logic: 50.2 };
         }
 
         // Module 51: Simulated Wave-Function Collapse Signal (WFCS-Sim)
         function getWFCSSignal(resultTypeHistory, lookback = Q_COLLAPSE_LOOKBACK, ambiguityThreshold = Q_COLLAPSE_AMBIGUITY, tipLength = 2) {
-            if (resultTypeHistory.length < lookback + tipLength) return { signal: null, confidence: 50, logic: 51.0 };
+            if (resultTypeHistory.length < lookback + tipLength) return { prediction: null, confidence: 50, logic: 51.0 };
             const ambiguityPeriod = resultTypeHistory.slice(tipLength, tipLength + lookback);
             const bigCount = ambiguityPeriod.filter(r => r === "BIG").length;
             const smallCount = ambiguityPeriod.filter(r => r === "SMALL").length;
-            if ((bigCount + smallCount) === 0) return { signal: null, confidence: 50, logic: 51.01 };
+            if ((bigCount + smallCount) === 0) return { prediction: null, confidence: 50, logic: 51.01 };
             const ambiguityRatio = Math.abs(bigCount - smallCount) / (bigCount + smallCount);
 
-            if (ambiguityRatio < ambiguityThreshold) { 
-                const tipPattern = resultTypeHistory.slice(0, tipLength);
-                if (tipPattern.every(val => val === tipPattern[0])) { 
-                    return { signal: tipPattern[0], confidence: 70, logic: 51.1 };
+            if (ambiguityRatio < ambiguityThreshold) { // High ambiguity (market undecided)
+                const tipPattern = resultTypeHistory.slice(0, tipLength); // Look at the most recent "tip"
+                if (tipPattern.every(val => val === tipPattern[0])) { // If tip shows a clear direction
+                    return { prediction: tipPattern[0], confidence: 70, logic: 51.1 }; // "Collapse" in that direction
                 }
             }
-            return { signal: null, confidence: 50, logic: 51.2 };
+            return { prediction: null, confidence: 50, logic: 51.2 };
         }
 
         // Module 52: Simulated Quantum Tunneling for Optimization Escape
-        function getQTunnelingSignal(currentUserStats, lastPrediction) {
-            if (currentUserStats.consecutiveLosses >= Q_TUNNEL_LOSS_STREAK && lastPrediction) {
-                // If stuck in a losing streak, "tunnel" to the opposite of the last prediction
-                // with a temporary confidence boost.
-                const oppositePrediction = lastPrediction.prediction === "BIG" ? "SMALL" : "BIG";
+        function getQTunnelingSignal(currentUserStats, lastPredictionObject) { // Expects last full prediction object
+            if (currentUserStats.consecutiveLosses >= Q_TUNNEL_LOSS_STREAK && lastPredictionObject && lastPredictionObject.prediction) {
+                const oppositePrediction = lastPredictionObject.prediction === "BIG" ? "SMALL" : "BIG";
                 return {
                     prediction: oppositePrediction,
-                    confidence: Math.min(75, lastPrediction.confidence + Q_TUNNEL_CONFIDENCE_BOOST), // Boost but cap
-                    logic: 52.1 
+                    confidence: Math.min(75, (lastPredictionObject.confidence || 50) + Q_TUNNEL_CONFIDENCE_BOOST),
+                    logic: 52.1
                 };
             }
-            return { signal: null, confidence: 50, logic: 52.0 }; // No tunneling
+            return { prediction: null, confidence: 50, logic: 52.0 };
         }
 
         // Module 53: Hyper-Dimensional Pattern Analysis (HDPA-Sim)
-        function getHDPASignal(numericalHistory, resultTypeHistory) {
-            let alignedSignals = 0;
+        function getHDPASignal(numericalHistory, resultTypeHistory) { // Added resultTypeHistory for more diverse signals
+            let alignedSignalsCount = 0;
             let primaryDirection = null;
             const signals = [
-                calculateRSI(numericalHistory.slice().reverse()),
+                calculateRSI(numericalHistory.slice().reverse()), // Ensure numericalHistory is passed correctly
                 getMACrossoverSignal(numericalHistory),
                 getBollingerBandsSignal(numericalHistory),
-                getVolatilityBreakoutSignal(numericalHistory)
-            ].filter(s => s && s.signal);
+                getVolatilityBreakoutSignal(numericalHistory),
+                getConsecutiveOutcomeSignal(resultTypeHistory) // Added a resultType based signal
+            ].filter(s => s && s.prediction); // Filter for signals that made a prediction
 
-            if (signals.length === 0) return { signal: null, confidence: 50, logic: 53.0 };
-            
+            if (signals.length === 0) return { prediction: null, confidence: 50, logic: 53.0 };
+
             const bigSignals = signals.filter(s => s.prediction === "BIG").length;
             const smallSignals = signals.filter(s => s.prediction === "SMALL").length;
 
             if (bigSignals >= HDPA_INDICATOR_THRESHOLD && bigSignals > smallSignals) {
                 primaryDirection = "BIG";
-                alignedSignals = bigSignals;
+                alignedSignalsCount = bigSignals;
             } else if (smallSignals >= HDPA_INDICATOR_THRESHOLD && smallSignals > bigSignals) {
                 primaryDirection = "SMALL";
-                alignedSignals = smallSignals;
+                alignedSignalsCount = smallSignals;
             }
 
             if (primaryDirection) {
+                const avgConfidenceOfAligned = signals.filter(s => s.prediction === primaryDirection)
+                                                 .reduce((sum, s) => sum + s.confidence, 0) / alignedSignalsCount;
                 return {
                     prediction: primaryDirection,
-                    confidence: 50 + (alignedSignals * 5) + Math.min(15, signals.reduce((sum, s) => sum + (s.confidence-50)/signals.length, 0)), // Base + alignment bonus + avg confidence bonus
-                    logic: 53.1 + (alignedSignals * 0.1)
+                    confidence: Math.min(90, 50 + (alignedSignalsCount * 5) + (avgConfidenceOfAligned - 50) * 0.5),
+                    logic: 53.1 + (alignedSignalsCount * 0.1)
                 };
             }
-            return { signal: null, confidence: 50, logic: 53.2 };
+            return { prediction: null, confidence: 50, logic: 53.2 };
         }
 
         // Module 54: Chaotic System Sensitivity Analysis (CSSA-Sim)
         function getCSSASignal(predictionHistory) { // Expects history of {prediction, confidence} objects
-            if (predictionHistory.length < CSSA_VOLATILITY_WINDOW) return { signal: null, confidence: 50, logic: 54.0, adjustmentFactor: 1.0 };
+            if (predictionHistory.length < CSSA_VOLATILITY_WINDOW) return { prediction: null, confidence: 50, logic: 54.0, adjustmentFactor: 1.0 };
             const recentPredictions = predictionHistory.slice(0, CSSA_VOLATILITY_WINDOW);
             let flips = 0;
             for (let i = 0; i < recentPredictions.length - 1; i++) {
-                if (recentPredictions[i].prediction !== recentPredictions[i+1].prediction) {
+                if (recentPredictions[i].prediction && recentPredictions[i+1].prediction && recentPredictions[i].prediction !== recentPredictions[i+1].prediction) {
                     flips++;
                 }
             }
             if (flips >= CSSA_VOLATILITY_THRESHOLD) {
                 // High volatility, reduce confidence of current predictions
-                return { signal: null, confidence: 40, logic: 54.1, adjustmentFactor: 0.7 }; // adjustmentFactor to apply to other predictions
+                return { prediction: null, confidence: 40, logic: 54.1, adjustmentFactor: 0.7 }; // adjustmentFactor to apply to other predictions
             }
-            return { signal: null, confidence: 50, logic: 54.2, adjustmentFactor: 1.0 };
+            return { prediction: null, confidence: 50, logic: 54.2, adjustmentFactor: 1.0 };
         }
 
         // Module 55: Entropic Trend Decay (ETD-Sim)
         function getETDSignal(resultTypeHistory) {
-            if (resultTypeHistory.length < ETD_LOOKBACK) return { signal: null, confidence: 50, logic: 55.0 };
+            if (resultTypeHistory.length < ETD_LOOKBACK) return { prediction: null, confidence: 50, logic: 55.0 };
             const recentTrend = resultTypeHistory.slice(0, ETD_STREAK_THRESHOLD);
             if (recentTrend.length === ETD_STREAK_THRESHOLD && recentTrend.every(r => r === recentTrend[0])) {
                 // Long streak detected, slightly increase chance of reversal
                 const opposite = recentTrend[0] === "BIG" ? "SMALL" : "BIG";
                 return { prediction: opposite, confidence: 55, logic: 55.1 };
             }
-            return { signal: null, confidence: 50, logic: 55.2 };
+            return { prediction: null, confidence: 50, logic: 55.2 };
         }
 
         // Module 56: Predictive State Resonance (PSR-Sim)
         function getPSRSignal(validPredictions) { // Takes the array of valid predictions from ultraAIPredict
-            if (validPredictions.length < PSR_RESONANCE_THRESHOLD) return { signal: null, confidence: 50, logic: 56.0 };
-            
+            if (validPredictions.length < PSR_RESONANCE_THRESHOLD) return { prediction: null, confidence: 50, logic: 56.0 };
+
             const predictionCounts = validPredictions.reduce((acc, p) => {
-                acc[p.prediction] = (acc[p.prediction] || 0) + 1;
+                if (p.prediction) acc[p.prediction] = (acc[p.prediction] || 0) + 1;
                 return acc;
             }, {});
 
@@ -1484,15 +1494,15 @@
             }
 
             if (resonantPrediction) {
-                const resonantPredictions = validPredictions.filter(p => p.prediction === resonantPrediction);
-                const averageConfidenceOfResonant = resonantPredictions.reduce((sum, p) => sum + p.confidence, 0) / resonantPredictions.length;
+                const resonantPredictionsFiltered = validPredictions.filter(p => p.prediction === resonantPrediction);
+                const averageConfidenceOfResonant = resonantPredictionsFiltered.reduce((sum, p) => sum + p.confidence, 0) / resonantPredictionsFiltered.length;
                 return {
                     prediction: resonantPrediction,
                     confidence: Math.min(95, averageConfidenceOfResonant + (maxCount * 3)), // Boost by count
                     logic: 56.1 + (maxCount * 0.1)
                 };
             }
-            return { signal: null, confidence: 50, logic: 56.2 };
+            return { prediction: null, confidence: 50, logic: 56.2 };
         }
 
 
@@ -1506,29 +1516,33 @@
 
         // --- Main Prediction Aggregator (Sigma Swarm Consensus) ---
         function ultraAIPredict(currentUserHistory, currentUserStats) {
+            // Ensure finalLogic is declared and initialized at the very beginning of the function scope.
+            let finalLogic = 99.9; // Default initialization
+
             const currentConsecutiveLosses = currentUserStats.consecutiveLosses || 0;
             let lastSystemPredictionForRecovery = null;
-            let lastFullPredictionObject = null; // Store the whole last prediction object
+            let lastFullPredictionObject = null;
 
-            if (currentUserHistory && currentUserHistory.length > 0) { 
-                const lastResolved = currentUserHistory.find(h => h.prediction && (h.status === "WIN" || h.status === "LOSS")); 
+            if (currentUserHistory && currentUserHistory.length > 0) {
+                const lastResolved = currentUserHistory.find(h => h.prediction && (h.status === "WIN" || h.status === "LOSS"));
                 if (lastResolved) {
                     lastSystemPredictionForRecovery = lastResolved.prediction;
-                    lastFullPredictionObject = lastResolved; // Store the object
+                    lastFullPredictionObject = lastResolved; // This object includes .prediction and .confidence
                 }
             }
-            
-            if (!currentUserHistory || currentUserHistory.length === 0) { return { prediction: Math.random() > 0.5 ? "BIG" : "SMALL", confidence: 50, logic: 0.0, activeLogics: ["InitialRandom"] }; }
+
+            if (!currentUserHistory || currentUserHistory.length === 0) {
+                return { prediction: Math.random() > 0.5 ? "BIG" : "SMALL", confidence: 50, logic: 0.0, activeLogics: ["InitialRandom"] };
+            }
 
             const allPredictions = [];
             const numericalHistory = getNumericalHistory(currentUserHistory);
             const resultTypeHistory = getResultTypeHistory(currentUserHistory);
             const predictionHistoryForCSSA = currentUserHistory.map(h => ({prediction: h.prediction, confidence: h.confidence}));
 
-
             // Call all prediction modules
             if (numericalHistory.length > 0) {
-                allPredictions.push(calculateRSI(numericalHistory.slice().reverse()));
+                allPredictions.push(calculateRSI(numericalHistory.slice().reverse())); // RSI needs reversed history
                 allPredictions.push(getMACrossoverSignal(numericalHistory));
                 allPredictions.push(getBollingerBandsSignal(numericalHistory));
                 allPredictions.push(getMACDSimpleSignal(numericalHistory));
@@ -1538,7 +1552,7 @@
                 allPredictions.push(getMeanReversionSignal(numericalHistory));
                 allPredictions.push(getMomentumOscillatorSignal(numericalHistory));
                 allPredictions.push(getDominantCycleSignal(numericalHistory));
-                allPredictions.push(getSQFASignal(numericalHistory)); 
+                allPredictions.push(getSQFASignal(numericalHistory));
                 allPredictions.push(getHDPASignal(numericalHistory, resultTypeHistory));
             }
             if (resultTypeHistory.length > 0) {
@@ -1556,65 +1570,66 @@
                 allPredictions.push(getHistoricalPatternMatchSignal(resultTypeHistory, ["BIG","BIG","SMALL"]));
                 allPredictions.push(getHistoricalPatternMatchSignal(resultTypeHistory, ["SMALL","SMALL","BIG"]));
                 allPredictions.push(getRelativeStrengthSignal(resultTypeHistory));
-                allPredictions.push(getEPRSimSignal(resultTypeHistory)); 
-                allPredictions.push(getWFCSSignal(resultTypeHistory)); 
+                allPredictions.push(getEPRSimSignal(resultTypeHistory));
+                allPredictions.push(getWFCSSignal(resultTypeHistory));
                 allPredictions.push(getETDSignal(resultTypeHistory));
             }
-            
+
             const recentResultsForOldLogics = currentUserHistory.filter(h => h.resultType && h.resultType !== "-").slice(0, 15);
-            if (recentResultsForOldLogics.length >= 3) { 
+            if (recentResultsForOldLogics.length >= 3) {
                 allPredictions.push(neuralNetworkPrediction(recentResultsForOldLogics));
                 allPredictions.push(fibonacciPrediction(recentResultsForOldLogics));
                 allPredictions.push(machineLearningPrediction(recentResultsForOldLogics));
             }
             allPredictions.push(weightedPrediction(currentUserHistory.length));
-            
-            // Quantum Tunneling needs last prediction object
-            if(lastFullPredictionObject) {
+
+            if(lastFullPredictionObject) { // Pass the full object to Q Tunneling
                 allPredictions.push(getQTunnelingSignal(currentUserStats, lastFullPredictionObject));
             }
 
-
-            if (currentConsecutiveLosses >= 1 && lastSystemPredictionForRecovery) { 
+            // Recovery logic based on consecutive losses
+            if (currentConsecutiveLosses >= 1 && lastSystemPredictionForRecovery) {
                 let recoveryConfidence = 70 + (currentConsecutiveLosses * 5);
-                let recoveryLogic = 22.0 + currentConsecutiveLosses * 0.1;
-                if (currentConsecutiveLosses >= 3) { recoveryConfidence = 30; recoveryLogic = 22.9; }
-                allPredictions.push({ prediction: lastSystemPredictionForRecovery === "BIG" ? "SMALL" : "BIG", confidence: Math.min(95, recoveryConfidence), logic: recoveryLogic });
+                let recoveryLogicCode = 22.0 + currentConsecutiveLosses * 0.1;
+                if (currentConsecutiveLosses >= 3) { recoveryConfidence = 30; recoveryLogicCode = 22.9; } // Reduced confidence for high loss streak
+                allPredictions.push({ prediction: lastSystemPredictionForRecovery === "BIG" ? "SMALL" : "BIG", confidence: Math.min(95, recoveryConfidence), logic: recoveryLogicCode });
             }
 
-            const validPredictionsInput = allPredictions.filter(p => p && p.prediction !== null && typeof p.confidence === 'number'); // Use p.prediction
-            
-            // Add PSR Signal based on the current set of valid predictions
+            const validPredictionsInput = allPredictions.filter(p => p && p.prediction !== null && typeof p.confidence === 'number');
+
             if(validPredictionsInput.length > 0) {
-                 allPredictions.push(getPSRSignal(validPredictionsInput));
+                 allPredictions.push(getPSRSignal(validPredictionsInput)); // PSR uses the collection of valid predictions
             }
 
-            const validPredictions = allPredictions.filter(p => p && p.prediction !== null && typeof p.confidence === 'number'); // Re-filter to include PSR
+            const validPredictions = allPredictions.filter(p => p && p.prediction !== null && typeof p.confidence === 'number');
 
             if (validPredictions.length === 0) {
-                const fallbackLogic = resultTypeHistory.length > 0 ? (resultTypeHistory[0] === "BIG" ? "SMALL" : "BIG") : (Math.random() > 0.5 ? "BIG" : "SMALL");
-                return { prediction: fallbackLogic, confidence: 45, logic: 0.1, activeLogics: ["FallbackRandom"] };
+                const fallbackPrediction = resultTypeHistory.length > 0 ? (resultTypeHistory[0] === "BIG" ? "SMALL" : "BIG") : (Math.random() > 0.5 ? "BIG" : "SMALL");
+                return { prediction: fallbackPrediction, confidence: 45, logic: 0.1, activeLogics: ["FallbackRandom"] };
             }
-            
+
             const cssaResult = getCSSASignal(predictionHistoryForCSSA);
             let globalConfidenceAdjustment = cssaResult.adjustmentFactor || 1.0;
-
 
             let weightedSumBig = 0; let weightedSumSmall = 0; let totalConfidenceWeight = 0;
             const activeLogicsList = [];
 
             validPredictions.forEach(p => {
-                const weight = p.confidence * globalConfidenceAdjustment; // Apply CSSA adjustment
-                if (p.prediction === "BIG") weightedSumBig += weight;
-                else if (p.prediction === "SMALL") weightedSumSmall += weight;
-                totalConfidenceWeight += weight;
+                const adjustedConfidence = p.confidence * globalConfidenceAdjustment;
+                if (p.prediction === "BIG") weightedSumBig += adjustedConfidence;
+                else if (p.prediction === "SMALL") weightedSumSmall += adjustedConfidence;
+                totalConfidenceWeight += adjustedConfidence;
                 if(p.logic) activeLogicsList.push(p.logic.toFixed(2));
             });
-            
-            let finalPrediction; let finalConfidence;
 
-            if (totalConfidenceWeight === 0) {
-                finalPrediction = Math.random() > 0.5 ? "BIG" : "SMALL"; finalConfidence = 40 * globalConfidenceAdjustment;
+            let finalPrediction;
+            let finalConfidence;
+            // finalLogic is already initialized at the top
+
+            if (totalConfidenceWeight === 0) { // Should ideally not happen if validPredictions.length > 0
+                finalPrediction = Math.random() > 0.5 ? "BIG" : "SMALL";
+                finalConfidence = 40 * globalConfidenceAdjustment;
+                finalLogic = 99.8; // Specific logic code for this rare case
             } else {
                 if (weightedSumBig > weightedSumSmall) {
                     finalPrediction = "BIG";
@@ -1622,31 +1637,44 @@
                 } else if (weightedSumSmall > weightedSumBig) {
                     finalPrediction = "SMALL";
                     finalConfidence = (weightedSumSmall / totalConfidenceWeight) * 100 * (validPredictions.filter(p=>p.prediction === "SMALL").length / validPredictions.length);
-                } else { 
+                } else { // Tie-breaker: use highest confidence prediction or random if still tied
                     const highestConf = validPredictions.reduce((max, p) => p.confidence > max.confidence ? p : max, validPredictions[0]);
                     finalPrediction = highestConf.prediction;
-                    finalConfidence = highestConf.confidence * 0.8; 
+                    finalConfidence = highestConf.confidence * 0.8; // Reduce confidence slightly for ties
+                    finalLogic = highestConf.logic || 99.7;
                 }
-                finalConfidence *= globalConfidenceAdjustment; 
+                finalConfidence *= globalConfidenceAdjustment;
             }
-            
-            let omegaAdjustmentFactor = 1.0; let omegaLogicSuffix = ".0_O0";
-            if (currentConsecutiveLosses === 1) { omegaAdjustmentFactor = 0.9; omegaLogicSuffix = ".1_O1"; } 
-            else if (currentConsecutiveLosses === 2) { omegaAdjustmentFactor = 0.7; omegaLogicSuffix = ".2_O2"; } 
-            else if (currentConsecutiveLosses >= 3) { omegaAdjustmentFactor = 0.5; omegaLogicSuffix = ".3_O3"; } 
+
+            // Omega Protocol: Adjust confidence based on consecutive losses
+            let omegaAdjustmentFactor = 1.0;
+            let omegaLogicSuffix = "_O0"; // Default Omega Level 0
+            if (currentConsecutiveLosses === 1) { omegaAdjustmentFactor = 0.9; omegaLogicSuffix = "_O1"; }
+            else if (currentConsecutiveLosses === 2) { omegaAdjustmentFactor = 0.7; omegaLogicSuffix = "_O2"; }
+            else if (currentConsecutiveLosses >= 3) { omegaAdjustmentFactor = 0.5; omegaLogicSuffix = "_O3"; } // Critical level
             finalConfidence *= omegaAdjustmentFactor;
 
             finalConfidence = Math.max(25, Math.min(98, Math.floor(finalConfidence)));
-            
+
             // Safeguard against NaN or non-finite numbers for finalConfidence
-            if (!isFinite(finalConfidence)) { 
+            if (!isFinite(finalConfidence)) {
+                // The console.warn line that was causing the error.
+                // finalLogic here will use its default value (99.9) or any value assigned in tie-breaker.
                 console.warn(`ultraAIPredict: finalConfidence was non-finite (${finalConfidence}). Defaulting to 50. Prediction: ${finalPrediction}, Logic: ${finalLogic}, ActiveLogics: ${activeLogicsList.slice(0,5).join(',')}`);
-                finalConfidence = 50; // Default value if NaN or Infinity occurs
+                finalConfidence = 50;
             }
 
+            // Determine finalLogic based on the dominant signal or a default/tie-breaker value
             const dominantSignal = validPredictions.sort((a,b) => b.confidence - a.confidence)[0];
-            let finalLogic = dominantSignal ? dominantSignal.logic : 99.0; 
-            finalLogic = parseFloat(finalLogic.toString().split('_')[0] + omegaLogicSuffix); 
+            if (finalLogic === 99.9 || finalLogic === 99.8 || finalLogic === 99.7) { // If not set by tie-breaker or zero weight
+                 finalLogic = dominantSignal ? dominantSignal.logic : 99.0; // Default if no dominant signal
+            }
+            // Ensure finalLogic is a number before appending suffix string
+            let baseLogicNum = parseFloat(finalLogic.toString().split('_')[0]);
+            if (isNaN(baseLogicNum)) baseLogicNum = 99.0; // Fallback if parsing fails
+
+            finalLogic = parseFloat(baseLogicNum + omegaLogicSuffix.replace('_O', '.')); // e.g., 31.3_O1 becomes 31.31
+
 
             return { prediction: finalPrediction, confidence: finalConfidence, logic: finalLogic, activeLogics: activeLogicsList.slice(0,5) };
         }
@@ -1655,20 +1683,20 @@
         function getUserSpecificPath(basePath) { if (!currentDeviceIdAlphaX) { console.error("User Device ID is not set for Firebase path."); return null; } return `${USER_DATA_BASE_PATH}/${currentDeviceIdAlphaX}/${basePath}`; }
         async function getUserStats() { const path = getUserSpecificPath("stats"); if (!path) return { streak: 0, winLevel: 0, consecutiveLosses: 0 }; try { const snapshot = await db.ref(path).get(); return snapshot.val() || { streak: 0, winLevel: 0, consecutiveLosses: 0 }; } catch (error) { console.error("Error fetching user stats:", error); return { streak: 0, winLevel: 0, consecutiveLosses: 0 }; } }
         async function updateUserStats(newStatus, predictedOutcome) { const path = getUserSpecificPath("stats"); if (!path) return; const currentUserStats = await getUserStats(); let { streak, winLevel, consecutiveLosses } = currentUserStats; if (newStatus === 'WIN') { winLevel = Math.min(winLevel + 1, MAX_WIN_LEVEL); streak = streak >= 0 ? streak + 1 : 1; consecutiveLosses = 0; } else if (newStatus === 'LOSS') { winLevel = 0; streak = streak <= 0 ? streak - 1 : -1; consecutiveLosses++; } if (currentUserStats.winLevel >= MAX_WIN_LEVEL && newStatus !== 'Skipped') { winLevel = 0; } const updatedStats = { streak, winLevel, consecutiveLosses, lastUpdated: firebase.database.ServerValue.TIMESTAMP }; try { await db.ref(path).set(updatedStats); window.userStreak = streak; window.userWinLevel = winLevel; window.userConsecutiveLosses = consecutiveLosses; } catch (error) { console.error("Error updating user stats:", error); } }
-        
+
         async function getUserHistory() {
             const path = getUserSpecificPath("game_history");
             if (!path) return [];
             try {
-                const snapshot = await db.ref(path).get(); 
+                const snapshot = await db.ref(path).get(); // Use .get() for a one-time read
                 const history = [];
                 if (snapshot.exists()) {
                     snapshot.forEach(childSnapshot => {
                         history.push({ id: childSnapshot.key, ...childSnapshot.val() });
                     });
                 }
-                history.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-                return history.slice(0, MAX_USER_HISTORY_LENGTH); 
+                history.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)); // Sort by timestamp descending
+                return history.slice(0, MAX_USER_HISTORY_LENGTH); // Return only the most recent items
             } catch (error) {
                 console.error("Error fetching user history:", error);
                 return [];
@@ -1679,21 +1707,22 @@
             const path = getUserSpecificPath("game_history");
             if (!path) return;
             try {
-                const newHistoryEntryRef = db.ref(path).push();
+                const newHistoryEntryRef = db.ref(path).push(); // Generate a new unique key
                 await newHistoryEntryRef.set({
                     periodFull: periodFull,
-                    periodDisplay: periodFull.slice(-5),
+                    periodDisplay: periodFull.slice(-5), // Last 5 digits for display
                     actual: actualNumber,
                     resultType: resultType,
                     prediction: predictedForThisPeriod || null,
                     confidence: confidenceOfThisPrediction || null,
-                    status: statusOfThisPrediction || null,
+                    status: statusOfThisPrediction || null, // WIN, LOSS, Skipped
                     logic: logicSourceOfPrediction || null,
                     activeLogics: activeLogicsList || [],
                     timestamp: firebase.database.ServerValue.TIMESTAMP
                 });
 
-                const historySnapshot = await db.ref(path).get(); 
+                // After adding, check if history exceeds max length and trim if necessary
+                const historySnapshot = await db.ref(path).get(); // Get current history
                 if (historySnapshot.exists()) {
                     const historyData = [];
                     historySnapshot.forEach(child => {
@@ -1701,18 +1730,18 @@
                     });
 
                     if (historyData.length > MAX_USER_HISTORY_LENGTH) {
-                        historyData.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+                        historyData.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0)); // Sort oldest first
                         const itemsToRemove = historyData.length - MAX_USER_HISTORY_LENGTH;
                         const updates = {};
                         for (let i = 0; i < itemsToRemove; i++) {
-                            updates[historyData[i].key] = null; 
+                            updates[historyData[i].key] = null; // Mark for deletion
                         }
-                        await db.ref(path).update(updates);
+                        await db.ref(path).update(updates); // Perform batch delete
                         console.log(`Trimmed ${itemsToRemove} old history entries.`);
                     }
                 }
             } catch (error) {
-                console.error("Error adding to user history:", error); 
+                console.error("Error adding to user history:", error); // Log error
             }
         }
 
@@ -1722,31 +1751,70 @@
         // --- Main Prediction Loop ---
         let isProcessingCycle = false;
         async function fetchAndUpdateCycle() {
-            if (isProcessingCycle || !currentDeviceIdAlphaX) { return; } 
+            if (isProcessingCycle || !currentDeviceIdAlphaX) { return; } // Prevent concurrent runs or if not logged in
             isProcessingCycle = true;
             try {
                 let gameApiResult = await fetchGameResultFromAPI();
                 if (!gameApiResult || !gameApiResult.issueNumber) { isProcessingCycle = false; return; }
+
                 const endedPeriodFull = gameApiResult.issueNumber;
                 const actualNumber = Number(gameApiResult.number);
                 const actualResultType = getBigSmallFromNumber(actualNumber);
-                if (endedPeriodFull === lastUserFetchedPeriod && localUserHistoryData.some(h => h.periodFull === endedPeriodFull && h.actual !== null)) { isProcessingCycle = false; return; }
+
+                // Avoid re-processing the same period if already resolved in local history
+                if (endedPeriodFull === lastUserFetchedPeriod && localUserHistoryData.some(h => h.periodFull === endedPeriodFull && h.actual !== null)) {
+                    isProcessingCycle = false;
+                    return;
+                }
+
                 const userPredictionPath = getUserSpecificPath("current_prediction");
                 if (!userPredictionPath) { isProcessingCycle = false; return; }
                 const userPredictionSnapshot = await db.ref(userPredictionPath).get();
                 const previousUserPrediction = userPredictionSnapshot.val();
-                let statusOfPreviousPrediction = "Skipped"; let predictedOutcomeForEndedPeriod = null; let confidenceOfPreviousPrediction = null; let logicOfPreviousPrediction = null; let activeLogicsOfPrevious = [];
-                if (previousUserPrediction && previousUserPrediction.periodFull === endedPeriodFull) { predictedOutcomeForEndedPeriod = previousUserPrediction.prediction; confidenceOfPreviousPrediction = previousUserPrediction.confidence; logicOfPreviousPrediction = previousUserPrediction.logicSource; activeLogicsOfPrevious = previousUserPrediction.activeLogics || []; if (actualResultType && predictedOutcomeForEndedPeriod && predictedOutcomeForEndedPeriod !== "SKIP") { statusOfPreviousPrediction = (actualResultType === predictedOutcomeForEndedPeriod) ? 'WIN' : 'LOSS'; } }
+
+                let statusOfPreviousPrediction = "Skipped";
+                let predictedOutcomeForEndedPeriod = null;
+                let confidenceOfPreviousPrediction = null;
+                let logicOfPreviousPrediction = null;
+                let activeLogicsOfPrevious = [];
+
+                if (previousUserPrediction && previousUserPrediction.periodFull === endedPeriodFull) {
+                    predictedOutcomeForEndedPeriod = previousUserPrediction.prediction;
+                    confidenceOfPreviousPrediction = previousUserPrediction.confidence;
+                    logicOfPreviousPrediction = previousUserPrediction.logicSource;
+                    activeLogicsOfPrevious = previousUserPrediction.activeLogics || [];
+                    if (actualResultType && predictedOutcomeForEndedPeriod && predictedOutcomeForEndedPeriod !== "SKIP") { // Ensure prediction was made
+                        statusOfPreviousPrediction = (actualResultType === predictedOutcomeForEndedPeriod) ? 'WIN' : 'LOSS';
+                    }
+                }
+
+                // Add/Update history only if it's a new period or an unresolved existing one
                 const existingHistoryEntry = localUserHistoryData.find(h => h.periodFull === endedPeriodFull);
-                if (!existingHistoryEntry || existingHistoryEntry.actual === null) { await updateUserStats(statusOfPreviousPrediction, predictedOutcomeForEndedPeriod); await addResultToUserHistory(endedPeriodFull, actualNumber, actualResultType, predictedOutcomeForEndedPeriod, statusOfPreviousPrediction, confidenceOfPreviousPrediction, logicOfPreviousPrediction, activeLogicsOfPrevious); lastUserFetchedPeriod = endedPeriodFull; }
+                if (!existingHistoryEntry || existingHistoryEntry.actual === null) { // If new or not yet resolved
+                    await updateUserStats(statusOfPreviousPrediction, predictedOutcomeForEndedPeriod);
+                    await addResultToUserHistory(
+                        endedPeriodFull, actualNumber, actualResultType,
+                        predictedOutcomeForEndedPeriod, statusOfPreviousPrediction,
+                        confidenceOfPreviousPrediction, logicOfPreviousPrediction, activeLogicsOfPrevious
+                    );
+                    lastUserFetchedPeriod = endedPeriodFull; // Update last fetched period
+                }
+
+                // Predict for the next period
                 const nextPeriodToPredictFull = (BigInt(endedPeriodFull) + 1n).toString();
-                const userHistoryForPrediction = await getUserHistory(); const userStatsForPrediction = await getUserStats(); 
+                const userHistoryForPrediction = await getUserHistory(); // Get fresh history
+                const userStatsForPrediction = await getUserStats(); // Get fresh stats
                 const aiDecision = ultraAIPredict(userHistoryForPrediction, userStatsForPrediction);
                 await updateUserCurrentPrediction(nextPeriodToPredictFull, aiDecision);
-            } catch (error) { console.error("Error in fetchAndUpdateCycle:", error); } 
-            finally { isProcessingCycle = false; }
+
+            } catch (error) {
+                console.error("Error in fetchAndUpdateCycle:", error);
+            }
+            finally {
+                isProcessingCycle = false;
+            }
         }
-        
+
         // --- UI Update Functions (Listening to User-Specific Firebase Paths) ---
         function setupFirebaseListeners() {
             if (!currentDeviceIdAlphaX) { console.warn("Cannot setup Firebase listeners: Device ID not available."); return; }
@@ -1758,38 +1826,50 @@
                 db.ref(userCurrentPredictionPath).on('value', (snapshot) => {
                     const currentPredData = snapshot.val();
                     if (currentPredData) {
-                        globalUserPredictionData = currentPredData; 
+                        globalUserPredictionData = currentPredData; // Update global state
                         if(alphaX_currentPeriodEl) alphaX_currentPeriodEl.textContent = currentPredData.periodDisplay || currentPredData.periodFull?.slice(-5) || '-';
                         if(alphaX_currentResultEl) alphaX_currentResultEl.textContent = currentPredData.prediction || '-';
                         if(alphaX_confidenceTextEl) alphaX_confidenceTextEl.textContent = `${currentPredData.confidence || 0}%`;
                         if(alphaX_confidenceFillEl) alphaX_confidenceFillEl.style.width = `${currentPredData.confidence || 0}%`;
-                        if (alphaX_isNotificationsEnabled && Notification.permission === 'granted' && currentPredData.periodFull !== lastUserFetchedPeriod) { if (!window.lastNotifiedUserPeriod || window.lastNotifiedUserPeriod !== currentPredData.periodFull) { new Notification(`ALPHA X AI: ${currentPredData.prediction}`, { body: `Period: ${currentPredData.periodDisplay} | Confidence: ${currentPredData.confidence}% | Logic: ${currentPredData.logicSource || 'N/A'}`, icon: 'https://placehold.co/48x48/E0FFFF/708090?text=AXA' }); alphaX_playSound('notify'); window.lastNotifiedUserPeriod = currentPredData.periodFull; } }
-                    } else { if(alphaX_currentPeriodEl) alphaX_currentPeriodEl.textContent = '-'; if(alphaX_currentResultEl) alphaX_currentResultEl.textContent = '-'; if(alphaX_confidenceTextEl) alphaX_confidenceTextEl.textContent = `0%`; if(alphaX_confidenceFillEl) alphaX_confidenceFillEl.style.width = `0%`; }
+                        // Notification logic
+                        if (alphaX_isNotificationsEnabled && Notification.permission === 'granted' && currentPredData.periodFull !== lastUserFetchedPeriod) {
+                            if (!window.lastNotifiedUserPeriod || window.lastNotifiedUserPeriod !== currentPredData.periodFull) {
+                                new Notification(`ALPHA X AI: ${currentPredData.prediction}`, { body: `Period: ${currentPredData.periodDisplay} | Confidence: ${currentPredData.confidence}% | Logic: ${currentPredData.logicSource || 'N/A'}`, icon: 'https://placehold.co/48x48/E0FFFF/708090?text=AXA' });
+                                alphaX_playSound('notify');
+                                window.lastNotifiedUserPeriod = currentPredData.periodFull;
+                            }
+                        }
+                    } else { // Handle no prediction data
+                        if(alphaX_currentPeriodEl) alphaX_currentPeriodEl.textContent = '-';
+                        if(alphaX_currentResultEl) alphaX_currentResultEl.textContent = '-';
+                        if(alphaX_confidenceTextEl) alphaX_confidenceTextEl.textContent = `0%`;
+                        if(alphaX_confidenceFillEl) alphaX_confidenceFillEl.style.width = `0%`;
+                    }
                 });
             }
             if (userGameHistoryPath) {
-                db.ref(userGameHistoryPath).on('value', (snapshot) => { 
+                db.ref(userGameHistoryPath).on('value', (snapshot) => { // Listen for changes in user's game history
                     const newHistory = [];
                     if (snapshot.exists()) {
                         snapshot.forEach(childSnapshot => {
                             newHistory.push({ id: childSnapshot.key, ...childSnapshot.val() });
                         });
                     }
-                    newHistory.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-                    localUserHistoryData = newHistory.slice(0, MAX_USER_HISTORY_LENGTH); 
+                    newHistory.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0)); // Sort newest first
+                    localUserHistoryData = newHistory.slice(0, MAX_USER_HISTORY_LENGTH); // Update local cache, capped
                     updateHistoryUI();
-                    updateDashboardAndStats();
+                    updateDashboardAndStats(); // Update UI elements based on new history
                 });
             }
             if (userStatsPath) { db.ref(userStatsPath).on('value', (snapshot) => { const stats = snapshot.val() || { streak: 0, winLevel: 0, consecutiveLosses: 0 }; window.userStreak = stats.streak; window.userWinLevel = stats.winLevel; window.userConsecutiveLosses = stats.consecutiveLosses; updateDashboardAndStats(); checkWinStreakAndNotify(); }); }
         }
-        
+
         // --- UI Helper Functions ---
         function alphaX_updateLanguage() { document.querySelectorAll('[data-lang-key]').forEach(element => { const key = element.getAttribute('data-lang-key'); const translation = translations[alphaX_currentLanguage]?.[key] || translations['en']?.[key]; if (translation) { if (translation.includes('<') && translation.includes('>')) element.innerHTML = translation; else element.textContent = translation; } }); document.querySelectorAll('.history-item .watermark').forEach(wm => { wm.textContent = "ALPHA X AI"; }); if(alphaX_serverStatusIndicator) alphaX_updateServerStatusUI(alphaX_serverStatusIndicator.style.backgroundColor === 'var(--win-color)'); updateHistoryUI(); updateDashboardAndStats(); }
         function alphaX_playSound(type) { if (!alphaX_isSoundEnabled) return; try { const audioContext = new (window.AudioContext || window.webkitAudioContext)(); const oscillator = audioContext.createOscillator(); const gainNode = audioContext.createGain(); oscillator.connect(gainNode); gainNode.connect(audioContext.destination); gainNode.gain.setValueAtTime(0.05, audioContext.currentTime); switch(type) { case 'win': oscillator.type = 'sine'; oscillator.frequency.setValueAtTime(600, audioContext.currentTime); break; case 'loss': oscillator.type = 'square'; oscillator.frequency.setValueAtTime(200, audioContext.currentTime); break; case 'notify': oscillator.type = 'triangle'; oscillator.frequency.setValueAtTime(440, audioContext.currentTime); break; case 'skipped': case 'toggle': case 'open': case 'close': case 'confirm': oscillator.type = 'sine'; oscillator.frequency.setValueAtTime(500, audioContext.currentTime); break; default: gainNode.gain.setValueAtTime(0, audioContext.currentTime); } if (gainNode.gain.value > 0) { oscillator.start(audioContext.currentTime); oscillator.stop(audioContext.currentTime + 0.1); } } catch (e) { console.warn("Sound play failed:", e); } }
         function alphaX_updateServerStatusUI(isConnected, message = null) { const lang = alphaX_currentLanguage; if(alphaX_serverStatusEl && alphaX_serverStatusIndicator) { if (alphaX_isMaintenanceModeActive) { alphaX_serverStatusEl.textContent = message || translations[lang]?.under_maintenance || translations['en']?.under_maintenance; alphaX_serverStatusIndicator.style.backgroundColor = 'var(--warning-color)'; alphaX_serverStatusIndicator.classList.remove('animate-ping'); } else if (isConnected) { alphaX_serverStatusEl.textContent = message || translations[lang]?.connected || translations['en']?.connected; alphaX_serverStatusIndicator.style.backgroundColor = 'var(--win-color)'; alphaX_serverStatusIndicator.classList.add('animate-ping'); } else { alphaX_serverStatusEl.textContent = message || translations[lang]?.disconnected || translations['en']?.disconnected; alphaX_serverStatusIndicator.style.backgroundColor = 'var(--loss-color)'; alphaX_serverStatusIndicator.classList.remove('animate-ping'); } } }
         function updateDashboardAndStats() { const confirmedHistory = localUserHistoryData.filter(p => p.status === "WIN" || p.status === "LOSS"); const wins = confirmedHistory.filter(p => p.status === "WIN").length; const losses = confirmedHistory.filter(p => p.status === "LOSS").length; const winRateNum = (wins + losses) > 0 ? Math.round((wins / (wins + losses)) * 100) : 0; if(alphaX_winRateEl) alphaX_winRateEl.textContent = `${winRateNum}%`; if(alphaX_totalWinBetsEl) alphaX_totalWinBetsEl.textContent = wins; if(alphaX_totalLossBetsEl) alphaX_totalLossBetsEl.textContent = losses; if(alphaX_statsTotalWinsEl) alphaX_statsTotalWinsEl.textContent = wins; if(alphaX_statsTotalLossesEl) alphaX_statsTotalLossesEl.textContent = losses; if(alphaX_statsWinRateEl) alphaX_statsWinRateEl.textContent = `${winRateNum}%`; if (alphaX_currentStreakEl) { if (window.userStreak > 0) { alphaX_currentStreakEl.textContent = `W${window.userStreak}`; alphaX_currentStreakEl.style.color = 'var(--win-color)'; } else if (window.userStreak < 0) { alphaX_currentStreakEl.textContent = `L${Math.abs(window.userStreak)}`; alphaX_currentStreakEl.style.color = 'var(--loss-color)'; } else { alphaX_currentStreakEl.textContent = '-'; alphaX_currentStreakEl.style.color = 'var(--text-primary)'; } } if(alphaX_lastFiveActualsEl) { const lastFive = localUserHistoryData.filter(p => p.actual !== null && p.actual !== undefined).slice(0, 5).map(p => p.actual).join(', ') || '-'; alphaX_lastFiveActualsEl.textContent = lastFive; } const bigSmallCounts = { BIG: 0, SMALL: 0 }; localUserHistoryData.forEach(entry => { if(entry.resultType === "BIG") bigSmallCounts.BIG++; else if (entry.resultType === "SMALL") bigSmallCounts.SMALL++; }); if(alphaX_mostFrequentBigSmallEl && alphaX_leastFrequentBigSmallEl) { if (bigSmallCounts.BIG === 0 && bigSmallCounts.SMALL === 0) { alphaX_mostFrequentBigSmallEl.textContent = '-'; alphaX_leastFrequentBigSmallEl.textContent = '-'; } else if (bigSmallCounts.BIG >= bigSmallCounts.SMALL) { alphaX_mostFrequentBigSmallEl.textContent = 'BIG'; alphaX_leastFrequentBigSmallEl.textContent = bigSmallCounts.SMALL > 0 || bigSmallCounts.BIG === 0 ? 'SMALL' : (bigSmallCounts.BIG > 0 ? 'BIG' : '-'); } else { alphaX_mostFrequentBigSmallEl.textContent = 'SMALL'; alphaX_leastFrequentBigSmallEl.textContent = bigSmallCounts.BIG > 0 || bigSmallCounts.SMALL === 0 ? 'BIG' : (bigSmallCounts.SMALL > 0 ? 'SMALL' : '-'); } } }
-        function updateHistoryUI() { if (!alphaX_historyContainer) { console.error("History container not found!"); return; } alphaX_historyContainer.innerHTML = ''; if (localUserHistoryData.length === 0) { alphaX_historyContainer.innerHTML = `<p class="text-center p-4" style="color: var(--text-secondary-light);" data-lang-key="no_history">${translations[alphaX_currentLanguage]?.no_history || translations['en']?.no_history}</p>`; if (document.documentElement.classList.contains('dark-mode')) { alphaX_historyContainer.innerHTML = `<p class="text-center p-4" style="color: var(--text-secondary-dark);" data-lang-key="no_history">${translations[alphaX_currentLanguage]?.no_history || translations['en']?.no_history}</p>`; } return; } localUserHistoryData.forEach((entry, index) => { const status = (entry.status || 'pending').toLowerCase(); const iconClass = { win: 'fas fa-check-circle', loss: 'fas fa-times-circle', pending: 'fas fa-hourglass-half', skipped: 'fas fa-ban' }[status] || 'fas fa-question-circle'; const badgeClass = { win: 'win-icon', loss: 'loss-icon', pending: 'pending-icon', skipped: 'skipped-icon'}[status] || ''; const historyItem = document.createElement('div'); historyItem.className = `history-item ${status} flex items-center justify-between p-4 rounded-xl animate__animated animate__fadeInUp animate__faster`; historyItem.style.animationDelay = `${index * 0.05}s`; historyItem.setAttribute('data-id', entry.id); historyItem.innerHTML = ` <div class="watermark">ALPHA X AI</div> <div class="flex items-center space-x-3 flex-grow"> <div class="status-icon ${badgeClass}"> <i class="${iconClass}"></i></div> <div class="flex-grow"> <p class="text-lg font-semibold">${entry.periodDisplay || (entry.periodFull ? entry.periodFull.slice(-5) : 'N/A')}</p> <div class="flex flex-wrap text-sm gap-x-3"> <span>${translations[alphaX_currentLanguage].prediction || 'Prediction'}: <strong>${entry.prediction || '-'}</strong></span> ${entry.actual !== null && entry.actual !== undefined ? `<span>Actual: <strong>${entry.actual} (${entry.resultType || getBigSmallFromNumber(entry.actual) || 'N/A'})</strong></span>` : ''} ${entry.confidence ? `<span>${translations[alphaX_currentLanguage].confidence || 'Confidence'}: <strong>${entry.confidence}%</strong></span>` : ''} ${entry.logic ? `<span>Logic: <strong>${entry.logic.toFixed(2)}</strong></span>` : ''} </div> <p class="text-sm capitalize font-medium mt-1">${translations[alphaX_currentLanguage][status] || status}</p> </div> </div> <button class="delete-btn transition ml-2 p-2 rounded-full" data-id="${entry.id}"> <i class="fas fa-trash-alt text-lg"></i></button> `; alphaX_historyContainer.appendChild(historyItem); historyItem.querySelector('.delete-btn').addEventListener('click', (e) => { e.stopPropagation(); const itemId = e.currentTarget.getAttribute('data-id'); alphaX_showConfirmModal('delete_item_confirm', async () => { const userHistoryPath = getUserSpecificPath("game_history"); if (!userHistoryPath) return; try { await db.ref(userHistoryPath).child(itemId).remove(); showGeneralToast("History item deleted.", "info"); alphaX_playSound('confirm'); } catch (error) { console.error("Error deleting history item:", error); showGeneralToast("Failed to delete item.", "error"); } }); }); }); }
+        function updateHistoryUI() { if (!alphaX_historyContainer) { console.error("History container not found!"); return; } alphaX_historyContainer.innerHTML = ''; if (localUserHistoryData.length === 0) { alphaX_historyContainer.innerHTML = `<p class="text-center p-4" style="color: var(--text-secondary-light);" data-lang-key="no_history">${translations[alphaX_currentLanguage]?.no_history || translations['en']?.no_history}</p>`; if (document.documentElement.classList.contains('dark-mode')) { alphaX_historyContainer.innerHTML = `<p class="text-center p-4" style="color: var(--text-secondary-dark);" data-lang-key="no_history">${translations[alphaX_currentLanguage]?.no_history || translations['en']?.no_history}</p>`; } return; } localUserHistoryData.forEach((entry, index) => { const status = (entry.status || 'pending').toLowerCase(); const iconClass = { win: 'fas fa-check-circle', loss: 'fas fa-times-circle', pending: 'fas fa-hourglass-half', skipped: 'fas fa-ban' }[status] || 'fas fa-question-circle'; const badgeClass = { win: 'win-icon', loss: 'loss-icon', pending: 'pending-icon', skipped: 'skipped-icon'}[status] || ''; const historyItem = document.createElement('div'); historyItem.className = `history-item ${status} flex items-center justify-between p-4 rounded-xl animate__animated animate__fadeInUp animate__faster`; historyItem.style.animationDelay = `${index * 0.05}s`; historyItem.setAttribute('data-id', entry.id); historyItem.innerHTML = ` <div class="watermark">ALPHA X AI</div> <div class="flex items-center space-x-3 flex-grow"> <div class="status-icon ${badgeClass}"> <i class="${iconClass}"></i></div> <div class="flex-grow"> <p class="text-lg font-semibold">${entry.periodDisplay || (entry.periodFull ? entry.periodFull.slice(-5) : 'N/A')}</p> <div class="flex flex-wrap text-sm gap-x-3"> <span>${translations[alphaX_currentLanguage].prediction || 'Prediction'}: <strong>${entry.prediction || '-'}</strong></span> ${entry.actual !== null && entry.actual !== undefined ? `<span>Actual: <strong>${entry.actual} (${entry.resultType || getBigSmallFromNumber(entry.actual) || 'N/A'})</strong></span>` : ''} ${entry.confidence ? `<span>${translations[alphaX_currentLanguage].confidence || 'Confidence'}: <strong>${entry.confidence}%</strong></span>` : ''} ${entry.logic ? `<span>Logic: <strong>${typeof entry.logic === 'number' ? entry.logic.toFixed(2) : entry.logic}</strong></span>` : ''} </div> <p class="text-sm capitalize font-medium mt-1">${translations[alphaX_currentLanguage][status] || status}</p> </div> </div> <button class="delete-btn transition ml-2 p-2 rounded-full" data-id="${entry.id}"> <i class="fas fa-trash-alt text-lg"></i></button> `; alphaX_historyContainer.appendChild(historyItem); historyItem.querySelector('.delete-btn').addEventListener('click', (e) => { e.stopPropagation(); const itemId = e.currentTarget.getAttribute('data-id'); alphaX_showConfirmModal('delete_item_confirm', async () => { const userHistoryPath = getUserSpecificPath("game_history"); if (!userHistoryPath) return; try { await db.ref(userHistoryPath).child(itemId).remove(); showGeneralToast("History item deleted.", "info"); alphaX_playSound('confirm'); } catch (error) { console.error("Error deleting history item:", error); showGeneralToast("Failed to delete item.", "error"); } }); }); }); }
         document.getElementById('deleteAllHistoryBtn').addEventListener('click', () => { alphaX_showConfirmModal('delete_all_confirm', async () => { const userHistoryPath = getUserSpecificPath("game_history"); const userStatsPath = getUserSpecificPath("stats"); if (!userHistoryPath || !userStatsPath) { showGeneralToast("Error: User not identified.", "error"); return; } try { await db.ref(userHistoryPath).remove(); await db.ref(userStatsPath).set({ streak: 0, winLevel: 0, consecutiveLosses: 0, lastUpdated: firebase.database.ServerValue.TIMESTAMP }); localUserHistoryData = []; window.userStreak = 0; window.userWinLevel = 0; window.userConsecutiveLosses = 0; lastUserFetchedPeriod = null; updateHistoryUI(); updateDashboardAndStats(); showGeneralToast("All your history and stats cleared.", "info"); alphaX_playSound('confirm'); } catch (error) { console.error("Error deleting all user history/stats:", error); showGeneralToast("Failed to clear data.", "error"); } }); });
         const navItems = document.querySelectorAll('#appContainer .navigation ul li'); const sections = document.querySelectorAll('#appContainer .content-section');
         navItems.forEach((item, index) => { item.addEventListener('click', (e) => { e.preventDefault(); navItems.forEach(nav => nav.classList.remove('active')); item.classList.add('active'); const sectionId = item.querySelector('a').getAttribute('data-section'); sections.forEach(section => section.classList.remove('active')); const targetSection = document.getElementById(sectionId); if (targetSection) { targetSection.classList.add('active'); gsap.fromTo(targetSection, {opacity: 0, y: 10}, {opacity: 1, y: 0, duration: 0.3, ease: "power1.out"}); } alphaX_playSound('toggle'); }); });
@@ -1811,38 +1891,41 @@
         async function handleSubmitUsernameAlphaX() { const usernameInput = document.getElementById('telegramUsernameInputAlphaX'); const errorEl = document.getElementById('usernameErrorAlphaX'); const submitBtn = document.getElementById('submitUsernameBtnAlphaX'); if(!usernameInput || !errorEl || !submitBtn) return; const username = usernameInput.value.trim().replace(/^@/, ''); if (!username || !/^[a-zA-Z0-9_]{5,32}$/.test(username)) { errorEl.textContent = 'Please enter a valid Telegram username (5-32 chars, a-z, 0-9, _).'; errorEl.style.display = 'block'; return; } errorEl.style.display = 'none'; submitBtn.disabled = true; submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...'; currentDeviceIdAlphaX = getOrGenerateUserDeviceIdAlphaX(); try { const deviceRef = db.ref(`${USER_ACCESS_REQUESTS_PATH}/${currentDeviceIdAlphaX}`); const snapshot = await deviceRef.get(); const deviceData = snapshot.val(); let updates = { telegramUsername: username, requestedAt: firebase.database.ServerValue.TIMESTAMP, deviceId: currentDeviceIdAlphaX }; if (deviceData && deviceData.telegramUsername && deviceData.telegramUsername !== username) { updates.status = 'pending'; updates.approvedAt = null; updates.expiryTimestamp = null; updates.validityValue = null; updates.validityUnit = null; localStorage.removeItem(PREDICTOR_LOGGED_IN_KEY_ALPHAX); } else if (!deviceData) { updates.status = 'pending'; } await deviceRef.update(updates); localStorage.setItem(TELEGRAM_USERNAME_STORAGE_KEY_ALPHAX, username); showScreenAlphaX('loginPage2AlphaX'); updateApprovalStatusUIAlphaX(updates.status || deviceData?.status || 'pending'); startApprovalCheckAlphaX(); } catch (error) { console.error("Error submitting AlphaX username:", error); if(errorEl) { errorEl.textContent = 'Failed to submit. Check connection or try again.'; errorEl.style.display = 'block';} } finally { if(submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = 'Continue';} } }
         function copyCurrentDeviceIdAlphaX() { const deviceIdDisplayEl = document.getElementById('displayedDeviceIdAlphaX'); const feedbackEl = document.getElementById('copyFeedbackAlphaX'); if(!deviceIdDisplayEl || !feedbackEl) return; const deviceIdToCopy = deviceIdDisplayEl.textContent; if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(deviceIdToCopy).then(() => { feedbackEl.classList.add('show'); setTimeout(() => feedbackEl.classList.remove('show'), 2000); }).catch(err => { console.error('Failed to copy device ID:', err); alphaX_showLoginToast('Failed to copy Device ID.', 'error'); }); } else { const textArea = document.createElement("textarea"); textArea.value = deviceIdToCopy; document.body.appendChild(textArea); textArea.select(); document.execCommand('copy'); document.body.removeChild(textArea); feedbackEl.classList.add('show'); setTimeout(() => feedbackEl.classList.remove('show'), 2000); } }
         function handleLogoutAlphaX(showLoginPage1 = true) { localStorage.removeItem(PREDICTOR_LOGGED_IN_KEY_ALPHAX); if (approvalCheckIntervalAlphaX) clearInterval(approvalCheckIntervalAlphaX); approvalCheckIntervalAlphaX = null; if (showLoginPage1) { const usernameInput = document.getElementById('telegramUsernameInputAlphaX'); if(usernameInput) usernameInput.value = localStorage.getItem(TELEGRAM_USERNAME_STORAGE_KEY_ALPHAX) || ''; showScreenAlphaX('loginPage1AlphaX'); } else { if (document.getElementById('appContainer')?.classList.contains('active')) { showScreenAlphaX('loginPage1AlphaX'); } } alphaX_showLoginToast('Successfully logged out.', 'info'); }
-        function updateApprovalStatusUIAlphaX(status, message = '') { const container = document.getElementById('approvalStatusContainerAlphaX'); if (!container) return; container.classList.remove('status-pending-alphax', 'status-approved-alphax', 'status-rejected-alphax', 'status-expired-alphax', 'status-info-alphax'); let iconHtml = '<i class="fas fa-spinner fa-spin mr-2"></i>'; let fullMessage = message || 'Checking status...'; switch(status) { case 'pending': container.classList.add('status-pending-alphax'); iconHtml = '<i class="fas fa-hourglass-half mr-2"></i>'; fullMessage = message || 'Waiting for admin approval...'; break; case 'approved': container.classList.add('status-approved-alphax'); iconHtml = `<span class="tick-animation-alphax mr-2"><svg viewBox="0 0 52 52"><circle class="tick-circle" cx="26" cy="26" r="25" style="fill:none; stroke:var(--bg-dark-tertiary); stroke-width:3; stroke-linecap:round; animation: strokeAlphaX 0.6s cubic-bezier(0.65,0,0.45,1) forwards;"/><path class="tick-path" d="M14.1 27.2l7.1 7.2 16.7-16.8" style="fill:none; stroke:var(--bg-dark-tertiary); stroke-width:3; stroke-linecap:round; stroke-linejoin:round; transform-origin:50% 50%; stroke-dasharray:48; stroke-dashoffset:48; animation: strokeAlphaX 0.3s cubic-bezier(0.65,0,0.45,1) 0.4s forwards;"/></svg></span>`; fullMessage = message || 'Access Approved! Redirecting...'; break; case 'rejected': container.classList.add('status-rejected-alphax'); iconHtml = '<i class="fas fa-times-circle mr-2"></i>'; fullMessage = message || 'Access Denied.'; break; case 'expired': container.classList.add('status-expired-alphax'); iconHtml = '<i class="fas fa-clock mr-2"></i>'; fullMessage = message || 'Access Expired.'; break; default: container.classList.add('status-info-alphax'); break; } container.innerHTML = `${iconHtml} ${fullMessage}`; }
-        function startApprovalCheckAlphaX() { if (approvalCheckIntervalAlphaX) clearInterval(approvalCheckIntervalAlphaX); const check = async () => { if (!currentDeviceIdAlphaX) currentDeviceIdAlphaX = getOrGenerateUserDeviceIdAlphaX(); if (!currentDeviceIdAlphaX) return; try { const maintenanceSnapshot = await db.ref(`${MAINTENANCE_STATUS_PATH}/status`).get(); alphaX_isMaintenanceModeActive = maintenanceSnapshot.val() === true; if (alphaX_isMaintenanceModeActive) { const msgSnapshot = await db.ref(`${MAINTENANCE_STATUS_PATH}/message`).get(); showMaintenancePageAlphaX(msgSnapshot.val() || "ALPHA X AI is under maintenance."); if (approvalCheckIntervalAlphaX) clearInterval(approvalCheckIntervalAlphaX); return; } const deviceSnapshot = await db.ref(`${USER_ACCESS_REQUESTS_PATH}/${currentDeviceIdAlphaX}`).get(); const deviceData = deviceSnapshot.val(); if (deviceData) { if (deviceData.telegramUsername !== localStorage.getItem(TELEGRAM_USERNAME_STORAGE_KEY_ALPHAX)) { updateApprovalStatusUIAlphaX('pending', 'Username mismatch.'); return; } if (deviceData.status === 'approved') { if (deviceData.expiryTimestamp && Date.now() > deviceData.expiryTimestamp) { updateApprovalStatusUIAlphaX('expired'); handleLogoutAlphaX(false); } else { clearInterval(approvalCheckIntervalAlphaX); approvalCheckIntervalAlphaX = null; updateApprovalStatusUIAlphaX('approved'); localStorage.setItem(PREDICTOR_LOGGED_IN_KEY_ALPHAX, 'true'); alphaX_showLoginToast('Access Approved! Welcome!', 'success'); setTimeout(() => { showScreenAlphaX('appContainer'); initializeAppPredictor(); }, 1500); } } else if (deviceData.status === 'rejected') { updateApprovalStatusUIAlphaX('rejected'); } else { updateApprovalStatusUIAlphaX('pending'); } } else { updateApprovalStatusUIAlphaX('pending', 'Device not registered.'); } } catch (error) { console.error("Error checking approval:", error); updateApprovalStatusUIAlphaX('info', 'Error checking status.');} }; check(); approvalCheckIntervalAlphaX = setInterval(check, APPROVAL_CHECK_INTERVAL_MS_ALPHAX); }
+        function updateApprovalStatusUIAlphaX(status, message = '') { const container = document.getElementById('approvalStatusContainerAlphaX'); if (!container) return; container.classList.remove('status-pending-alphax', 'status-approved-alphax', 'status-rejected-alphax', 'status-expired-alphax', 'status-info-alphax'); let iconHtml = '<i class="fas fa-spinner fa-spin mr-2"></i>'; let fullMessage = message || 'Checking status...'; switch(status) { case 'pending': container.classList.add('status-pending-alphax'); iconHtml = '<i class="fas fa-hourglass-half mr-2"></i>'; fullMessage = message || 'Waiting for admin approval...'; break; case 'approved': container.classList.add('status-approved-alphax'); iconHtml = `<span class="tick-animation-alphax mr-2"><svg viewBox="0 0 52 52"><circle class="tick-circle" cx="26" cy="26" r="25" style="fill:none; stroke:var(--button-primary-text-dark); stroke-width:3; stroke-linecap:round; animation: strokeAlphaX 0.6s cubic-bezier(0.65,0,0.45,1) forwards;"/><path class="tick-path" d="M14.1 27.2l7.1 7.2 16.7-16.8" style="fill:none; stroke:var(--button-primary-text-dark); stroke-width:3; stroke-linecap:round; stroke-linejoin:round; transform-origin:50% 50%; stroke-dasharray:48; stroke-dashoffset:48; animation: strokeAlphaX 0.3s cubic-bezier(0.65,0,0.45,1) 0.4s forwards;"/></svg></span>`; fullMessage = message || 'Access Approved! Redirecting...'; break; case 'rejected': container.classList.add('status-rejected-alphax'); iconHtml = '<i class="fas fa-times-circle mr-2"></i>'; fullMessage = message || 'Access Denied.'; break; case 'expired': container.classList.add('status-expired-alphax'); iconHtml = '<i class="fas fa-clock mr-2"></i>'; fullMessage = message || 'Access Expired.'; break; default: container.classList.add('status-info-alphax'); break; } container.innerHTML = `${iconHtml} ${fullMessage}`; }
+        function startApprovalCheckAlphaX() { if (approvalCheckIntervalAlphaX) clearInterval(approvalCheckIntervalAlphaX); const check = async () => { if (!currentDeviceIdAlphaX) currentDeviceIdAlphaX = getOrGenerateUserDeviceIdAlphaX(); if (!currentDeviceIdAlphaX) return; try { const maintenanceSnapshot = await db.ref(`${MAINTENANCE_STATUS_PATH}/status`).get(); alphaX_isMaintenanceModeActive = maintenanceSnapshot.val() === true; if (alphaX_isMaintenanceModeActive) { const msgSnapshot = await db.ref(`${MAINTENANCE_STATUS_PATH}/message`).get(); showMaintenancePageAlphaX(msgSnapshot.val() || "ALPHA X AI is under maintenance."); if (approvalCheckIntervalAlphaX) clearInterval(approvalCheckIntervalAlphaX); return; } const deviceSnapshot = await db.ref(`${USER_ACCESS_REQUESTS_PATH}/${currentDeviceIdAlphaX}`).get(); const deviceData = deviceSnapshot.val(); if (deviceData) { if (deviceData.telegramUsername !== localStorage.getItem(TELEGRAM_USERNAME_STORAGE_KEY_ALPHAX)) { updateApprovalStatusUIAlphaX('pending', 'Username mismatch. Please re-enter.'); return; } if (deviceData.status === 'approved') { if (deviceData.expiryTimestamp && Date.now() > deviceData.expiryTimestamp) { updateApprovalStatusUIAlphaX('expired'); handleLogoutAlphaX(false); } else { clearInterval(approvalCheckIntervalAlphaX); approvalCheckIntervalAlphaX = null; updateApprovalStatusUIAlphaX('approved'); localStorage.setItem(PREDICTOR_LOGGED_IN_KEY_ALPHAX, 'true'); alphaX_showLoginToast('Access Approved! Welcome!', 'success'); setTimeout(() => { showScreenAlphaX('appContainer'); initializeAppPredictor(); }, 1500); } } else if (deviceData.status === 'rejected') { updateApprovalStatusUIAlphaX('rejected'); } else { updateApprovalStatusUIAlphaX('pending'); } } else { updateApprovalStatusUIAlphaX('pending', 'Device not registered.'); } } catch (error) { console.error("Error checking approval:", error); updateApprovalStatusUIAlphaX('info', 'Error checking status.');} }; check(); approvalCheckIntervalAlphaX = setInterval(check, APPROVAL_CHECK_INTERVAL_MS_ALPHAX); }
         function alphaX_showLoginToast(message, type = 'info') { const toastEl = document.getElementById('loginToast'); const messageEl = document.getElementById('loginToastMessage'); const iconEl = toastEl.querySelector('.icon'); if (!toastEl || !messageEl || !iconEl) return; messageEl.textContent = message; iconEl.className = 'icon fas '; if (type === 'success') iconEl.classList.add('fa-check-circle', 'success'); else if (type === 'error') iconEl.classList.add('fa-times-circle', 'error'); else iconEl.classList.add('fa-info-circle', 'info'); toastEl.style.display = 'flex'; setTimeout(() => { toastEl.style.display = 'none'; }, 4000); }
         function showMaintenancePageAlphaX(message) { const msgEl = document.getElementById('maintenanceMessage'); if (msgEl) { msgEl.textContent = message || "The platform is currently under maintenance. Please try again later."; } showScreenAlphaX('maintenanceContainer'); }
-        
+
         // --- Theme Management ---
         function applyTheme(theme) { if (theme === 'light') { document.documentElement.classList.add('light-mode'); document.documentElement.classList.remove('dark-mode'); } else { document.documentElement.classList.remove('light-mode'); document.documentElement.classList.add('dark-mode'); } }
         function toggleTheme() { alphaX_currentTheme = document.documentElement.classList.contains('dark-mode') ? 'light' : 'dark'; localStorage.setItem('alphaXAiTheme_QE_V3', alphaX_currentTheme); applyTheme(alphaX_currentTheme); updateThemeToggleUI(); alphaX_playSound('toggle'); }
         function updateThemeToggleUI() { const themeToggleInput = document.getElementById('themeToggle'); if (themeToggleInput) { themeToggleInput.checked = alphaX_currentTheme === 'light'; } const moonIcon = document.querySelector('#themeToggle ~ .mode-icons .fa-moon'); const sunIcon = document.querySelector('#themeToggle ~ .mode-icons .fa-sun'); if(moonIcon && sunIcon){ moonIcon.style.display = alphaX_currentTheme === 'dark' ? 'inline-block' : 'none'; sunIcon.style.display = alphaX_currentTheme === 'light' ? 'inline-block' : 'none'; if(alphaX_currentTheme === 'dark') moonIcon.style.color = 'var(--accent-primary-dark)'; else sunIcon.style.color = 'var(--accent-primary-light)'; } }
-        
+
         // --- Main App Initialization ---
         function initializeAppPredictor() {
             console.log("Initializing AlphaX Predictor App (Quantum Enhanced V3) with User-Specific Data...");
             applyTheme(alphaX_currentTheme); updateThemeToggleUI();
-            USER_GAME_HISTORY_PATH = `${USER_DATA_BASE_PATH}/${currentDeviceIdAlphaX}/game_history`;
-            USER_CURRENT_PREDICTION_PATH = `${USER_DATA_BASE_PATH}/${currentDeviceIdAlphaX}/current_prediction`;
-            USER_STATS_PATH = `${USER_DATA_BASE_PATH}/${currentDeviceIdAlphaX}/stats`;
-            
+            // Set user-specific Firebase paths (already done if currentDeviceIdAlphaX is set)
+            USER_GAME_HISTORY_PATH = getUserSpecificPath("game_history");
+            USER_CURRENT_PREDICTION_PATH = getUserSpecificPath("current_prediction");
+            USER_STATS_PATH = getUserSpecificPath("stats");
+
             const langToggle = document.getElementById('languageToggle'); if(langToggle) langToggle.checked = alphaX_currentLanguage === 'hi';
             const notifToggle = document.getElementById('notificationToggle'); if(notifToggle) notifToggle.checked = alphaX_isNotificationsEnabled;
             const soundToggle = document.getElementById('soundToggle'); if(soundToggle) soundToggle.checked = alphaX_isSoundEnabled;
             const predModeToggle = document.getElementById('predictionModeToggle'); if(predModeToggle) predModeToggle.checked = alphaX_isAdvancedModeActive;
             isMuted = !alphaX_isSoundEnabled;
 
-            alphaX_updateLanguage(); 
-            setupFirebaseListeners(); 
+            alphaX_updateLanguage();
+            setupFirebaseListeners(); // Start listening to Firebase data
 
-            fetchAndUpdateCycle().catch(error => console.error("Initial fetch/prediction cycle failed:", error)); 
-            setInterval(() => { fetchAndUpdateCycle().catch(error => console.error("Scheduled fetch/prediction cycle failed:", error)); }, 15000); 
+            fetchAndUpdateCycle().catch(error => console.error("Initial fetch/prediction cycle failed:", error)); // Initial data fetch and prediction
+            setInterval(() => { fetchAndUpdateCycle().catch(error => console.error("Scheduled fetch/prediction cycle failed:", error)); }, 15000); // Poll every 15 seconds
 
+            // Request notification permission if enabled but not granted
             if (alphaX_isNotificationsEnabled && Notification.permission !== 'granted') { Notification.requestPermission().then(permission => { if (permission !== 'granted') { alphaX_isNotificationsEnabled = false; localStorage.setItem('alphaXAiNotifications_QE_V3', 'false'); if(notifToggle) notifToggle.checked = false; showGeneralToast('Notifications permission denied.', 'error'); } else {showGeneralToast('Notifications enabled!', 'info');} }); }
-            
+
+            // Set initial active navigation tab and content section
             const homeNavLi = document.querySelector('#appContainer .navigation ul li a[data-section="homeSection"]')?.closest('li');
             const allNavItems = document.querySelectorAll('#appContainer .navigation ul li');
             const allSections = document.querySelectorAll('#appContainer .content-section');
@@ -1854,7 +1937,7 @@
                 homeNavLi.classList.add('active');
                 const homeSectionEl = document.getElementById('homeSection');
                 if (homeSectionEl) homeSectionEl.classList.add('active');
-            } else { 
+            } else { // Fallback if home section isn't found (shouldn't happen)
                 const firstNavItem = document.querySelector('#appContainer .navigation ul li:first-child');
                 if (firstNavItem) {
                     firstNavItem.classList.add('active');
@@ -1867,47 +1950,49 @@
 
         // Initial Load Logic
         document.addEventListener('DOMContentLoaded', () => {
-            alphaX_currentTheme = localStorage.getItem('alphaXAiTheme_QE_V3') || 'dark'; 
+            alphaX_currentTheme = localStorage.getItem('alphaXAiTheme_QE_V3') || 'dark';
             applyTheme(alphaX_currentTheme);
-            const themeToggle = document.getElementById('themeToggle'); 
-            if(themeToggle) { 
-                themeToggle.checked = alphaX_currentTheme === 'light'; 
-                themeToggle.addEventListener('change', toggleTheme); 
-                updateThemeToggleUI(); 
+            const themeToggle = document.getElementById('themeToggle');
+            if(themeToggle) {
+                themeToggle.checked = alphaX_currentTheme === 'light'; // Set toggle based on loaded theme
+                themeToggle.addEventListener('change', toggleTheme);
+                updateThemeToggleUI(); // Ensure icons are correct
             }
 
+            // Login page event listeners
             const submitUsernameBtn = document.getElementById('submitUsernameBtnAlphaX'); if(submitUsernameBtn) submitUsernameBtn.addEventListener('click', handleSubmitUsernameAlphaX);
             const copyDeviceIdBtn = document.getElementById('copyDeviceIdBtnAlphaX'); if(copyDeviceIdBtn) copyDeviceIdBtn.addEventListener('click', copyCurrentDeviceIdAlphaX);
             const logoutBtn = document.getElementById('logoutFromDevicePageBtnAlphaX'); if(logoutBtn) logoutBtn.addEventListener('click', () => handleLogoutAlphaX(true));
-            
-            const langToggle = document.getElementById('languageToggle'); if(langToggle) langToggle.addEventListener('change', (e) => { alphaX_currentLanguage = e.target.checked ? 'hi' : 'en'; localStorage.setItem('alphaXAiLanguage_QE_V3', alphaX_currentLanguage); alphaX_updateLanguage(); alphaX_playSound('toggle'); });
-            const notifToggle = document.getElementById('notificationToggle'); if(notifToggle) notifToggle.addEventListener('change', (e) => { alphaX_isNotificationsEnabled = e.target.checked; localStorage.setItem('alphaXAiNotifications_QE_V3', alphaX_isNotificationsEnabled.toString()); if(alphaX_isNotificationsEnabled && Notification.permission !== "granted") { Notification.requestPermission().then(p => { if(p !== 'granted') { alphaX_isNotificationsEnabled = false; localStorage.setItem('alphaXAiNotifications_QE_V3', 'false'); e.target.checked = false; showGeneralToast('Notifications denied.', 'error');} else {showGeneralToast('Notifications enabled!', 'info');} }); } else if (!alphaX_isNotificationsEnabled) { showGeneralToast('Notifications disabled.', 'info');} alphaX_playSound('toggle'); });
-            const soundToggle = document.getElementById('soundToggle'); if(soundToggle) soundToggle.addEventListener('change', (e) => { alphaX_isSoundEnabled = e.target.checked; localStorage.setItem('alphaXAiSound_QE_V3', alphaX_isSoundEnabled.toString()); isMuted = !alphaX_isSoundEnabled; if (alphaX_isSoundEnabled) alphaX_playSound('toggle'); });
-            const predModeToggle = document.getElementById('predictionModeToggle'); if(predModeToggle) predModeToggle.addEventListener('change', (e) => { alphaX_isAdvancedModeActive = e.target.checked; localStorage.setItem('alphaXAiPredictionMode_QE_V3', alphaX_isAdvancedModeActive ? 'advanced' : 'normal'); alphaX_playSound('toggle'); showGeneralToast(`Prediction mode set to ${alphaX_isAdvancedModeActive ? 'Advanced' : 'Normal'}.`, 'info'); });
-            
-            const deleteAllHistoryBtn = document.getElementById('deleteAllHistoryBtn'); 
-            if(deleteAllHistoryBtn) deleteAllHistoryBtn.addEventListener('click', () => { 
-                alphaX_showConfirmModal('delete_all_confirm', async () => { 
+
+            // Settings event listeners (already set up, but ensure they are if DOMContentLoaded is primary init point)
+            // These are duplicated from initializeAppPredictor; ensure they are only bound once or managed carefully.
+            // For simplicity, assuming initializeAppPredictor handles these after login.
+
+            // Delete All History Button
+            const deleteAllHistoryBtn = document.getElementById('deleteAllHistoryBtn');
+            if(deleteAllHistoryBtn) deleteAllHistoryBtn.addEventListener('click', () => {
+                alphaX_showConfirmModal('delete_all_confirm', async () => {
                     const userHistoryPath = getUserSpecificPath("game_history");
                     const userStatsPath = getUserSpecificPath("stats");
                     if (!userHistoryPath || !userStatsPath) { showGeneralToast("Error: User not identified.", "error"); return; }
-                    try { 
-                        await db.ref(userHistoryPath).remove(); 
-                        await db.ref(userStatsPath).set({ streak: 0, winLevel: 0, consecutiveLosses: 0, lastUpdated: firebase.database.ServerValue.TIMESTAMP }); 
-                        localUserHistoryData = []; 
+                    try {
+                        await db.ref(userHistoryPath).remove();
+                        await db.ref(userStatsPath).set({ streak: 0, winLevel: 0, consecutiveLosses: 0, lastUpdated: firebase.database.ServerValue.TIMESTAMP });
+                        localUserHistoryData = []; // Clear local cache
                         window.userStreak = 0; window.userWinLevel = 0; window.userConsecutiveLosses = 0;
-                        lastUserFetchedPeriod = null;
-                        updateHistoryUI(); updateDashboardAndStats();
-                        showGeneralToast('All your history and stats cleared.', 'info'); 
-                        alphaX_playSound('confirm'); 
-                    } catch (error) { console.error("Error deleting user history/stats:", error); showGeneralToast("Failed to clear data.", "error"); } 
-                }); 
+                        lastUserFetchedPeriod = null; // Reset last fetched period
+                        updateHistoryUI(); updateDashboardAndStats(); // Refresh UI
+                        showGeneralToast('All your history and stats cleared.', 'info');
+                        alphaX_playSound('confirm');
+                    } catch (error) { console.error("Error deleting user history/stats:", error); showGeneralToast("Failed to clear data.", "error"); }
+                });
             });
 
+            // Modal confirmation buttons
             const confirmModalBtn = document.getElementById('confirmModalBtn'); if(confirmModalBtn) confirmModalBtn.addEventListener('click', () => { if (alphaX_currentConfirmCallback) alphaX_currentConfirmCallback(); if(alphaX_confirmModalEl) alphaX_confirmModalEl.classList.remove('active'); alphaX_playSound('confirm'); alphaX_currentConfirmCallback = null; });
             const cancelModalBtn = document.getElementById('cancelModalBtn'); if(cancelModalBtn) cancelModalBtn.addEventListener('click', () => { if(alphaX_confirmModalEl) alphaX_confirmModalEl.classList.remove('active'); alphaX_playSound('close'); alphaX_currentConfirmCallback = null; });
-            
-            const streakBreakPopupEl_listener = document.getElementById('streakBreakPopup'); 
+
+            // Streak Break Popup cancel button
             const cancelStreakModalBtn = document.getElementById('cancelStreakModalBtn');
             if(cancelStreakModalBtn) {
                 cancelStreakModalBtn.addEventListener('click', () => {
@@ -1915,36 +2000,54 @@
                     alphaX_playSound('toggle');
                 });
             }
-            
-            currentDeviceIdAlphaX = getOrGenerateUserDeviceIdAlphaX(); 
+             // Bad Trend Popup cancel button
+            const cancelBadTrendModalBtn = document.getElementById('cancelBadTrendModalBtn');
+            if(cancelBadTrendModalBtn) {
+                cancelBadTrendModalBtn.addEventListener('click', () => {
+                    const badTrendPopupEl = document.getElementById('badTrendPopup');
+                    if(badTrendPopupEl) badTrendPopupEl.classList.remove('active');
+                    alphaX_playSound('toggle');
+                });
+            }
+
+
+            currentDeviceIdAlphaX = getOrGenerateUserDeviceIdAlphaX(); // Ensure device ID is ready
             const isLoggedInAlphaX = localStorage.getItem(PREDICTOR_LOGGED_IN_KEY_ALPHAX) === 'true';
             const storedUsernameAlphaX = localStorage.getItem(TELEGRAM_USERNAME_STORAGE_KEY_ALPHAX);
             const telegramUsernameInputAlphaX_el_check = document.getElementById('telegramUsernameInputAlphaX');
 
+            // Check maintenance status first
             db.ref(`${MAINTENANCE_STATUS_PATH}/status`).get().then(statusSnapshot => {
                 alphaX_isMaintenanceModeActive = statusSnapshot.val() === true;
-                if (alphaX_isMaintenanceModeActive) { db.ref(`${MAINTENANCE_STATUS_PATH}/message`).get().then(messageSnapshot => { showMaintenancePageAlphaX(messageSnapshot.val() || "ALPHA X AI is currently under maintenance."); }).catch(err => { console.error("Error fetching maintenance message:", err); showMaintenancePageAlphaX(); }); }
-                else { 
-                    if (isLoggedInAlphaX && storedUsernameAlphaX && currentDeviceIdAlphaX) { 
-                        if(telegramUsernameInputAlphaX_el_check) telegramUsernameInputAlphaX_el_check.value = storedUsernameAlphaX; 
-                        showScreenAlphaX('loginPage2AlphaX'); 
-                        updateApprovalStatusUIAlphaX('info', 'Verifying access...'); 
-                        startApprovalCheckAlphaX(); 
-                    } else if (storedUsernameAlphaX && currentDeviceIdAlphaX) { 
-                        if(telegramUsernameInputAlphaX_el_check) telegramUsernameInputAlphaX_el_check.value = storedUsernameAlphaX; 
-                        showScreenAlphaX('loginPage2AlphaX'); 
-                        startApprovalCheckAlphaX(); 
-                    } else { 
-                        showScreenAlphaX('loginPage1AlphaX'); 
-                    } 
+                if (alphaX_isMaintenanceModeActive) {
+                    db.ref(`${MAINTENANCE_STATUS_PATH}/message`).get().then(messageSnapshot => {
+                        showMaintenancePageAlphaX(messageSnapshot.val() || "ALPHA X AI is currently under maintenance.");
+                    }).catch(err => {
+                        console.error("Error fetching maintenance message:", err);
+                        showMaintenancePageAlphaX(); // Show default maintenance message
+                    });
+                } else { // Not in maintenance, proceed with login flow
+                    if (isLoggedInAlphaX && storedUsernameAlphaX && currentDeviceIdAlphaX) {
+                        if(telegramUsernameInputAlphaX_el_check) telegramUsernameInputAlphaX_el_check.value = storedUsernameAlphaX;
+                        showScreenAlphaX('loginPage2AlphaX');
+                        updateApprovalStatusUIAlphaX('info', 'Verifying access...'); // Show verifying status
+                        startApprovalCheckAlphaX(); // Start checking for approval
+                    } else if (storedUsernameAlphaX && currentDeviceIdAlphaX) { // Has username and device ID but not marked as logged in
+                        if(telegramUsernameInputAlphaX_el_check) telegramUsernameInputAlphaX_el_check.value = storedUsernameAlphaX;
+                        showScreenAlphaX('loginPage2AlphaX'); // Go to device ID page
+                        startApprovalCheckAlphaX();
+                    } else { // No stored session, show initial login page
+                        showScreenAlphaX('loginPage1AlphaX');
+                    }
                 }
-            }).catch(error => { 
-                console.error("Error checking maintenance status:", error); alphaX_isMaintenanceModeActive = false;
+            }).catch(error => { // Error fetching maintenance status, assume not in maintenance
+                console.error("Error checking maintenance status:", error);
+                alphaX_isMaintenanceModeActive = false; // Default to not in maintenance
                  if (isLoggedInAlphaX && storedUsernameAlphaX && currentDeviceIdAlphaX) { if(telegramUsernameInputAlphaX_el_check) telegramUsernameInputAlphaX_el_check.value = storedUsernameAlphaX; showScreenAlphaX('loginPage2AlphaX'); updateApprovalStatusUIAlphaX('info', 'Verifying access...'); startApprovalCheckAlphaX(); }
                  else if (storedUsernameAlphaX && currentDeviceIdAlphaX) { if(telegramUsernameInputAlphaX_el_check) telegramUsernameInputAlphaX_el_check.value = storedUsernameAlphaX; showScreenAlphaX('loginPage2AlphaX'); startApprovalCheckAlphaX(); }
                  else { showScreenAlphaX('loginPage1AlphaX'); }
             });
-            updateThemeToggleUI();
+            updateThemeToggleUI(); // Final UI update for theme toggle
         });
     </script>
 </body>
