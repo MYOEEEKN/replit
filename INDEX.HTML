@@ -1427,30 +1427,28 @@
         }
         
         async function handleDeleteSharedHistoryItem(event) {
+            // This function is now for local visual clear ONLY for the specific item clicked.
+            // It does NOT delete from shared Firebase history.
             const button = event.currentTarget;
-            const itemId = button.getAttribute('data-id');
-            if (!itemId || itemId.startsWith("pending-")) { 
+            const itemIdToDelete = button.getAttribute('data-id');
+            if (!itemIdToDelete || itemIdToDelete.startsWith("pending-")) { 
                  alphaX_showLoginToast("Cannot delete a pending prediction from history.", "error");
                 return;
             }
             
-            alphaX_showConfirmModal('delete_item_confirm', async () => {
-                try {
-                    if(currentUser){
-                        // Use getIdTokenResult to get claims
-                        const idTokenResult = await getIdTokenResult(currentUser, true); // Force refresh
-                        if(idTokenResult.claims.admin){ // Check claims object
-                            await remove(ref(db, `${SHARED_GAME_HISTORY_PATH}/${itemId}`));
-                            alphaX_showLoginToast("History item deleted.", 'info'); 
-                            alphaX_playSound('confirm');
-                        } else {
-                             alphaX_showLoginToast("Only admins can delete history items.", 'error');
-                        }
-                    }
-                } catch (error) {
-                    console.error("Error deleting shared history item:", error);
-                    alphaX_showLoginToast("Failed to delete item.", 'error');
-                }
+            alphaX_showConfirmModal('delete_item_confirm', () => {
+                localHistoryData = localHistoryData.filter(item => item.id !== itemIdToDelete);
+                // No localStorage update here as localHistoryData is now primarily a reflection of Firebase
+                // for display. If we want purely local history that persists, we'd need localStorage.
+                // For now, this just removes it from the current view.
+                // To make it "stick" locally even after refresh (without deleting from Firebase),
+                // we would need a separate local storage for "hidden" items by this user.
+                // For simplicity, this will just remove it from the current view.
+                // The item will reappear on next full data fetch from Firebase if not truly deleted.
+                updateHistoryUI_V2(); 
+                updateStatsUI_V2(); // Recalculate stats based on visually available history
+                alphaX_showLoginToast("History item hidden from this view.", 'info'); 
+                alphaX_playSound('confirm');
             });
         }
 
@@ -1689,39 +1687,21 @@
             if(soundToggle) soundToggle.addEventListener('change', (e) => { alphaX_isSoundEnabled = e.target.checked; localStorage.setItem('alphaXAiSound', alphaX_isSoundEnabled.toString()); isMuted = !alphaX_isSoundEnabled; if (alphaX_isSoundEnabled) alphaX_playSound('toggle'); });
             
             const deleteAllHistoryBtn = document.getElementById('deleteAllHistoryBtn');
-            if(deleteAllHistoryBtn) deleteAllHistoryBtn.addEventListener('click', () => { 
-                alphaX_showConfirmModal('delete_all_confirm', async () => { 
-                    try {
-                        const user = auth.currentUser;
-                        if (user) {
-                            const idTokenResult = await getIdTokenResult(user, true); // Corrected: Use getIdTokenResult
-                            if (idTokenResult.claims.admin) { // Correctly access claims
-                                if (BACKEND_URL === "YOUR_REPLIT_BACKEND_URL_HERE" || !BACKEND_URL.startsWith("https://")) {
-                                    alphaX_showLoginToast("Backend not configured for this action.", "error"); return;
-                                }
-                                const idToken = await getIdToken(user); // Get the token string to send
-                                const response = await fetch(`${BACKEND_URL}deleteAllHistory`, { 
-                                    method: 'POST',
-                                    headers: { 'Authorization': `Bearer ${idToken}` }
-                                });
-                                if(response.ok) {
-                                    alphaX_showLoginToast('All history and stats cleared by backend.', 'info'); 
-                                } else {
-                                    const errData = await response.json().catch(()=>({message: "Unknown error clearing history"}));
-                                    alphaX_showLoginToast(`Failed to clear history: ${errData.message || response.statusText}`, 'error');
-                                }
-                            } else {
-                               alphaX_showLoginToast('You do not have permission to clear all history.', 'error');
-                            }
-                        } else {
-                             alphaX_showLoginToast('You must be logged in to perform this action.', 'error');
-                        }
-                    } catch (error) {
-                        console.error("Error calling delete all history endpoint:", error);
-                        alphaX_showLoginToast("Failed to clear all history.", "error");
-                    }
-                }); 
-            });
+            if(deleteAllHistoryBtn) {
+                deleteAllHistoryBtn.addEventListener('click', () => { 
+                    alphaX_showConfirmModal('delete_all_confirm', async () => { 
+                        // This now clears only the local visual history for the current user
+                        localHistoryData = []; // Clear the local array
+                        // No localStorage interaction here for history as it's primarily from Firebase.
+                        // If you want to persist "hidden" items locally, that's a more complex feature.
+                        updateHistoryUI_V2(); // Re-render the history UI (will show "No history")
+                        updateStatsUI_V2();   // Re-calculate stats based on the now-empty visual history
+                        alphaX_showLoginToast('Your history view has been cleared for this device.', 'info'); 
+                        alphaX_playSound('confirm'); 
+                    }); 
+                });
+            }
+
 
             const confirmModalBtn = document.getElementById('confirmModalBtn');
             if(confirmModalBtn) confirmModalBtn.addEventListener('click', () => { if (alphaX_currentConfirmCallback) alphaX_currentConfirmCallback(); if(alphaX_confirmModalEl) alphaX_confirmModalEl.classList.remove('active'); alphaX_playSound('confirm'); alphaX_currentConfirmCallback = null; });
