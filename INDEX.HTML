@@ -613,31 +613,25 @@
                             <div>
                                 <h3 class="text-xl font-semibold mb-2 text-accent-primary" data-lang-key="predictor_intro_title">Our Prediction Engine</h3>
                                 <p data-lang-key="predictor_intro_p1">ALPHA X AI employs a sophisticated prediction engine, now operating on our secure backend, to analyze trends and patterns from historical data. Our goal is to provide insightful predictions, but it's important to remember that these are based on statistical analysis and not guarantees of future outcomes.</p>
-                                <p data-lang-key="predictor_intro_p2_updated">The system uses an advanced multi-model approach, combining numerous analytical techniques to enhance accuracy and adapt to changing conditions. This version incorporates enhanced pattern recognition, transitional analysis, a Relative Strength Index (RSI) engine, a Quantum-Inspired ensemble model, and weighted historical data to provide more nuanced predictions. It also includes the "Omega Mind" protocol, an adaptive risk management system that adjusts prediction confidence and strategy based on recent performance to mitigate prolonged loss streaks and adapt to pattern changes.</p>
+                                <p data-lang-key="predictor_intro_p2_updated">Our backend system uses an advanced multi-model approach, combining numerous analytical techniques including enhanced pattern recognition, transitional analysis, Relative Strength Index (RSI), Quantum-Inspired Ensembles, Cyclical Pattern Detection, Entropy Analysis, and weighted historical data. It also includes the "Omega Mind" protocol, an adaptive risk management system that adjusts prediction confidence and strategy based on recent performance to mitigate prolonged loss streaks and adapt to dynamic market changes.</p>
                             </div>
                             <div>
-                                <h3 class="text-xl font-semibold mb-2 text-accent-primary" data-lang-key="how_it_works_title">How It Works (Advanced)</h3>
+                                <h3 class="text-xl font-semibold mb-2 text-accent-primary" data-lang-key="how_it_works_title">How It Works (Advanced Backend Logic)</h3>
                                 <p class="mb-2">Our prediction logic is now primarily processed on a secure backend server for enhanced performance and security. The core analytical components include:</p>
                                 <ul class="list-disc list-inside space-y-1 pl-4">
-                                    <li data-lang-key="how_it_works_li1_adv"><strong>Multi-Period Frequency Analysis:</strong> Tracks "BIG" vs "SMALL" occurrences over short, medium, and long-term windows.</li>
-                                    <li data-lang-key="how_it_works_li2_adv"><strong>Transition Matrix Analysis:</strong> Calculates probabilities of B->S, S->B, B->B, S->S transitions.</li>
-                                    <li data-lang-key="how_it_works_li3_adv"><strong>Advanced Pattern Matching:</strong> Identifies recurring sequences (e.g., BSBS, BBSS, BBSBBS) and alternating trends, adapting to changes in these patterns.</li>
-                                    <li data-lang-key="how_it_works_li4_adv"><strong>Streak Dynamics:</strong> Analyzes current and historical win/loss streaks for both outcomes, assessing continuation or reversal likelihood.</li>
-                                    <li data-lang-key="how_it_works_li_rsi_engine"><strong>Relative Strength Index (RSI) Trend Engine:</strong> Measures the speed and change of recent numerical outcomes (0-9) to identify potential overbought (suggests SMALL) or oversold (suggests BIG) conditions, contributing to trend assessment.</li>
-                                    <li data-lang-key="how_it_works_li_quantum_ai"><strong>Quantum-Inspired AI Ensemble:</strong> A conceptual model that combines outputs from multiple simpler predictors (including deterministic logic like period-based calculations) with varying weights. It may introduce controlled stochasticity or prioritize less obvious patterns, especially when other indicators are conflicting or market volatility is high, simulating a more adaptive and complex decision process.</li>
-                                    <li data-lang-key="how_it_works_li_trend_stability"><strong>Trend Stability Analysis:</strong> Evaluates recent win rates and pattern consistency. If the trend is unstable (e.g., low win rate, frequent pattern breaks), the system may suggest skipping predictions or reduce confidence.</li>
-                                    <li data-lang-key="how_it_works_li_macd"><strong>Moving Average Convergence Divergence (MACD) Analyzer:</strong> Tracks the relationship between two moving averages of numerical outcomes to identify momentum shifts.</li>
-                                    <li data-lang-key="how_it_works_li_bollinger"><strong>Bollinger Bands Analyzer:</strong> Uses standard deviation bands around a moving average to assess volatility and potential overextension.</li>
-                                    <li data-lang-key="how_it_works_li_inter_signal"><strong>Inter-Signal Confirmation Engine:</strong> Assesses the level of agreement among various analytical engines (RSI, Quantum, Pattern Matchers, etc.) to adjust overall confidence and resolve conflicting signals.</li>
-                                    <li data-lang-key="how_it_works_li_entropy"><strong>Entropy Analysis:</strong> Measures randomness of recent outcomes; very predictable or very random sequences can indicate shifts.</li>
-                                    <li data-lang-key="how_it_works_li_cyclical"><strong>Cyclical Pattern Detection:</strong> A simplified spectral analysis to detect underlying cyclical patterns in BIG/SMALL alternations.</li>
-                                    <li data-lang-key="how_it_works_li_omega_mind"><strong>Omega Mind Protocol (Adaptive Risk Management):</strong>
-                                        <ul class="list-['-_'] list-inside pl-4">
-                                            <li>Level 0 (Normal): Standard prediction logic with balanced weights for all engines.</li>
-                                            <li>Level 1 (Caution - 1 Loss OR Unstable Trend): Slightly reduced confidence, increased sensitivity to counter-signals from RSI or Quantum models.</li>
-                                            <li>Level 2 (Warning - 2 Losses OR Persistently Unstable Trend): Significantly reduced confidence, strong bias towards breaking the pattern of the last losing prediction, may favor Quantum or RSI if they suggest a change.</li>
-                                            <li>Level 3 (Critical - 3+ Losses OR Very Volatile Market): Prediction might be skipped or use extremely conservative fallback; system focuses on identifying a new stable pattern or preserving capital.</li>
-                                        </ul>
+                                    <li data-lang-key="how_it_works_li1_adv"><strong>Multi-Period Frequency Analysis:</strong> Tracks "BIG" vs "SMALL" occurrences.</li>
+                                    <li data-lang-key="how_it_works_li2_adv"><strong>Transition Matrix Analysis:</strong> Calculates B->S, S->B, B->B, S->S probabilities.</li>
+                                    <li data-lang-key="how_it_works_li3_adv"><strong>Advanced Pattern Matching:</strong> Identifies recurring sequences and adapts to changes.</li>
+                                    <li data-lang-key="how_it_works_li4_adv"><strong>Streak Dynamics:</strong> Analyzes win/loss streaks for reversal/continuation.</li>
+                                    <li data-lang-key="how_it_works_li_rsi_engine"><strong>Relative Strength Index (RSI) Engine:</strong> Identifies overbought/oversold conditions.</li>
+                                    <li data-lang-key="how_it_works_li_quantum_ai"><strong>Quantum-Inspired AI Ensemble:</strong> Combines multiple predictors with adaptive weighting and controlled stochasticity for complex decision making, especially in volatile conditions.</li>
+                                    <li data-lang-key="how_it_works_li_trend_stability"><strong>Trend Stability Analysis:</strong> Evaluates win rates and pattern consistency to adjust confidence or suggest skipping.</li>
+                                    <li data-lang-key="how_it_works_li_macd"><strong>MACD Analyzer:</strong> Identifies momentum shifts.</li>
+                                    <li data-lang-key="how_it_works_li_bollinger"><strong>Bollinger Bands Analyzer:</strong> Assesses volatility and overextension.</li>
+                                    <li data-lang-key="how_it_works_li_inter_signal"><strong>Inter-Signal Confirmation Engine:</strong> Adjusts confidence based on agreement among various analytical engines.</li>
+                                    <li data-lang-key="how_it_works_li_entropy"><strong>Entropy Analysis:</strong> Measures randomness; highly predictable or random sequences can indicate shifts.</li>
+                                    <li data-lang-key="how_it_works_li_cyclical"><strong>Cyclical Pattern Detection:</strong> Simplified spectral analysis for underlying BIG/SMALL alternation cycles.</li>
+                                    <li data-lang-key="how_it_works_li_omega_mind"><strong>Omega Mind Protocol (Adaptive Risk Management):</strong><ul><li>Level 0 (Normal): Standard logic.</li><li>Level 1 (Caution): Reduced confidence, sensitive to counter-signals.</li><li>Level 2 (Warning): Significantly reduced confidence, bias against last losing pattern.</li><li>Level 3 (Critical): Prediction skipped or highly conservative; focus on stabilization.</li></ul>
                                     </li>
                                 </ul>
                             </div>
@@ -792,26 +786,24 @@
             signInWithEmailAndPassword, 
             signOut, 
             onAuthStateChanged,
-            getIdToken // For sending to backend
+            getIdToken, // For sending to backend
+            getIdTokenResult // For checking admin claim client-side
         } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
         import { 
             getDatabase, 
             ref, 
             set, 
             get, 
-            // child, // Not directly used, ref() is preferred
             onValue, 
             serverTimestamp, 
-            // push, // Backend will handle push to history
             query, 
             orderByChild, 
             limitToLast,
             remove
-            // update // Not directly used, set() with merge or specific paths is often used
         } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 
         // --- Firebase Configuration ---
-        const firebaseConfig = { // Using the user-provided config from the previous turn
+        const firebaseConfig = { 
             apiKey: "AIzaSyBGJtGnfdDw2rPpJLphbRisWz0MXLvIEyI",
             authDomain: "premiumalphaxai.firebaseapp.com",
             projectId: "premiumalphaxai",
@@ -830,17 +822,14 @@
 
         // --- CONFIGURATION ---
         const BACKEND_URL = "https://3ee8fe32-bfee-4aea-accf-471a67337aa7-00-31cquvnv92zbr.pike.replit.dev/"; 
-        const PREDICTION_ENDPOINT = `${BACKEND_URL}predict`; // Ensure no double slash if BACKEND_URL ends with /
-        // const FETCH_GAME_RESULT_ENDPOINT = `${BACKEND_URL}fetchGameResult`; // Not directly called by frontend anymore
+        const PREDICTION_ENDPOINT = `${BACKEND_URL}predict`; 
 
-        // Firebase Paths (mostly read by frontend, written by backend)
         const USER_PREMIUM_ACCESS_PATH = "user_premium_access";
         const SHARED_GAME_HISTORY_PATH = "shared_alpha_x_ai/game_history";
         const SHARED_CURRENT_PREDICTION_PATH = "shared_alpha_x_ai/current_prediction";
         const MAINTENANCE_STATUS_PATH = "alphax_maintenanceStatus";
         const MAX_SHARED_HISTORY_LENGTH = 50;
 
-        // --- Auth State & UI Elements ---
         const authScreen = document.getElementById('authScreen');
         const appContainer = document.getElementById('appContainer');
         const maintenanceContainer = document.getElementById('maintenanceContainer');
@@ -863,19 +852,15 @@
         const logoutButton = document.getElementById('logoutButton');
         const logoutFromDeniedBtn = document.getElementById('logoutFromDeniedBtn');
 
-
         let currentUser = null;
         let premiumAccessListener = null; 
         let predictionIntervalId = null;
 
-
-        // --- Global Settings State ---
         let alphaX_currentLanguage = localStorage.getItem('alphaXAiLanguage') || 'en';
         let alphaX_isSoundEnabled = localStorage.getItem('alphaXAiSound') === null ? true : localStorage.getItem('alphaXAiSound') === 'true';
         let alphaX_isNotificationsEnabled = localStorage.getItem('alphaXAiNotifications') === 'true' || false;
         let isMuted = !alphaX_isSoundEnabled; 
 
-        // --- Translations (Updated for backend logic) ---
         const translations = {
             en: { 
                 period: "Period", prediction: "Prediction", confidence: "Confidence",
@@ -935,14 +920,14 @@
                 access_pending_message: "Your premium access is pending approval. Please wait or contact the administrator.",
                 logged_out_successfully: "Logged out successfully.",
                 login_successful: "Login successful! Welcome back.",
-                signup_successful_pending: "Signup successful! Your account is created. Please contact admin for premium access activation.",
+                signup_successful_pending: "Signup successful! Your account is created. Contact admin for premium access.",
                 password_mismatch: "Passwords do not match.",
                 password_too_short: "Password should be at least 6 characters.",
                 contact_admin_for_access: "Please contact the administrator for access.",
                 backend_error: "Error communicating with the prediction server. Please try again later.",
                 fetching_prediction: "Fetching prediction from server..."
             },
-            hi: { // Ensure Hindi translations are also updated for new/changed keys
+            hi: { 
                 period: "अवधि", prediction: "भविष्यवाणी", confidence: "आत्मविश्वास",
                 analysis_dashboard: "विश्लेषण डैशबोर्ड", most_frequent_bs: "सबसे लगातार (बड़ा/छोटा)",
                 least_frequent_bs: "कम से कम लगातार (बड़ा/छोटा)", win_rate: "जीत दर", wins: "जीत", losses: "हार",
@@ -1009,7 +994,6 @@
             }
         };
         
-        // --- DOM Elements (Predictor UI) ---
         const alphaX_currentPeriodEl = document.getElementById('currentPeriod');
         const alphaX_currentResultEl = document.getElementById('currentResult'); 
         const alphaX_confidenceFillEl = document.getElementById('confidenceFill');
@@ -1032,13 +1016,11 @@
         const alphaX_confirmModalEl = document.getElementById('confirmModal');
         const alphaX_modalMessageEl = document.getElementById('modalMessage');
         const alphaX_streakBreakPopupEl = document.getElementById('streakBreakPopup');
-        // const alphaX_streakBreakMessageEl = document.getElementById('streakBreakMessage'); // Already defined
         const alphaX_badTrendIndicatorEl = document.getElementById('badTrendIndicator');
         const alphaX_badTrendMessageTextEl = document.getElementById('badTrendMessageText'); 
         const alphaX_badTrendPopupEl = document.getElementById('badTrendPopup');
         const alphaX_badTrendPopupMessageEl = document.getElementById('badTrendPopupMessageEl'); 
 
-        // --- Utility Functions ---
         function showAuthMessage(message, type = 'info') {
             if (!authMessageDiv) return;
             authMessageDiv.textContent = message;
@@ -1075,7 +1057,6 @@
             }
         }
         
-        // --- Authentication Logic ---
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             clearAuthMessage();
@@ -1456,8 +1437,9 @@
             alphaX_showConfirmModal('delete_item_confirm', async () => {
                 try {
                     if(currentUser){
-                        const idTokenResult = await getIdToken(currentUser);
-                        if(idTokenResult.claims.admin){
+                        // Use getIdTokenResult to get claims
+                        const idTokenResult = await getIdTokenResult(currentUser, true); // Force refresh
+                        if(idTokenResult.claims.admin){ // Check claims object
                             await remove(ref(db, `${SHARED_GAME_HISTORY_PATH}/${itemId}`));
                             alphaX_showLoginToast("History item deleted.", 'info'); 
                             alphaX_playSound('confirm');
@@ -1712,14 +1694,15 @@
                     try {
                         const user = auth.currentUser;
                         if (user) {
-                            const idTokenResult = await getIdToken(user, true); 
-                            if (idTokenResult.claims.admin) {
+                            const idTokenResult = await getIdTokenResult(user, true); // Corrected: Use getIdTokenResult
+                            if (idTokenResult.claims.admin) { // Correctly access claims
                                 if (BACKEND_URL === "YOUR_REPLIT_BACKEND_URL_HERE" || !BACKEND_URL.startsWith("https://")) {
                                     alphaX_showLoginToast("Backend not configured for this action.", "error"); return;
                                 }
-                                const response = await fetch(`${BACKEND_URL}deleteAllHistory`, { // Ensure no double slash
+                                const idToken = await getIdToken(user); // Get the token string to send
+                                const response = await fetch(`${BACKEND_URL}deleteAllHistory`, { 
                                     method: 'POST',
-                                    headers: { 'Authorization': `Bearer ${await getIdToken(user)}` }
+                                    headers: { 'Authorization': `Bearer ${idToken}` }
                                 });
                                 if(response.ok) {
                                     alphaX_showLoginToast('All history and stats cleared by backend.', 'info'); 
