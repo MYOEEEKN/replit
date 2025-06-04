@@ -629,6 +629,8 @@
                                     <li data-lang-key="how_it_works_li_macd"><strong>Moving Average Convergence Divergence (MACD) Analyzer:</strong> Tracks the relationship between two moving averages of numerical outcomes to identify momentum shifts.</li>
                                     <li data-lang-key="how_it_works_li_bollinger"><strong>Bollinger Bands Analyzer:</strong> Uses standard deviation bands around a moving average to assess volatility and potential overextension.</li>
                                     <li data-lang-key="how_it_works_li_inter_signal"><strong>Inter-Signal Confirmation Engine:</strong> Assesses the level of agreement among various analytical engines (RSI, Quantum, Pattern Matchers, etc.) to adjust overall confidence and resolve conflicting signals.</li>
+                                    <li data-lang-key="how_it_works_li_entropy"><strong>Entropy Analysis:</strong> Measures randomness of recent outcomes; very predictable or very random sequences can indicate shifts.</li>
+                                    <li data-lang-key="how_it_works_li_cyclical"><strong>Cyclical Pattern Detection:</strong> A simplified spectral analysis to detect underlying cyclical patterns in BIG/SMALL alternations.</li>
                                     <li data-lang-key="how_it_works_li_omega_mind"><strong>Omega Mind Protocol (Adaptive Risk Management):</strong>
                                         <ul class="list-['-_'] list-inside pl-4">
                                             <li>Level 0 (Normal): Standard prediction logic with balanced weights for all engines.</li>
@@ -886,25 +888,27 @@
                 about_aura_x_ai: "About ALPHA X AI",
                 predictor_intro_title: "Our Prediction Engine",
                 predictor_intro_p1: "ALPHA X AI employs a sophisticated prediction engine, now operating on our secure backend, to analyze trends and patterns from historical data. Our goal is to provide insightful predictions, but it's important to remember that these are based on statistical analysis and not guarantees of future outcomes.",
-                predictor_intro_p2_updated: "The system uses an advanced multi-model approach, combining numerous analytical techniques to enhance accuracy and adapt to changing conditions. This version incorporates enhanced pattern recognition, transitional analysis, a Relative Strength Index (RSI) engine, a Quantum-Inspired ensemble model, and weighted historical data to provide more nuanced predictions. It also includes the \"Omega Mind\" protocol, an adaptive risk management system that adjusts prediction confidence and strategy based on recent performance to mitigate prolonged loss streaks and adapt to pattern changes.",
-                how_it_works_title: "How It Works (Advanced)",
-                how_it_works_li1_adv: "<strong>Multi-Period Frequency Analysis:</strong> Tracks \"BIG\" vs \"SMALL\" occurrences over short, medium, and long-term windows.",
-                how_it_works_li2_adv: "<strong>Transition Matrix Analysis:</strong> Calculates probabilities of B->S, S->B, B->B, S->S transitions.",
-                how_it_works_li3_adv: "<strong>Advanced Pattern Matching:</strong> Identifies recurring sequences (e.g., BSBS, BBSS, BBSBBS) and alternating trends, adapting to changes in these patterns.",
-                how_it_works_li4_adv: "<strong>Streak Dynamics:</strong> Analyzes current and historical win/loss streaks for both outcomes, assessing continuation or reversal likelihood.",
-                how_it_works_li_rsi_engine: "<strong>Relative Strength Index (RSI) Trend Engine:</strong> Measures the speed and change of recent numerical outcomes (0-9) to identify potential overbought (suggests SMALL) or oversold (suggests BIG) conditions, contributing to trend assessment.",
-                how_it_works_li_quantum_ai: "<strong>Quantum-Inspired AI Ensemble:</strong> A conceptual model that combines outputs from multiple simpler predictors (including deterministic logic like period-based calculations) with varying weights. It may introduce controlled stochasticity or prioritize less obvious patterns, especially when other indicators are conflicting or market volatility is high, simulating a more adaptive and complex decision process.",
-                how_it_works_li_trend_stability: "<strong>Trend Stability Analysis:</strong> Evaluates recent win rates and pattern consistency. If the trend is unstable (e.g., low win rate, frequent pattern breaks), the system may suggest skipping predictions or reduce confidence.",
-                how_it_works_li_macd: "<strong>Moving Average Convergence Divergence (MACD) Analyzer:</strong> Tracks the relationship between two moving averages of numerical outcomes to identify momentum shifts.",
-                how_it_works_li_bollinger: "<strong>Bollinger Bands Analyzer:</strong> Uses standard deviation bands around a moving average to assess volatility and potential overextension.",
-                how_it_works_li_inter_signal: "<strong>Inter-Signal Confirmation Engine:</strong> Assesses the level of agreement among various analytical engines (RSI, Quantum, Pattern Matchers, etc.) to adjust overall confidence and resolve conflicting signals.",
-                how_it_works_li_omega_mind: "<strong>Omega Mind Protocol (Adaptive Risk Management):</strong><ul><li>Level 0 (Normal): Standard prediction logic with balanced weights for all engines.</li><li>Level 1 (Caution - 1 Loss OR Unstable Trend): Slightly reduced confidence, increased sensitivity to counter-signals from RSI or Quantum models.</li><li>Level 2 (Warning - 2 Losses OR Persistently Unstable Trend): Significantly reduced confidence, strong bias towards breaking the pattern of the last losing prediction, may favor Quantum or RSI if they suggest a change.</li><li>Level 3 (Critical - 3+ Losses OR Very Volatile Market): Prediction might be skipped or use extremely conservative fallback; system focuses on identifying a new stable pattern or preserving capital.</li></ul>",
+                predictor_intro_p2_updated: "Our backend system uses an advanced multi-model approach, combining numerous analytical techniques including enhanced pattern recognition, transitional analysis, Relative Strength Index (RSI), Quantum-Inspired Ensembles, Cyclical Pattern Detection, Entropy Analysis, and weighted historical data. It also includes the \"Omega Mind\" protocol, an adaptive risk management system that adjusts prediction confidence and strategy based on recent performance to mitigate prolonged loss streaks and adapt to dynamic market changes.",
+                how_it_works_title: "How It Works (Advanced Backend Logic)",
+                how_it_works_li1_adv: "<strong>Multi-Period Frequency Analysis:</strong> Tracks \"BIG\" vs \"SMALL\" occurrences.",
+                how_it_works_li2_adv: "<strong>Transition Matrix Analysis:</strong> Calculates B->S, S->B, B->B, S->S probabilities.",
+                how_it_works_li3_adv: "<strong>Advanced Pattern Matching:</strong> Identifies recurring sequences and adapts to changes.",
+                how_it_works_li4_adv: "<strong>Streak Dynamics:</strong> Analyzes win/loss streaks for reversal/continuation.",
+                how_it_works_li_rsi_engine: "<strong>Relative Strength Index (RSI) Engine:</strong> Identifies overbought/oversold conditions.",
+                how_it_works_li_quantum_ai: "<strong>Quantum-Inspired AI Ensemble:</strong> Combines multiple predictors with adaptive weighting and controlled stochasticity for complex decision making, especially in volatile conditions.",
+                how_it_works_li_trend_stability: "<strong>Trend Stability Analysis:</strong> Evaluates win rates and pattern consistency to adjust confidence or suggest skipping.",
+                how_it_works_li_macd: "<strong>MACD Analyzer:</strong> Identifies momentum shifts.",
+                how_it_works_li_bollinger: "<strong>Bollinger Bands Analyzer:</strong> Assesses volatility and overextension.",
+                how_it_works_li_inter_signal: "<strong>Inter-Signal Confirmation Engine:</strong> Adjusts confidence based on agreement among various analytical engines.",
+                how_it_works_li_entropy: "<strong>Entropy Analysis:</strong> Measures randomness; highly predictable or random sequences can indicate shifts.",
+                how_it_works_li_cyclical: "<strong>Cyclical Pattern Detection:</strong> Simplified spectral analysis for underlying BIG/SMALL alternation cycles.",
+                how_it_works_li_omega_mind: "<strong>Omega Mind Protocol (Adaptive Risk Management):</strong><ul><li>Level 0 (Normal): Standard logic.</li><li>Level 1 (Caution): Reduced confidence, sensitive to counter-signals.</li><li>Level 2 (Warning): Significantly reduced confidence, bias against last losing pattern.</li><li>Level 3 (Critical): Prediction skipped or highly conservative; focus on stabilization.</li></ul>",
                 important_note_title: "Important Note",
                 important_note_p1: "All predictions provided by ALPHA X AI are for informational and entertainment purposes only. Past performance is not indicative of future results. Please use this information responsibly.",
                 meet_the_team_title: "Meet The Team", owner_info: "<strong>Owner/Developer:</strong> @ALPHAXAIWEB", owner_telegram: "Telegram Profile",
                 general_settings_title: "General Settings", more_info_title: "More Information", status: "Status",
                 language: "Language", notifications: "Notifications", sound: "Sound", reset_settings: "Reset Settings",
-                reset: "Reset", // prediction_mode: "Prediction Mode", // Removed
+                reset: "Reset", 
                 how_to_use: "How To Use", watch_video: "Watch Video",
                 privacy_policy: "Privacy Policy", read_more: "Read More", how_to_use_aura_x_ai: "How To Use ALPHA X AI",
                 confirm_action: "Confirm Action", cancel: "Cancel", confirm: "Confirm", pending: "Pending",
@@ -938,7 +942,7 @@
                 backend_error: "Error communicating with the prediction server. Please try again later.",
                 fetching_prediction: "Fetching prediction from server..."
             },
-            hi: { 
+            hi: { // Ensure Hindi translations are also updated for new/changed keys
                 period: "अवधि", prediction: "भविष्यवाणी", confidence: "आत्मविश्वास",
                 analysis_dashboard: "विश्लेषण डैशबोर्ड", most_frequent_bs: "सबसे लगातार (बड़ा/छोटा)",
                 least_frequent_bs: "कम से कम लगातार (बड़ा/छोटा)", win_rate: "जीत दर", wins: "जीत", losses: "हार",
@@ -949,25 +953,27 @@
                 about_aura_x_ai: "अल्फा एक्स एआई के बारे में",
                 predictor_intro_title: "हमारा भविष्यवाणी इंजन",
                 predictor_intro_p1: "अल्फा एक्स एआई एक परिष्कृत भविष्यवाणी इंजन का उपयोग करता है, जो अब हमारे सुरक्षित बैकएंड पर काम करता है, ताकि ऐतिहासिक डेटा से रुझानों और पैटर्न का विश्लेषण किया जा सके। हमारा लक्ष्य अंतर्दृष्टिपूर्ण भविष्यवाणियां प्रदान करना है, लेकिन यह याद रखना महत्वपूर्ण है कि ये सांख्यिकीय विश्लेषण पर आधारित हैं और भविष्य के परिणामों की गारंटी नहीं हैं।",
-                predictor_intro_p2_updated: "यह प्रणाली भविष्यवाणियां उत्पन्न करने के लिए एक उन्नत बहु-मॉडल दृष्टिकोण का उपयोग करती है, सटीकता बढ़ाने और बदलती परिस्थितियों के अनुकूल होने के लिए कई विश्लेषणात्मक तकनीकों का संयोजन करती है। यह संस्करण अधिक सूक्ष्म भविष्यवाणियां प्रदान करने के लिए उन्नत पैटर्न पहचान, संक्रमणकालीन विश्लेषण, एक सापेक्ष शक्ति सूचकांक (RSI) इंजन, एक क्वांटम-प्रेरित एन्सेम्बल मॉडल और भारित ऐतिहासिक डेटा को शामिल करता है। इसमें \"ओमेगा माइंड\" प्रोटोकॉल भी शामिल है, जो एक अनुकूली जोखिम प्रबंधन प्रणाली है जो हाल के प्रदर्शन के आधार पर भविष्यवाणी के आत्मविश्वास और रणनीति को समायोजित करती है ताकि लंबे समय तक हार की लकीरों को कम किया जा सके और पैटर्न परिवर्तनों के अनुकूल बनाया जा सके।",
-                how_it_works_title: "यह कैसे काम करता है (उन्नत)",
-                how_it_works_li1_adv: "<strong>बहु-अवधि आवृत्ति विश्लेषण:</strong> छोटी, मध्यम और लंबी अवधि की खिड़कियों पर \"बड़ा\" बनाम \"छोटा\" घटनाओं को ट्रैक करता है।",
-                how_it_works_li2_adv: "<strong>संक्रमण मैट्रिक्स विश्लेषण:</strong> B->S, S->B, B->B, S->S संक्रमणों की संभावनाओं की गणना करता है।",
-                how_it_works_li3_adv: "<strong>उन्नत पैटर्न मिलान:</strong> आवर्ती अनुक्रमों (जैसे, BSBS, BBSS, BBSBBS) और वैकल्पिक प्रवृत्तियों की पहचान करता है, इन पैटर्न में बदलावों के अनुकूल होता है।",
-                how_it_works_li4_adv: "<strong>स्ट्रीक गतिशीलता:</strong> दोनों परिणामों के लिए वर्तमान और ऐतिहासिक जीत/हार की लकीरों का विश्लेषण करता है, निरंतरता या उत्क्रमण की संभावना का आकलन करता है।",
-                how_it_works_li_rsi_engine: "<strong>रिलेटिव स्ट्रेंथ इंडेक्स (RSI) ट्रेंड इंजन:</strong> हालिया संख्या गतिविधियों (0-9) की गति और परिवर्तन को मापता है ताकि संभावित ओवरबॉट (SMALL की भविष्यवाणी) या ओवरसोल्ड (BIG की भविष्यवाणी) स्थितियों की पहचान की जा सके, जो ट्रेंड मूल्यांकन में योगदान देता है।",
-                how_it_works_li_quantum_ai: "<strong>क्वांटम-प्रेरित AI एन्सेम्बल:</strong> एक वैचारिक मॉडल जो विभिन्न सरल भविष्यवक्ताओं (अवधि-आधारित गणनाओं जैसे नियतात्मक तर्क सहित) के आउटपुट को विभिन्न भारों के साथ जोड़ता है। यह नियंत्रित स्टोकेस्टिकता का परिचय दे सकता है या कम स्पष्ट पैटर्न को प्राथमिकता दे सकता है, खासकर जब अन्य संकेतक परस्पर विरोधी हों या बाजार की अस्थिरता अधिक हो, एक अधिक अनुकूली और जटिल निर्णय प्रक्रिया का अनुकरण करता है।",
-                how_it_works_li_trend_stability: "<strong>ट्रेंड स्थिरता विश्लेषण:</strong> हाल की जीत दरों और पैटर्न स्थिरता का मूल्यांकन करता है। यदि ट्रेंड अस्थिर है (उदाहरण के लिए, कम जीत दर, लगातार पैटर्न ब्रेक), तो सिस्टम भविष्यवाणियों को छोड़ने या आत्मविश्वास कम करने का सुझाव दे सकता है।",
-                how_it_works_li_macd: "<strong>मूविंग एवरेज कन्वर्जेंस डाइवर्जेंस (MACD) विश्लेषक:</strong> मोमेंटम शिफ्ट की पहचान करने के लिए संख्यात्मक परिणामों के दो मूवING एवरेज के बीच संबंध को ट्रैक करता है।",
-                how_it_works_li_bollinger: "<strong>बोलिंगर बैंड विश्लेषक:</strong> अस्थिरता और संभावित अतिविस्तार का आकलन करने के लिए मूविंग एवरेज के आसपास मानक विचलन बैंड का उपयोग करता है।",
-                how_it_works_li_inter_signal: "<strong>अंतर-सिग्नल पुष्टिकरण इंजन:</strong> समग्र आत्मविश्वास को समायोजित करने और परस्पर विरोधी संकेतों को हल करने के लिए विभिन्न विश्लेषणात्मक इंजनों (RSI, क्वांटम, पैटर्न मैचर्स, आदि) के बीच समझौते के स्तर का आकलन करता है।",
-                how_it_works_li_omega_mind: "<strong>ओमेगा माइंड प्रोटोकॉल (अनुकूली जोखिम प्रबंधन):</strong><ul><li>स्तर 0 (सामान्य): सभी इंजनों के लिए संतुलित भार के साथ मानक भविष्यवाणी तर्क।</li><li>स्तर 1 (सावधानी - 1 हार OR Unstable Trend): थोड़ा कम आत्मविश्वास, RSI या क्वांटम मॉडल से काउंटर-सिग्नल के प्रति बढ़ी हुई संवेदनशीलता।</li><li>स्तर 2 (चेतावनी - 2 हार OR Persistently Unstable Trend): काफी कम आत्मविश्वास, पिछली हार के पैटर्न को तोड़ने की दिशा में मजबूत पूर्वाग्रह, यदि वे बदलाव का सुझाव देते हैं तो क्वांटम या RSI का पक्ष ले सकते हैं।</li><li>स्तर 3 (गंभीर - 3+ हार OR Very Volatile Market): भविष्यवाणी अस्थायी रूप से अक्षम, या अत्यधिक रूढ़िवादी फ़ॉलबैक (जैसे, केवल उच्च-आत्मविश्वास RSI सिग्नल, या स्किप) का उपयोग करता है; सिस्टम एक नए स्थिर पैटर्न की पहचान पर ध्यान केंद्रित करता है या पूंजी संरक्षण पर।</li></ul>",
+                predictor_intro_p2_updated: "हमारा बैकएंड सिस्टम एक उन्नत मल्टी-मॉडल दृष्टिकोण का उपयोग करता है, जिसमें उन्नत पैटर्न पहचान, संक्रमणकालीन विश्लेषण, सापेक्ष शक्ति सूचकांक (RSI), क्वांटम-प्रेरित एन्सेम्बल, चक्रीय पैटर्न डिटेक्शन, एंट्रॉपी विश्लेषण और भारित ऐतिहासिक डेटा सहित कई विश्लेषणात्मक तकनीकों का संयोजन होता है। इसमें \"ओमेगा माइंड\" प्रोटोकॉल भी शामिल है, जो एक अनुकूली जोखिम प्रबंधन प्रणाली है।",
+                how_it_works_title: "यह कैसे काम करता है (उन्नत बैकएंड लॉजिक)",
+                how_it_works_li1_adv: "<strong>बहु-अवधि आवृत्ति विश्लेषण</strong>",
+                how_it_works_li2_adv: "<strong>संक्रमण मैट्रिक्स विश्लेषण</strong>",
+                how_it_works_li3_adv: "<strong>उन्नत पैटर्न मिलान</strong>",
+                how_it_works_li4_adv: "<strong>स्ट्रीक गतिशीलता</strong>",
+                how_it_works_li_rsi_engine: "<strong>सापेक्ष शक्ति सूचकांक (RSI) इंजन</strong>",
+                how_it_works_li_quantum_ai: "<strong>क्वांटम-प्रेरित AI एन्सेम्बल</strong>",
+                how_it_works_li_trend_stability: "<strong>ट्रेंड स्थिरता विश्लेषण</strong>",
+                how_it_works_li_macd: "<strong>MACD विश्लेषक</strong>",
+                how_it_works_li_bollinger: "<strong>बोलिंगर बैंड विश्लेषक</strong>",
+                how_it_works_li_inter_signal: "<strong>अंतर-सिग्नल पुष्टिकरण इंजन</strong>",
+                how_it_works_li_entropy: "<strong>एंट्रॉपी विश्लेषण</strong>",
+                how_it_works_li_cyclical: "<strong>चक्रीय पैटर्न डिटेक्शन</strong>",
+                how_it_works_li_omega_mind: "<strong>ओमेगा माइंड प्रोटोकॉल (अनुकूली जोखिम प्रबंधन):</strong><ul><li>स्तर 0 (सामान्य)</li><li>स्तर 1 (सावधानी)</li><li>स्तर 2 (चेतावनी)</li><li>स्तर 3 (गंभीर)</li></ul>",
                 important_note_title: "महत्वपूर्ण लेख",
                 important_note_p1: "अल्फा एक्स एआई द्वारा प्रदान की गई सभी भविष्यवाणियां केवल सूचनात्मक और मनोरंजन प्रयोजनों के लिए हैं। पिछला प्रदर्शन भविष्य के परिणामों का संकेतक नहीं है। कृपया इस जानकारी का जिम्मेदारी से उपयोग करें।",
                 meet_the_team_title: "टीम से मिलें", owner_info: "<strong>मालिक/डेवलपर:</strong> @ALPHAXAIWEB", owner_telegram: "टेलीग्राम प्रोफाइल",
                 general_settings_title: "सामान्य सेटिंग्स", more_info_title: "और जानकारी", status: "स्थिति",
                 language: "भाषा", notifications: "सूचनाएं", sound: "ध्वनि", reset_settings: "सेटिंग्स रीसेट करें",
-                reset: "रीसेट", // prediction_mode: "भविष्यवाणी मोड", // Removed
+                reset: "रीसेट", 
                 how_to_use: "उपयोग कैसे करें", watch_video: "वीडियो देखें",
                 privacy_policy: "गोपनीयता नीति", read_more: "और पढ़ें", how_to_use_aura_x_ai: "अल्फा एक्स एआई का उपयोग कैसे करें",
                 confirm_action: "कार्रवाई की पुष्टि करें", cancel: "रद्द करें", confirm: "पुष्टि करें", pending: "लंबित",
@@ -1229,7 +1235,7 @@
                         } else if (accessData.expiryTimestamp <= Date.now()) {
                             message = translations[alphaX_currentLanguage]?.access_expired_message || "Your premium access has expired. Please contact the administrator to renew your subscription.";
                         }
-                    } else { // No accessData means user is in Auth but not in user_premium_access
+                    } else { 
                          message = translations[alphaX_currentLanguage]?.contact_admin_for_access || "Please contact the administrator for access.";
                     }
                     if(accessDeniedTitleEl) accessDeniedTitleEl.textContent = title;
@@ -1244,9 +1250,8 @@
             });
         }
 
-        // --- Frontend logic to call backend for predictions ---
         let localHistoryData = []; 
-        let globalPredictionData = null; // Data from SHARED_CURRENT_PREDICTION_PATH (set by backend)
+        let globalPredictionData = null; 
         let isFetchingPrediction = false;
 
 
@@ -1292,7 +1297,7 @@
             } catch (error) {
                 console.error("Error triggering backend prediction cycle:", error);
                 alphaX_showLoginToast(translations[alphaX_currentLanguage]?.backend_error || "Error communicating with server.", "error");
-                alphaX_updateServerStatusUI(false, `Backend Error`); // Simplified error for UI
+                alphaX_updateServerStatusUI(false, `Backend Error`); 
             } finally {
                 isFetchingPrediction = false;
             }
